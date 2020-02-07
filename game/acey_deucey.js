@@ -58,9 +58,6 @@ function playGame() {
     // Reset cards
     cards.forEach(card => hideCard(card));
 
-    // Hide Play Game and Show Game Buttons
-    all_butttons.forEach(button => toggleDisplay(button));
-
     // Create the Deck
     let deck = [];
 
@@ -84,10 +81,12 @@ function playGame() {
     if (dealer_1.card.value === dealer_2.card.value) {
         message.innerHTML = 'Dealer Cards Are Even, no bet';
         toggleDisplay(message);
-        all_butttons.forEach(button => toggleDisplay(button));
 
         return true;
     }
+
+    // Hide Play Game, Show Game Buttons
+    all_butttons.forEach(button => toggleDisplay(button));
 }
 
 /*
