@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function playGame() {
     // All necessary elements
-    const all_butttons = document.querySelectorAll('button');
+    const all_buttons = document.querySelectorAll('button');
 
     const dealer_1 = {
         el: document.querySelector('#dealer_1'),
@@ -86,7 +86,7 @@ function playGame() {
     }
 
     // Hide Play Game, Show Game Buttons
-    all_butttons.forEach(button => toggleDisplay(button));
+    all_buttons.forEach(button => toggleDisplay(button));
 }
 
 /*
