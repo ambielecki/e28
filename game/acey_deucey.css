@@ -18,7 +18,7 @@ body {
     margin: auto;
 }
 
-.card_text {
+.card p {
     margin: auto;
     text-align: center;
 }
@@ -29,4 +29,12 @@ body {
 
 .card_active {
     background-color: white;
+}
+
+#button_row {
+    padding: 10px;
+}
+
+.game_btn {
+    display: none;
 }
