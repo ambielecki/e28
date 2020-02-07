@@ -14,52 +14,71 @@ const playing_cards = {
     'A': 14,
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-    const play_game = document.querySelector('#play_game');
+const messages = {
+    bet: {
+        win: 'You won!',
+        lose: 'You lost!',
+        post: 'You lost double your best!',
+    },
+    pass: {
+        win: 'You passed, but you would have won!',
+        lose: 'You passed, you would have lost!',
+        post: 'You passed, you would have lost double your best!',
+    }
+};
 
-    play_game.addEventListener('click', playGame);
+// All necessary elements
+const all_buttons = document.querySelectorAll('button');
+const play_game = document.querySelector('#play_game');
+
+let dealer_1 = {
+    el: document.querySelector('#dealer_1'),
+    p: {},
+    card: {},
+};
+
+let dealer_2 = {
+    el: document.querySelector('#dealer_2'),
+    p: {},
+    card: {},
+};
+
+let player_card = {
+    el: document.querySelector('#player_card'),
+    p: {},
+    card: {},
+};
+
+dealer_1.p = dealer_1.el.querySelectorAll('p')[0];
+dealer_2.p = dealer_2.el.querySelectorAll('p')[0];
+player_card.p = player_card.el.querySelectorAll('p')[0];
+
+const cards = [dealer_1, dealer_2, player_card];
+let deck = [];
+
+const game_buttons = document.querySelectorAll('.game_btn');
+let message = document.querySelector('#message');
+
+document.addEventListener("DOMContentLoaded", function () {
+    play_game.addEventListener('click', setUpGame);
+
+    // Add Event Listeners to Game Buttons
+    game_buttons.forEach(game_button => {
+        game_button.addEventListener('click', function (event) {
+            player_card.card = dealCard(deck);
+
+            handleBet(event);
+        });
+    });
 });
 
-function playGame() {
-    // All necessary elements
-    const all_buttons = document.querySelectorAll('button');
-
-    const dealer_1 = {
-        el: document.querySelector('#dealer_1'),
-        p: {},
-        card: {},
-    };
-
-    const dealer_2 = {
-        el: document.querySelector('#dealer_2'),
-        p: {},
-        card: {},
-    };
-
-    const player_card = {
-        el: document.querySelector('#player_card'),
-        p: {},
-        card: {},
-    };
-
-    dealer_1.p = dealer_1.el.querySelectorAll('p')[0];
-    dealer_2.p = dealer_2.el.querySelectorAll('p')[0];
-    player_card.p = player_card.el.querySelectorAll('p')[0];
-
-    const cards = [dealer_1, dealer_2, player_card];
-
-    const bet = document.querySelector('#bet');
-    const pass = document.querySelector('#pass');
-    let message = document.querySelector('#message');
-
+function setUpGame() {
     // Hide Message
     toggleDisplay(message);
 
-    // Reset cards
+    // Reset cards and deck
     cards.forEach(card => hideCard(card));
-
-    // Create the Deck
-    let deck = [];
+    deck = [];
 
     for (let i = 0; i < 4; i++) {
         Object.keys(playing_cards).forEach(playing_card => {
@@ -71,8 +90,8 @@ function playGame() {
     }
 
     // Get Dealer Cards
-    [dealer_1.card, deck] = dealCard(deck);
-    [dealer_2.card, deck] = dealCard(deck);
+    dealer_1.card = dealCard(deck);
+    dealer_2.card = dealCard(deck);
 
     showCard(dealer_1);
     showCard(dealer_2);
@@ -94,10 +113,8 @@ function playGame() {
  * (https://stackoverflow.com/questions/39967891/dealing-cards-from-a-deck-and-removing-the-cards-from-an-array)
  * return a random card and remove from the deck
  */
-function dealCard(deck) {
-    let card = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
-
-    return [card, deck];
+function dealCard() {
+    return deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
 }
 
 function showCard(card) {
@@ -120,4 +137,23 @@ function toggleDisplay(el) {
     } else {
         el.classList.add('hidden');
     }
+}
+
+function handleBet(event) {
+    let action = event.target.id;
+    let result = '';
+    let test = ((player_card.card.value - dealer_1.card.value) * (player_card.card.value - dealer_2.card.value));
+
+    if (test === 0) {
+        result = 'post';
+    } else if (test <= 0) {
+        result = 'win';
+    } else {
+        result = 'lose';
+    }
+
+    showCard(player_card);
+    message.innerHTML = messages[action][result];
+    toggleDisplay(message);
+    all_buttons.forEach(button => toggleDisplay(button));
 }
