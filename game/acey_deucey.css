@@ -10,7 +10,23 @@ body {
 }
 
 .card {
+    width: 3em;
+    height: 4em;
+    font-size: 4em;
+    text-align: center;
+    display: flex;
+    margin: auto;
+}
+
+.card_text {
+    margin: auto;
+    text-align: center;
+}
+
+.card_hidden {
     background-color: #0066ff;
-    width: 10em;
-    height: 13em;
+}
+
+.card_active {
+    background-color: white;
 }
