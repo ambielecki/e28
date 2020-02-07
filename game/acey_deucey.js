@@ -63,7 +63,7 @@ play_game.addEventListener('click', setUpGame);
 // Add Event Listeners to Game Buttons
 game_buttons.forEach(game_button => {
     game_button.addEventListener('click', function (event) {
-        player_card.card = dealCard(deck);
+        player_card.card = dealCard();
 
         handleBet(event);
     });
@@ -87,8 +87,8 @@ function setUpGame() {
     }
 
     // Get Dealer Cards
-    dealer_1.card = dealCard(deck);
-    dealer_2.card = dealCard(deck);
+    dealer_1.card = dealCard();
+    dealer_2.card = dealCard();
 
     showCard(dealer_1);
     showCard(dealer_2);
