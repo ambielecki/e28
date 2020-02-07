@@ -22,53 +22,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function playGame() {
     // All necessary elements
-    const play_game = document.querySelector('#play_game');
-    const game_btns = document.querySelectorAll('.game_btn');
-    const cards = document.querySelectorAll('.card');
+    const all_butttons = document.querySelectorAll('button');
 
-    const dealer_1 = document.querySelector('#dealer_1');
-    const dealer_2 = document.querySelector('#dealer_2');
-    const player_card = document.querySelector('#player_card');
+    const dealer_1 = {
+        el: document.querySelector('#dealer_1'),
+        p: {},
+        card: {},
+    };
+
+    const dealer_2 = {
+        el: document.querySelector('#dealer_2'),
+        p: {},
+        card: {},
+    };
+
+    const player_card = {
+        el: document.querySelector('#player_card'),
+        p: {},
+        card: {},
+    };
+
+    dealer_1.p = dealer_1.el.querySelectorAll('p')[0];
+    dealer_2.p = dealer_2.el.querySelectorAll('p')[0];
+    player_card.p = player_card.el.querySelectorAll('p')[0];
+
+    const cards = [dealer_1, dealer_2, player_card];
 
     const inside = document.querySelector('#inside');
     const outside = document.querySelector('#outside');
 
     // Reset cards
-    cards.forEach(card => {
-        card.classList.remove('card_active');
-        card.classList.add('card_hidden');
-    });
+    cards.forEach(card => hideCard(card));
 
-    // Clear Previous Game Cards
-    cards.forEach(card => {
-        card.querySelectorAll('p')[0].innerHTML = '';
-    });
-
-    // Get Correct Buttons
-    play_game.style.display = 'none';
-    game_btns.forEach(game_btn => game_btn.style.display = 'inline-block');
+    // Hide Play Game and Show Game Buttons
+    all_butttons.forEach(button => switchButton(button));
 
     // Create the Deck
     let deck = [];
 
     for (let i = 0; i < 4; i++) {
         Object.keys(playing_cards).forEach(playing_card => {
-            deck.push(playing_card);
+            deck.push({
+                text: playing_card,
+                value: playing_cards[playing_card],
+            });
         });
     }
 
     // Get Dealer Cards
-    let dealer_1_value = '';
-    let dealer_2_value = '';
-
-    [dealer_1_value, deck] = dealCard(deck);
-    [dealer_2_value, deck] = dealCard(deck);
+    [dealer_1.card, deck] = dealCard(deck);
+    [dealer_2.card, deck] = dealCard(deck);
 
     showCard(dealer_1);
     showCard(dealer_2);
-
-    setCardValue(dealer_1, dealer_1_value);
-    setCardValue(dealer_2, dealer_2_value);
 }
 
 /*
@@ -83,10 +89,23 @@ function dealCard(deck) {
 }
 
 function showCard(card) {
-    card.classList.remove('card_hidden');
-    card.classList.add('card_active');
+    card.el.classList.remove('card_hidden');
+    card.el.classList.add('card_active');
+
+    card.p.innerHTML = card.card.text;
 }
 
-function setCardValue(card, value) {
-    card.querySelectorAll('p')[0].innerHTML = value;
+function hideCard(card) {
+    card.el.classList.remove('card_active');
+    card.el.classList.add('card_hidden');
+
+    card.p.innerHTML = '';
+}
+
+function switchButton(button) {
+    if (button.style.display === 'none') {
+        button.style.display = 'inline-block';
+    } else {
+        button.style.display = 'none';
+    }
 }
