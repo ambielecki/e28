@@ -30,6 +30,8 @@ const messages = {
 // All necessary elements
 const all_buttons = document.querySelectorAll('button');
 const play_game = document.querySelector('#play_game');
+const game_buttons = document.querySelectorAll('.game_btn');
+const message = document.querySelector('#message');
 
 let dealer_1 = {
     el: document.querySelector('#dealer_1'),
@@ -55,9 +57,6 @@ player_card.p = player_card.el.querySelectorAll('p')[0];
 
 const cards = [dealer_1, dealer_2, player_card];
 let deck = [];
-
-const game_buttons = document.querySelectorAll('.game_btn');
-let message = document.querySelector('#message');
 
 document.addEventListener("DOMContentLoaded", function () {
     play_game.addEventListener('click', setUpGame);
