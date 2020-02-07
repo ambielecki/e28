@@ -63,9 +63,9 @@ play_game.addEventListener('click', setUpGame);
 // Add Event Listeners to Game Buttons
 game_buttons.forEach(game_button => {
     game_button.addEventListener('click', function (event) {
-        player_card.card = dealCard();
+        [player_card.card, deck] = dealCard(deck);
 
-        handleBet(event);
+        handleBet(event, dealer_1, dealer_2, player_card);
     });
 });
 
@@ -87,8 +87,8 @@ function setUpGame() {
     }
 
     // Get Dealer Cards
-    dealer_1.card = dealCard();
-    dealer_2.card = dealCard();
+    [dealer_1.card, deck] = dealCard(deck);
+    [dealer_2.card, deck] = dealCard(deck);
 
     showCard(dealer_1);
     showCard(dealer_2);
@@ -110,8 +110,10 @@ function setUpGame() {
  * (https://stackoverflow.com/questions/39967891/dealing-cards-from-a-deck-and-removing-the-cards-from-an-array)
  * return a random card and remove from the deck
  */
-function dealCard() {
-    return deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
+function dealCard(deck) {
+    let card = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
+
+    return [card, deck]
 }
 
 function showCard(card) {
@@ -136,7 +138,7 @@ function toggleDisplay(el) {
     }
 }
 
-function handleBet(event) {
+function handleBet(event, dealer_1, dealer_2, player_card) {
     let action = event.target.id;
     let result = '';
     let test = ((player_card.card.value - dealer_1.card.value) * (player_card.card.value - dealer_2.card.value));
