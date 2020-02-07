@@ -58,16 +58,14 @@ player_card.p = player_card.el.querySelectorAll('p')[0];
 const cards = [dealer_1, dealer_2, player_card];
 let deck = [];
 
-document.addEventListener("DOMContentLoaded", function () {
-    play_game.addEventListener('click', setUpGame);
+play_game.addEventListener('click', setUpGame);
 
-    // Add Event Listeners to Game Buttons
-    game_buttons.forEach(game_button => {
-        game_button.addEventListener('click', function (event) {
-            player_card.card = dealCard(deck);
+// Add Event Listeners to Game Buttons
+game_buttons.forEach(game_button => {
+    game_button.addEventListener('click', function (event) {
+        player_card.card = dealCard(deck);
 
-            handleBet(event);
-        });
+        handleBet(event);
     });
 });
 
