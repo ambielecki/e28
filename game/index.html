@@ -19,9 +19,29 @@
     </div>
 
     <div id="button_row">
-        <button id="play_game" style="display: inline-block">Play Game</button>
-        <button id="inside" class="game_btn" style="display: none">Inside</button>
-        <button id="outside" class="game_btn" style="display: none">Outside</button>
+        <button id="play_game">Play Game</button>
+        <button id="bet" class="game_btn hidden">Bet</button>
+        <button id="pass" class="game_btn hidden">Pass</button>
+    </div>
+
+    <div id="message" class="text_area">
+        Welcome to Simple Acey Duecy
+    </div>
+
+    <div id="rules" class="text_area">
+        The goal of the game is to predict whether your card will be between the dealer's two cards.
+        <ul>
+            <li>Aces are high</li>
+            <li>If you believe the next card is between the dealt cards, click bet.</li>
+            <li>If you believe it is outside, pass.</li>
+            <li>If your card matches one of the dealt cards you lose double your bet.</li>
+            <li>
+                Normally you could vary you bet amount based on your confidence,
+                but that is too complicated for this exercise
+            </li>
+            <li>Single deck</li>
+            <li>Deck is reshuffled before each game</li>
+        </ul>
     </div>
 
     <script src="acey_deucey.js"></script>

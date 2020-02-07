@@ -48,14 +48,18 @@ function playGame() {
 
     const cards = [dealer_1, dealer_2, player_card];
 
-    const inside = document.querySelector('#inside');
-    const outside = document.querySelector('#outside');
+    const bet = document.querySelector('#bet');
+    const pass = document.querySelector('#pass');
+    let message = document.querySelector('#message');
+
+    // Hide Message
+    toggleDisplay(message);
 
     // Reset cards
     cards.forEach(card => hideCard(card));
 
     // Hide Play Game and Show Game Buttons
-    all_butttons.forEach(button => switchButton(button));
+    all_butttons.forEach(button => toggleDisplay(button));
 
     // Create the Deck
     let deck = [];
@@ -75,6 +79,15 @@ function playGame() {
 
     showCard(dealer_1);
     showCard(dealer_2);
+
+    // Cannot continue if dealer cards have same value
+    if (dealer_1.card.value === dealer_2.card.value) {
+        message.innerHTML = 'Dealer Cards Are Even, no bet';
+        toggleDisplay(message);
+        all_butttons.forEach(button => toggleDisplay(button));
+
+        return true;
+    }
 }
 
 /*
@@ -102,10 +115,10 @@ function hideCard(card) {
     card.p.innerHTML = '';
 }
 
-function switchButton(button) {
-    if (button.style.display === 'none') {
-        button.style.display = 'inline-block';
+function toggleDisplay(el) {
+    if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
     } else {
-        button.style.display = 'none';
+        el.classList.add('hidden');
     }
 }

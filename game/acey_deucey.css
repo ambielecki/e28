@@ -9,6 +9,15 @@ body {
     grid-gap: 10px;
 }
 
+button {
+    font-size: 2em;
+    margin: 3px;
+}
+
+.game_btn {
+    display: inline-block;
+}
+
 .card {
     width: 3em;
     height: 4em;
@@ -33,4 +42,18 @@ body {
 
 #button_row {
     padding: 10px;
+}
+
+#message {
+    font-size: 4em;
+}
+
+.text_area {
+    background-color: white;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.hidden {
+    display: none !important;
 }
