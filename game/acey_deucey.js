@@ -1,3 +1,34 @@
+class Card {
+    constructor(element_id) {
+        this.el = document.querySelector(element_id);
+        this.p = this.el.querySelectorAll('p')[0];
+        this.card = {};
+    }
+
+    show() {
+        this.el.classList.remove('card_hidden');
+        this.el.classList.add('card_active');
+        this.p.innerHTML = this.card ? this.card.text : '';
+    }
+
+    hide() {
+        this.el.classList.remove('card_active');
+        this.el.classList.add('card_hidden');
+        this.p.innerHTML = '';
+    }
+
+    /*
+     * found this on SO a while back
+     * (https://stackoverflow.com/questions/39967891/dealing-cards-from-a-deck-and-removing-the-cards-from-an-array)
+     * return a random card and remove from the deck
+     */
+    deal(deck) {
+        this.card = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
+
+        return deck;
+    }
+}
+
 const playing_cards = {
     '2': 2,
     '3': 3,
@@ -33,27 +64,9 @@ const play_game = document.querySelector('#play_game');
 const game_buttons = document.querySelectorAll('.game_btn');
 const message = document.querySelector('#message');
 
-let dealer_1 = {
-    el: document.querySelector('#dealer_1'),
-    p: {},
-    card: {},
-};
-
-let dealer_2 = {
-    el: document.querySelector('#dealer_2'),
-    p: {},
-    card: {},
-};
-
-let player_card = {
-    el: document.querySelector('#player_card'),
-    p: {},
-    card: {},
-};
-
-dealer_1.p = dealer_1.el.querySelectorAll('p')[0];
-dealer_2.p = dealer_2.el.querySelectorAll('p')[0];
-player_card.p = player_card.el.querySelectorAll('p')[0];
+let dealer_1 = new Card('#dealer_1');
+let dealer_2 = new Card('#dealer_2');
+let player_card = new Card('#player_card');
 
 const cards = [dealer_1, dealer_2, player_card];
 let deck = [];
@@ -63,7 +76,7 @@ play_game.addEventListener('click', setUpGame);
 // Add Event Listeners to Game Buttons
 game_buttons.forEach(game_button => {
     game_button.addEventListener('click', function (event) {
-        [player_card.card, deck] = dealCard(deck);
+        deck = player_card.deal(deck);
 
         handleBet(event, dealer_1, dealer_2, player_card);
     });
@@ -74,9 +87,10 @@ function setUpGame() {
     toggleDisplay(message);
 
     // Reset cards and deck
-    cards.forEach(card => hideCard(card));
+    cards.forEach(card => card.hide());
     deck = [];
 
+    // Build deck
     for (let i = 0; i < 4; i++) {
         Object.keys(playing_cards).forEach(playing_card => {
             deck.push({
@@ -87,11 +101,11 @@ function setUpGame() {
     }
 
     // Get Dealer Cards
-    [dealer_1.card, deck] = dealCard(deck);
-    [dealer_2.card, deck] = dealCard(deck);
+    deck = dealer_1.deal(deck);
+    deck = dealer_2.deal(deck);
 
-    showCard(dealer_1);
-    showCard(dealer_2);
+    dealer_1.show();
+    dealer_2.show();
 
     // Cannot continue if dealer cards have same value
     if (dealer_1.card.value === dealer_2.card.value) {
@@ -103,29 +117,6 @@ function setUpGame() {
 
     // Hide Play Game, Show Game Buttons
     all_buttons.forEach(button => toggleDisplay(button));
-}
-
-/*
- * found this on SO a while back
- * (https://stackoverflow.com/questions/39967891/dealing-cards-from-a-deck-and-removing-the-cards-from-an-array)
- * return a random card and remove from the deck
- */
-function dealCard(deck) {
-    let card = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
-
-    return [card, deck]
-}
-
-function showCard(card) {
-    card.el.classList.remove('card_hidden');
-    card.el.classList.add('card_active');
-    card.p.innerHTML = card.card.text;
-}
-
-function hideCard(card) {
-    card.el.classList.remove('card_active');
-    card.el.classList.add('card_hidden');
-    card.p.innerHTML = '';
 }
 
 function toggleDisplay(el) {
@@ -149,7 +140,7 @@ function handleBet(event, dealer_1, dealer_2, player_card) {
         result = 'lose';
     }
 
-    showCard(player_card);
+    player_card.show();
     message.innerHTML = messages[action][result];
     toggleDisplay(message);
     all_buttons.forEach(button => toggleDisplay(button));
