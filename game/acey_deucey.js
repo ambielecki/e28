@@ -35,12 +35,13 @@ function playGame() {
 
     // Reset cards
     cards.forEach(card => {
-        hideCard(card)
+        card.classList.remove('card_active');
+        card.classList.add('card_hidden');
     });
 
     // Clear Previous Game Cards
     cards.forEach(card => {
-        eraseCard(card);
+        card.querySelectorAll('p')[0].innerHTML = '';
     });
 
     // Get Correct Buttons
@@ -81,18 +82,9 @@ function dealCard(deck) {
     return [card, deck];
 }
 
-function hideCard(card) {
-    card.classList.remove('card_active');
-    card.classList.add('card_hidden');
-}
-
 function showCard(card) {
     card.classList.remove('card_hidden');
     card.classList.add('card_active');
-}
-
-function eraseCard(card) {
-    card.querySelectorAll('p')[0].innerHTML = '';
 }
 
 function setCardValue(card, value) {
