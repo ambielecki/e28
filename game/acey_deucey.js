@@ -18,12 +18,12 @@ const messages = {
     bet: {
         win: 'You won!',
         lose: 'You lost!',
-        post: 'You lost double your best!',
+        post: 'You lost double your bet!',
     },
     pass: {
         win: 'You passed, but you would have won!',
         lose: 'You passed, you would have lost!',
-        post: 'You passed, you would have lost double your best!',
+        post: 'You passed, you would have lost double your bet!',
     }
 };
 
@@ -119,14 +119,12 @@ function dealCard(deck) {
 function showCard(card) {
     card.el.classList.remove('card_hidden');
     card.el.classList.add('card_active');
-
     card.p.innerHTML = card.card.text;
 }
 
 function hideCard(card) {
     card.el.classList.remove('card_active');
     card.el.classList.add('card_hidden');
-
     card.p.innerHTML = '';
 }
 
