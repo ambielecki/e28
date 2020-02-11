@@ -71,9 +71,10 @@ let player_card = new Card('#player_card');
 const cards = [dealer_1, dealer_2, player_card];
 let deck = [];
 
+// Listener to start a game
 play_game.addEventListener('click', setUpGame);
 
-// Add Event Listeners to Game Buttons
+// Game Action listeners
 game_buttons.forEach(game_button => {
     game_button.addEventListener('click', function (event) {
         deck = player_card.deal(deck);
@@ -83,8 +84,7 @@ game_buttons.forEach(game_button => {
 });
 
 function setUpGame() {
-    // Hide Message
-    toggleDisplay(message);
+    message.classList.toggle('hidden');
 
     // Reset cards and deck
     cards.forEach(card => card.hide());
@@ -110,21 +110,13 @@ function setUpGame() {
     // Cannot continue if dealer cards have same value
     if (dealer_1.card.value === dealer_2.card.value) {
         message.innerHTML = 'Dealer Cards Are Even, no bet';
-        toggleDisplay(message);
+        message.classList.toggle('hidden');
 
         return true;
     }
 
-    // Hide Play Game, Show Game Buttons
-    all_buttons.forEach(button => toggleDisplay(button));
-}
-
-function toggleDisplay(el) {
-    if (el.classList.contains('hidden')) {
-        el.classList.remove('hidden');
-    } else {
-        el.classList.add('hidden');
-    }
+    // Hide Play Game, Show Game Action Buttons
+    all_buttons.forEach(button => button.classList.toggle('hidden'));
 }
 
 function handleBet(event, dealer_1, dealer_2, player_card) {
@@ -142,6 +134,8 @@ function handleBet(event, dealer_1, dealer_2, player_card) {
 
     player_card.show();
     message.innerHTML = messages[action][result];
-    toggleDisplay(message);
-    all_buttons.forEach(button => toggleDisplay(button));
+    message.classList.toggle('hidden');
+
+    // Switch from Game Action to Start Game Button
+    all_buttons.forEach(button => button.classList.toggle('hidden'));
 }
