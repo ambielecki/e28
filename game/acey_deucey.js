@@ -7,12 +7,10 @@ class Card {
 
     show() {
         this.el.classList.remove('card_hidden');
-        this.el.classList.add('card_active');
         this.p.innerHTML = this.card ? this.card.text : '';
     }
 
     hide() {
-        this.el.classList.remove('card_active');
         this.el.classList.add('card_hidden');
         this.p.innerHTML = '';
     }

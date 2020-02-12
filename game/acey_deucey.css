@@ -25,6 +25,7 @@ button {
     text-align: center;
     display: flex;
     margin: auto;
+    background-color: white;
 }
 
 .card p {
@@ -32,12 +33,8 @@ button {
     text-align: center;
 }
 
-.card_hidden {
+.card.card_hidden {
     background-color: #0066ff;
-}
-
-.card_active {
-    background-color: white;
 }
 
 #button_row {
