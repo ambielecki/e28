@@ -45,7 +45,9 @@ Vue.component('playing-card', {
               class="card has-text-centered level-item playing_card" 
               v-bind:class="[card.class, card.show_card ? 'show_card' : '']"
             >
-                <p v-if="card.show_card">{{ card.text }}<span v-html="card.suit"></span></p>
+                <div class="card-content">
+                    <p v-if="card.show_card">{{ card.text }}<span v-html="card.suit"></span></p>
+                </div>
             </div>
         </div>
     `,
@@ -63,7 +65,36 @@ let blackjack = new Vue({
         player_hand: [],
     },
 
+    computed: {
+        dealer_status: function () {
+            return this.calcuateStatus(this.dealer_hand);
+        },
+
+        player_status: function () {
+            return this.calcuateStatus(this.player_hand);
+        }
+    },
+
     methods: {
+        calcuateStatus(hand) {
+            let value = 0;
+            let number_of_aces = 0;
+
+            hand.forEach(card => {
+                if (card.text === 'A') {
+                    number_of_aces++;
+                }
+
+                value += card.value;
+            });
+
+            if (number_of_aces > 0 && value + 10 <= 21) {
+                return {value: value + 10, is_soft: true};
+            }
+
+            return {value: value, is_soft: false};
+        },
+
         dealCard(show_card = true) {
             let card = this.deck.splice(Math.floor(Math.random() * this.deck.length), 1)[0];
             card.show_card = show_card;
