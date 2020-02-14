@@ -33,11 +33,11 @@
                     <div class="card-content columns is-multiline" id="card_table">
                         <playing-area
                           owner="Dealer"
-                          v-bind:card="dealer_card"
+                          v-bind:cards="dealer_hand"
                         ></playing-area>
                         <playing-area
                           owner="Player"
-                          v-bind:card="player_card">
+                          v-bind:cards="player_hand">
                         </playing-area>
                     </div>
                 </div>
