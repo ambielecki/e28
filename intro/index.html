@@ -5,15 +5,27 @@
     <meta charset='utf-8'>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <label>Enter your name:
             <input type="text" v-model="player_name">
         </label>
         <p v-if="player_name">
             Hi {{ player_name }}
         </p>
+        <br>
+
+        <label>Enter your guess:
+            <input type="text" v-model="guess">
+        </label>
+        <button v-on:click="handleGuess">Guess</button>
+        <br>
+
+        <ul>
+            <li v-for="this_guess in guesses">{{ this_guess }}</li>
+        </ul>
     </div>
 </body>
 </html>
