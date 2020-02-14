@@ -19,4 +19,16 @@ body {
 
 #card_table {
     background-color: green;
+    min-height: 70vh;
+    margin: 0;
+}
+
+.playing_card {
+    height: 20vh;
+    width: 14vh;
+    background-color: #0066ff;
+}
+
+.playing_card.show_card {
+    background-color: white;
 }
