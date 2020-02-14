@@ -5,6 +5,7 @@
 ## Outside resources
 * [Bulma](https://bulma.io/)
 * [Sticky Footer: CSS Tricks](https://css-tricks.com/couple-takes-sticky-footer/)
+* [Playing cards in Unicode](https://en.wikipedia.org/wiki/Playing_cards_in_Unicode)
 
 ## Notes for instructor
 *any notes for me to refer to while grading; if none, omit this section*

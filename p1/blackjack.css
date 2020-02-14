@@ -26,9 +26,18 @@ body {
 .playing_card {
     height: 20vh;
     width: 14vh;
-    background-color: #0066ff;
+    background-color: #0000e6;
+    font-size: 3rem;
 }
 
 .playing_card.show_card {
     background-color: white;
+}
+
+.clubs, .spades {
+    color: black;
+}
+
+.diamonds, .hearts {
+    color: red;
 }

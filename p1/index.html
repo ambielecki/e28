@@ -30,8 +30,15 @@
 
             <div class="column is-half">
                 <div class="card">
-                    <div class="card-content columns is-mobile is-multiline" id="card_table">
-
+                    <div class="card-content columns is-multiline" id="card_table">
+                        <playing-area
+                          owner="Dealer"
+                          v-bind:card="dealer_card"
+                        ></playing-area>
+                        <playing-area
+                          owner="Player"
+                          v-bind:card="player_card">
+                        </playing-area>
                     </div>
                 </div>
             </div>
