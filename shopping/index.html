@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <title>Week 3 Shopping List</title>
+    <meta charset='utf-8'>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div id="app" v-cloak>
+    <h1>Shopping List</h1>
+    <label>Item:
+        <input type="text" v-model="item">
+    </label>
+    <button v-on:click="addItem">Add</button>
+
+    <br>
+    <ul v-if="items.length > 0">
+        <li v-for="list_item in items">{{ list_item }}</li>
+    </ul>
+    <p v-else id="no_items">
+        You have no items on your list.
+    </p>
+</div>
+</body>
+</html>
