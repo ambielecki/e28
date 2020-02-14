@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <title>Week 3 Vue.js Intro</title>
+    <meta charset='utf-8'>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <label>Enter your name:
+            <input type="text" v-model="player_name">
+        </label>
+        <p v-if="player_name">
+            Hi {{ player_name }}
+        </p>
+    </div>
+</body>
+</html>
