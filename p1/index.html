@@ -27,22 +27,58 @@
             <div class="column is-one-quarter">
                 <div class="card">
                     <header class="card-header">
-                        <p class="card-header-title">
-                            Game Status
-                        </p>
+                        <div class="columns is-multiline">
+                            <div class="column is-full">
+                                <p class="card-header-title">
+                                    Game Status
+                                </p>
+                            </div>
+
+                            <div v-if="message" class="column is-full">
+                                <p v-if="message" v-bind:class="message_class" class="card-header-title">
+                                    {{ message }}
+                                </p>
+                            </div>
+                        </div>
                     </header>
                     
                     <div class="card-content">
                         <div class="columns is-mobile is-multiline">
-                            <div class="column is-half">
-                                Player total: {{ player_status.is_soft ? 'Soft ' : '' }}{{ player_status.value }}
+                            <div class="column is full">
+                                <div class="columns is-mobile is-multiline">
+                                    <div class="column is-half">
+                                        Player total: {{ player_status.is_soft ? 'Soft ' : '' }}{{ player_status.value }}
+                                    </div>
+
+                                    <div class="column is-half">
+                                        Dealer total:
+                                        <span v-if="is_dealer_turn">{{ dealer_status.value }}</span>
+                                        <span v-else>?</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="column is-half">
-                                Dealer total:
-                                <span v-if="dealer_turn">{{ dealer_status.value }}</span>
-                                <span v-else>?</span>
+                            <div class="column is-full">
+                                <div class="columns is-mobile is-multiline">
+                                    <div class="column is-full">
+                                        Bet: {{ initial_bet }}
+                                    </div>
+
+
+                                    <div class="column is-one-third">
+                                        <button class="button is-dark">Deal</button>
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        <button class="button is-dark" v-on:click="increaseBet">Bet +</button>
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        <button class="button is-dark" v-on:click="decreaseBet">Bet -</button>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
