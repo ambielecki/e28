@@ -23,7 +23,7 @@
             </div>
         </section>
 
-        <section class="columns" id="blackjack">
+        <section class="columns" id="blackjack" v-cloak>
             <div class="column is-one-quarter">
                 <div class="card">
                     <header class="card-header">
@@ -35,9 +35,10 @@
                             </div>
 
                             <div v-if="message" class="column is-full">
-                                <p v-if="message" v-bind:class="message_class" class="card-header-title">
-                                    {{ message }}
-                                </p>
+                                <message
+                                  v-bind:message="message"
+                                  v-bind:message_class="message_class"
+                                ></message>
                             </div>
                         </div>
                     </header>
@@ -51,30 +52,45 @@
                                     </div>
 
                                     <div class="column is-half">
-                                        Dealer total:
-                                        <span v-if="is_dealer_turn">{{ dealer_status.value }}</span>
-                                        <span v-else>?</span>
+                                        Dealer total: {{ dealer_score_view }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="column is-full">
-                                <div class="columns is-mobile is-multiline">
+                                <div v-if="game_over" class="columns is-mobile is-multiline">
                                     <div class="column is-full">
                                         Bet: {{ initial_bet }}
                                     </div>
 
-
                                     <div class="column is-one-third">
-                                        <button class="button is-dark">Deal</button>
+                                        <button class="button is-dark" v-on:click="startGame">Deal</button>
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-dark" v-on:click="increaseBet">Bet +</button>
+                                        <button class="button is-success" v-on:click="increaseBet">Bet +</button>
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-dark" v-on:click="decreaseBet">Bet -</button>
+                                        <button class="button is-danger" v-on:click="decreaseBet">Bet -</button>
+                                    </div>
+                                </div>
+
+                                <div v-else class="columns is-mobile is-multiline">
+                                    <div class="column is-full">
+                                        Bet: {{ current_bet }}
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        <button class="button is-success" v-on:click="hitMe">Hit Me!</button>
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        <button class="button is-danger" v-on:click="stay">Stay</button>
+                                    </div>
+
+                                    <div v-if="allowed_to_double" class="column is-one-third">
+                                        <button class="button is-warning" v-on:click="doubleDown">Double</button>
                                     </div>
                                 </div>
                             </div>
@@ -86,13 +102,15 @@
 
             <div class="column is-half">
                 <div class="card">
-                    <div class="card-content columns is-multiline" id="card_table">
+                    <div class="card-content columns is-multiline has-background-success" id="card_table">
                         <playing-area
                           owner="Dealer"
+                          v-bind:owner_score="dealer_score_view"
                           v-bind:cards="dealer_hand"
                         ></playing-area>
                         <playing-area
                           owner="Player"
+                          v-bind:owner_score="player_score_view"
                           v-bind:cards="player_hand">
                         </playing-area>
                     </div>
@@ -100,7 +118,49 @@
             </div>
 
             <div class="column is-one-quarter">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Scoreboard
+                        </p>
+                    </header>
 
+                    <div class="card-content">
+                        <div class="columns is-multiline">
+                            <div class="column is-full">
+                                <div class="columns is-mobile is-multiline">
+                                    <div class="column is-half">
+                                        Player Purse: {{ player_purse}}
+                                    </div>
+
+                                    <div class="column is-half">
+                                        Games Played: {{ scoreboard_total }}
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        Wins: {{ scoreboard.wins }}
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        Losses: {{ scoreboard.losses }}
+                                    </div>
+
+                                    <div class="column is-one-third">
+                                        Draws: {{ scoreboard.draws }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="column is-full">
+                                <div class="columns">
+                                    <div class="column is-one-third">
+                                        <button class="button is-danger" v-on:click="resetStats">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
