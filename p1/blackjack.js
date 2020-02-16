@@ -161,7 +161,11 @@ let blackjack = new Vue({
         },
 
         clearGame() {
-            this.shuffleDeck();
+            if (this.deck.length <= number_of_decks * 52 / 2) {
+                this.shuffleDeck();
+                this.message = 'Shuffled Deck'
+            }
+
             this.dealer_hand = [];
             this.player_hand = [];
             this.can_double = true;
@@ -238,6 +242,15 @@ let blackjack = new Vue({
                 this.is_dealer_turn = true;
                 this.showDealerCards();
                 this.endGame(winner_dealer, end_messages.dealer_blackjack);
+
+                return true;
+            }
+
+            if (this.player_status.value === 21) {
+                this.player_purse += (0.5 * this.current_bet); // blackjack bonus
+                this.endGame(winner_player, end_messages.player_blackjack);
+
+                return true;
             }
 
             this.game_over = false;
@@ -252,7 +265,6 @@ let blackjack = new Vue({
 
         endGame(winner, message = '') {
             this.game_over = true;
-            this.message = message;
 
             switch(winner) {
                 case winner_player:
@@ -266,6 +278,8 @@ let blackjack = new Vue({
                     this.scoreboard.draws++;
                     this.player_purse += this.current_bet;
             }
+
+            this.message = message;
 
             switch(message) {
                 case end_messages.dealer_blackjack:
@@ -299,7 +313,6 @@ let blackjack = new Vue({
                 this.dealer_hand.push(this.dealCard());
             }
 
-            this.game_over = true;
             if (this.dealer_status.value > 21 || this.player_status.value > this.dealer_status.value) {
                 this.endGame(winner_player, end_messages.win);
             } else if (this.dealer_status.value > this.player_status.value) {
@@ -323,6 +336,11 @@ let blackjack = new Vue({
 
         resetStats() {
             Object.assign(this.$data, getDefaultData());
+            this.shuffleDeck();
         },
     },
+
+    mounted: function () {
+        this.shuffleDeck();
+    }
 });
