@@ -118,45 +118,69 @@
             </div>
 
             <div class="column is-one-quarter">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            Scoreboard
-                        </p>
-                    </header>
+                <div class="columns is-multiline">
+                    <div class="column is-full">
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    Scoreboard
+                                </p>
+                            </header>
 
-                    <div class="card-content">
-                        <div class="columns is-multiline">
-                            <div class="column is-full">
-                                <div class="columns is-mobile is-multiline">
-                                    <div class="column is-half">
-                                        Player Purse: {{ player_purse}}
+                            <div class="card-content">
+                                <div class="columns is-multiline">
+                                    <div class="column is-full">
+                                        <div class="columns is-mobile is-multiline">
+                                            <div class="column is-half">
+                                                Player Purse: {{ player_purse}}
+                                            </div>
+
+                                            <div class="column is-half">
+                                                Games Played: {{ scoreboard_total }}
+                                            </div>
+
+                                            <div class="column is-one-third">
+                                                Wins: {{ scoreboard.wins }}
+                                            </div>
+
+                                            <div class="column is-one-third">
+                                                Losses: {{ scoreboard.losses }}
+                                            </div>
+
+                                            <div class="column is-one-third">
+                                                Draws: {{ scoreboard.draws }}
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="column is-half">
-                                        Games Played: {{ scoreboard_total }}
-                                    </div>
-
-                                    <div class="column is-one-third">
-                                        Wins: {{ scoreboard.wins }}
-                                    </div>
-
-                                    <div class="column is-one-third">
-                                        Losses: {{ scoreboard.losses }}
-                                    </div>
-
-                                    <div class="column is-one-third">
-                                        Draws: {{ scoreboard.draws }}
+                                    <div class="column is-full">
+                                        <div class="columns">
+                                            <div class="column is-one-third">
+                                                <button class="button is-danger" v-on:click="resetStats">Reset</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="column is-full">
-                                <div class="columns">
-                                    <div class="column is-one-third">
-                                        <button class="button is-danger" v-on:click="resetStats">Reset</button>
-                                    </div>
-                                </div>
+                    <div class="column is-full">
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title">House Rules</p>
+                            </header>
+
+                            <div class="card-content">
+                                <ul>
+                                    <li>6 decks in play</li>
+                                    <li>Deck is shuffled if half finished at start of game</li>
+                                    <li>No Splitting (sorry too complicated to code right now)</li>
+                                    <li>Dealer hits on soft 17</li>
+                                    <li>Dealer wins with blackjack</li>
+                                    <li>Blackjack pays 3:2</li>
+                                    <li>Bet may be changed before starting new game</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
