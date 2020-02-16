@@ -60,7 +60,6 @@ function getDefaultData() {
             losses: 0,
             wins: 0,
         },
-        winner: null,
     };
 }
 
@@ -132,10 +131,18 @@ let blackjack = new Vue({
         },
 
         dealer_score_view: function () {
+            if (this.dealer_hand.length === 2 && this.dealer_status.value === 21) {
+                return 'Blackjack';
+            }
+
             return this.is_dealer_turn ? this.dealer_status.value : '?';
         },
 
         player_score_view: function () {
+            if (this.player_hand.length === 2 && this.player_status.value === 21) {
+                return 'Blackjack';
+            }
+
             return this.player_status.is_soft ? 'Soft ' + this.player_status.value : this.player_status.value;
         },
     },
@@ -169,7 +176,6 @@ let blackjack = new Vue({
             this.dealer_hand = [];
             this.player_hand = [];
             this.can_double = true;
-            this.winner = null;
             this.is_dealer_turn = false;
         },
 
@@ -309,7 +315,7 @@ let blackjack = new Vue({
             this.can_double = false;
             this.showDealerCards();
 
-            while (this.dealer_status.value < 17 || (this.dealer_status.value === 17 && this.dealer_status.value.is_soft)) {
+            while (this.dealer_status.value < 17 || (this.dealer_status.value === 17 && this.dealer_status.is_soft)) {
                 this.dealer_hand.push(this.dealCard());
             }
 
