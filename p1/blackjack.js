@@ -41,6 +41,7 @@ const winner_dealer = 'dealer';
 const winner_player = 'player';
 const winner_push = 'push';
 
+// makes it easier to reset the default game state
 function getDefaultData() {
     return {
         can_double: false,
@@ -135,7 +136,7 @@ let blackjack = new Vue({
                 return 'Blackjack';
             }
 
-            return this.is_dealer_turn ? this.dealer_status.value : '?';
+            return this.is_dealer_turn ? this.dealer_status.value : 'Showing ' + this.dealer_status.shown_value;
         },
 
         player_score_view: function () {
@@ -148,8 +149,10 @@ let blackjack = new Vue({
     },
 
     methods: {
+        // don't love returning the object, but all the values can be calculated in one loop
         calculateStatus(hand) {
             let value = 0;
+            let shown_value = 0;
             let has_ace = false;
 
             hand.forEach(card => {
@@ -158,13 +161,20 @@ let blackjack = new Vue({
                 }
 
                 value += card.value;
+                if (card.show_card) {
+                    shown_value += card.value;
+                }
             });
 
             if (has_ace && value + 10 <= 21) {
                 return {value: value + 10, is_soft: true};
             }
 
-            return {value: value, is_soft: false};
+            return {
+                value: value,
+                shown_value: shown_value,
+                is_soft: false,
+            };
         },
 
         clearGame() {
@@ -244,9 +254,12 @@ let blackjack = new Vue({
             this.dealer_hand.push(this.dealCard(false));
             this.player_hand.push(this.dealCard());
 
+            // check for dealer blackjack
             if (this.dealer_status.value === 21) {
                 this.is_dealer_turn = true;
                 this.showDealerCards();
+
+                // check for double blackjack
                 if (this.player_status.value === 21) {
                     this.endGame(winner_push, end_messages.push);
                 } else {
@@ -256,6 +269,7 @@ let blackjack = new Vue({
                 return true;
             }
 
+            // check for player blackjack
             if (this.player_status.value === 21) {
                 this.player_purse += (0.5 * this.current_bet); // blackjack bonus
                 this.endGame(winner_player, end_messages.player_blackjack);
@@ -266,6 +280,7 @@ let blackjack = new Vue({
             this.game_over = false;
         },
 
+        // most will have been shown, makes sure we get the hole card
         showDealerCards() {
             this.is_dealer_turn = true;
             this.dealer_hand.forEach(card => {
@@ -273,6 +288,7 @@ let blackjack = new Vue({
             });
         },
 
+        // handle bets and end messaging
         endGame(winner, message = '') {
             this.game_over = true;
 
