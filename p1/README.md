@@ -15,4 +15,7 @@ get rid of annoying message
 ## Notes for instructor
 * You can easily cheat, the dealer's hole card is set to start 
 (so we can see if the dealer had blackjack).  You'd need a server side API to really hide it.
-* Dynamic styling can be seen in the cards' show_card propery (show's the blue back or white face as background)
+* Dynamic styling can be seen via the cards' show_card propery (shows the blue back or white face as background), also, 
+the messages have different classes depending on the situation, card text color is also controlled via a class
+* A blast from the past may be found at <https://e15-p2.andrewbielecki.com>, I had put it up to show 
+someone at work :)

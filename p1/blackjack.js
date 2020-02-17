@@ -167,7 +167,11 @@ let blackjack = new Vue({
             });
 
             if (has_ace && value + 10 <= 21) {
-                return {value: value + 10, is_soft: true};
+                return {
+                    value: value + 10,
+                    shown_value: shown_value + 10,
+                    is_soft: true
+                };
             }
 
             return {
