@@ -48,7 +48,7 @@
                             <div class="column is full">
                                 <div class="columns is-mobile is-multiline">
                                     <div class="column is-half">
-                                        Player total: {{ player_status.is_soft ? 'Soft ' : '' }}{{ player_status.value }}
+                                        Player total: {{ player_score_view }}
                                     </div>
 
                                     <div class="column is-half">
@@ -177,7 +177,7 @@
                                     <li>Deck is shuffled if half finished at start of game</li>
                                     <li>No Splitting (sorry too complicated to code right now)</li>
                                     <li>Dealer hits on soft 17</li>
-                                    <li>Dealer wins with blackjack</li>
+                                    <li>Blackjack beats 21</li>
                                     <li>Blackjack pays 3:2</li>
                                     <li>Bet may be changed before starting new game</li>
                                 </ul>

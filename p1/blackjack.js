@@ -247,7 +247,11 @@ let blackjack = new Vue({
             if (this.dealer_status.value === 21) {
                 this.is_dealer_turn = true;
                 this.showDealerCards();
-                this.endGame(winner_dealer, end_messages.dealer_blackjack);
+                if (this.player_status.value === 21) {
+                    this.endGame(winner_push, end_messages.push);
+                } else {
+                    this.endGame(winner_dealer, end_messages.dealer_blackjack);
+                }
 
                 return true;
             }
