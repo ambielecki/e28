@@ -136,7 +136,7 @@ let blackjack = new Vue({
                 return 'Blackjack';
             }
 
-            return this.is_dealer_turn ? this.dealer_status.value : 'Showing ' + this.dealer_status.shown_value;
+            return this.is_dealer_turn ? this.dealer_status.value : 'Shows ' + this.dealer_status.shown_value;
         },
 
         player_score_view: function () {
