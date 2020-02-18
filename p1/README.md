@@ -11,6 +11,8 @@ to show the suit ascii
 * [Reset a component](https://github.com/vuejs/vue/issues/702) - an approach to reseting to original state
 * [Component lists should have keys](https://stackoverflow.com/questions/42476942/console-warning-component-lists-rendered-with-v-for-should-have-explicit-keys) - 
 get rid of annoying message
+* [JSdoc Return Object](https://stackoverflow.com/questions/28763257/jsdoc-return-object-structure) - 
+Define object properties in JSDoc
 
 ## Notes for instructor
 * You can easily cheat, the dealer's hole card is set to start 

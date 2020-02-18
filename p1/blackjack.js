@@ -1,3 +1,19 @@
+/**
+ * @typedef {Object} Card
+ * @property {number} value - card value
+ * @property {string} text - card text, A, K etc
+ * @property {string} class - red or black text, the suit
+ * @property {string} suit - ascii representation of suit
+ * @property {boolean} show_card - visibility
+ */
+
+/**
+ * @typedef {Object} Status
+ * @property {number} value - actual value of hand
+ * @property {number} shown_value - visible value of hand
+ * @property {boolean} is_soft - if hand has an ace that can be 1 or 11
+ */
+
 const card_types = {
     '2': 2,
     '3': 3,
@@ -69,7 +85,7 @@ Vue.component('playing-area', {
         <div class="column is-full" id="dealer_area">
             <div class="columns is-mobile is-multiline">
                 <div class="column is-full">
-                    <h2 class="subtitle has-text-white">{{ owner }} - {{ owner_score }}</h2>
+                    <h2 class="subtitle has-text-white">{{ owner + ': ' + owner_score}}</h2>
                 </div>
                 
                 <playing-card 
@@ -83,6 +99,7 @@ Vue.component('playing-area', {
     props: ['owner', 'owner_score', 'cards'],
 });
 
+// can find conditional formatting here
 Vue.component('playing-card', {
     template: `
         <div class="column level is-narrow card_wrapper">
@@ -149,7 +166,10 @@ let blackjack = new Vue({
     },
 
     methods: {
-        // don't love returning the object, but all the values can be calculated in one loop
+        /**
+         * @param {Card[]} hand
+         * @return {Status}
+         */
         calculateStatus(hand) {
             let value = 0;
             let shown_value = 0;
@@ -198,6 +218,10 @@ let blackjack = new Vue({
             this.message_class = null;
         },
 
+        /**
+         * @param {boolean} show_card
+         * @return {Card}
+         */
         dealCard(show_card = true) {
             let card = this.deck.splice(Math.floor(Math.random() * this.deck.length), 1)[0];
             card.show_card = show_card;
