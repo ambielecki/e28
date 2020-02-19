@@ -2,6 +2,7 @@
 Course Website: <https://hesweb.dev/e28>
 
 ## About Me
+* LinkedIn: <https://www.linkedin.com/in/andrew-bielecki-5835b5123/>
 * Github user: [ambielecki](https://github.com/ambielecki)
 * Coursework Repo: <https://github.com/ambielecki/e28>
 * Practice Project
