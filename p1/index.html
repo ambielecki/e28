@@ -36,7 +36,7 @@
                                 </p>
                             </div>
 
-                            <div v-if="message" class="column is-full">
+                            <div v-show="message" class="column is-full">
                                 <message
                                   v-bind:message="message"
                                   v-bind:message_class="message_class"

@@ -127,12 +127,17 @@ Vue.component('playing-card', {
               v-bind:class="[card.class, card.show_card ? '' : 'has-background-link']"
             >
                 <div class="card-content">
-                    <p v-if="card.show_card">{{ card.text }}<span v-html="card.suit"></span></p>
+                    <p v-html="card_text"></p>
                 </div>
             </div>
         </div>
     `,
     props: ['is_dealer_turn', 'card'],
+    computed: {
+        card_text() {
+            return this.card.show_card ? this.card.text + this.card.suit: '';
+        },
+    },
 });
 
 Vue.component('message', {
