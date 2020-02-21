@@ -291,6 +291,18 @@ let blackjack = new Vue({
         startGame() {
             this.clearMessage();
 
+            if (this.initial_bet > this.player_purse) {
+                this.message_class = text_danger;
+                if (this.player_purse < minimum_bet) {
+                    this.message = 'You ran out of credits, game over.';
+                } else {
+                    this.initial_bet = minimum_bet;
+                    this.message = 'You cannot bet more than your purse, bet set to minimum';
+                }
+
+                return true;
+            }
+
             this.current_bet = this.initial_bet;
             this.player_purse -= this.current_bet;
 
