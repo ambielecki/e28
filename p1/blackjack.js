@@ -78,6 +78,7 @@ const winner_push = 'push';
 // makes it easier to reset the default game state
 function getDefaultData() {
     return {
+        audit: [],
         can_double: false,
         current_bet: null,
         dealer_hand: [],
