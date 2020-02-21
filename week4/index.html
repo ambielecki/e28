@@ -8,28 +8,28 @@
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div id="app" v-cloak>
-    <h1>Shopping List</h1>
-    <div v-if="message" class="message">{{ message }}</div>
-    <label>Quantity:
-        <input type="text" v-model="quantity" v-on:keyup.enter="addItem">
-    </label>
-    <label>Item:
-        <input type="text" v-model="item" v-on:keyup.enter="addItem">
-    </label>
-    <button v-on:click="addItem">Add</button>
+    <div id="app" v-cloak>
+        <h1>Shopping List</h1>
+        <div v-if="message" class="message">{{ message }}</div>
+        <label>Quantity:
+            <input type="text" v-model="quantity" v-on:keyup.enter="addItem">
+        </label>
+        <label>Item:
+            <input type="text" v-model="item" v-on:keyup.enter="addItem">
+        </label>
+        <button v-on:click="addItem">Add</button>
 
-    <br>
+        <br>
 
-    <div v-if="items.length > 0">
-        <p>Total Items: {{ total_items }}</p>
-        <ul>
-            <li v-for="list_item in items">{{ list_item.quantity }} x {{ list_item.item }}</li>
-        </ul>
+        <div v-if="items.length > 0">
+            <p>Total Items: {{ total_items }}</p>
+            <ul>
+                <li v-for="list_item in items">{{ list_item.quantity }} x {{ list_item.item }}</li>
+            </ul>
+        </div>
+        <p v-else id="no_items">
+            You have no items on your list.
+        </p>
     </div>
-    <p v-else id="no_items">
-        You have no items on your list.
-    </p>
-</div>
 </body>
 </html>
