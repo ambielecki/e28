@@ -45,12 +45,30 @@ const text_success = 'has-text-success';
 const text_black = 'has-text-black';
 
 const end_messages = {
-    dealer_blackjack: 'You lost, dealer had blackjack',
-    player_blackjack: 'Blackjack! You win 1.5x your bet',
-    win: 'You won!',
-    lose: 'Sorry, you lost',
-    bust: 'You busted and lost your bet',
-    push: 'You pushed, your bet has been returned',
+    dealer_blackjack: {
+        message: 'You lost, dealer had blackjack',
+        result: 'Dealer won with blackjack',
+    },
+    player_blackjack: {
+        message: 'Blackjack! You win 1.5x your bet',
+        result: 'Player won with blackjack',
+    },
+    win: {
+        message: 'You won!',
+        result: 'Player won',
+    },
+    lose: {
+        message: 'Sorry, you lost',
+        result: 'Dealer won',
+    },
+    bust: {
+        message: 'Sorry, you lost',
+        result: 'Player busted'
+    },
+    push: {
+        message: 'You pushed, your bet has been returned',
+        result: 'Push',
+    },
 };
 
 const winner_dealer = 'dealer';
@@ -72,6 +90,7 @@ function getDefaultData() {
         minimum_bet: minimum_bet,
         player_hand: [],
         player_purse: 5000,
+        results: [],
         scoreboard: {
             draws: 0,
             losses: 0,
@@ -333,21 +352,29 @@ let blackjack = new Vue({
                     this.player_purse += this.current_bet;
             }
 
-            this.message = message;
+            let result_message = 'Round ' + this.scoreboard_total +': ' + message.result;
+            this.message = message.message;
 
-            switch(message) {
-                case end_messages.dealer_blackjack:
-                case end_messages.lose:
-                case end_messages.bust:
+            switch(message.message) {
+                case end_messages.dealer_blackjack.message:
+                case end_messages.lose.message:
+                case end_messages.bust.message:
                     this.message_class = text_danger;
+                    result_message = result_message + '. Player lost ' + this.current_bet;
                     break;
-                case end_messages.player_blackjack:
-                case end_messages.win:
+                case end_messages.player_blackjack.message:
+                    result_message = result_message + '. Player won ' + (1.5 * this.current_bet);
+                    this.message_class = text_success;
+                    break;
+                case end_messages.win.message:
+                    result_message = result_message + '. Player won ' + this.current_bet;
                     this.message_class = text_success;
                     break;
                 default:
                     this.message_class = text_black;
             }
+
+            this.results.push(result_message);
         },
 
         hitMe() {
