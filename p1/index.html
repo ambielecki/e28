@@ -181,6 +181,10 @@
                         </div>
                     </div>
 
+                    <div v-if="show_audit" class="column is-full">
+                        <audit v-bind:audit="audit"></audit>
+                    </div>
+
                     <div class="column is-full">
                         <div class="card">
                             <header class="card-header">

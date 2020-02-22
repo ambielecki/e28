@@ -47,32 +47,41 @@ const text_black = 'has-text-black';
 const end_messages = {
     dealer_blackjack: {
         message: 'You lost, dealer had blackjack',
-        result: 'Dealer won with blackjack',
+        result: 'Dealer won with blackjack. Player lost ',
+        class: text_danger,
     },
     player_blackjack: {
         message: 'Blackjack! You win 1.5x your bet',
-        result: 'Player won with blackjack',
+        result: 'Player won with blackjack. Player won ',
+        class: text_success,
     },
-    win: {
+    player: {
         message: 'You won!',
-        result: 'Player won',
+        result: 'Player won ',
+        class: text_success,
     },
-    lose: {
+    dealer: {
         message: 'Sorry, you lost',
-        result: 'Dealer won',
+        result: 'Player lost ',
+        class: text_danger,
     },
-    bust: {
+    player_bust: {
         message: 'Sorry, you lost',
-        result: 'Player busted'
+        result: 'Player busted and lost ',
+        class: text_danger,
     },
     push: {
         message: 'You pushed, your bet has been returned',
         result: 'Push',
+        class: text_black,
     },
 };
 
 const winner_dealer = 'dealer';
+const dealer_blackjack = 'dealer_blackjack';
+const player_bust = 'player_bust';
 const winner_player = 'player';
+const player_blackjack = 'player_blackjack';
 const winner_push = 'push';
 
 // makes it easier to reset the default game state
@@ -83,6 +92,7 @@ function getDefaultData() {
         current_bet: null,
         dealer_hand: [],
         deck: [],
+        doubled: false,
         game_over: true,
         initial_bet: minimum_bet,
         is_dealer_turn: false,
@@ -97,6 +107,7 @@ function getDefaultData() {
             losses: 0,
             wins: 0,
         },
+        show_audit: false,
     };
 }
 
@@ -122,7 +133,7 @@ Vue.component('playing-area', {
 // can find conditional formatting here
 Vue.component('playing-card', {
     template: `
-        <div class="column level is-narrow card_wrapper">
+        <div class="column level is-narrow">
             <div 
               class="card has-text-centered level-item playing_card" 
               v-bind:class="[card.class, card.show_card ? '' : 'has-background-link']"
@@ -139,6 +150,23 @@ Vue.component('playing-card', {
             return this.card.show_card ? this.card.text + this.card.suit: '';
         },
     },
+});
+
+Vue.component('audit', {
+    template: `
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Audit</p>
+            </header>
+
+            <div class="card-content">
+                <ul>
+                    <li v-for="(record, index) in audit" v-bind:key="index">{{ record }}</li>
+                </ul>
+            </div>
+        </div>
+    `,
+    props: ['audit'],
 });
 
 Vue.component('message', {
@@ -296,6 +324,7 @@ let blackjack = new Vue({
 
         startGame() {
             this.clearMessage();
+            this.doubled = false;
 
             if (this.initial_bet > this.player_purse) {
                 this.message_class = text_danger;
@@ -326,9 +355,9 @@ let blackjack = new Vue({
 
                 // check for double blackjack
                 if (this.player_status.value === 21) {
-                    this.endGame(winner_push, end_messages.push);
+                    this.endGame(winner_push);
                 } else {
-                    this.endGame(winner_dealer, end_messages.dealer_blackjack);
+                    this.endGame(dealer_blackjack);
                 }
 
                 return true;
@@ -336,8 +365,7 @@ let blackjack = new Vue({
 
             // check for player blackjack
             if (this.player_status.value === 21) {
-                this.player_purse += (0.5 * this.current_bet); // blackjack bonus
-                this.endGame(winner_player, end_messages.player_blackjack);
+                this.endGame(player_blackjack);
 
                 return true;
             }
@@ -354,42 +382,61 @@ let blackjack = new Vue({
         },
 
         // handle bets and end messaging
-        endGame(winner, message = '') {
+        endGame(winner) {
             this.game_over = true;
+            let purse_adjustment = 0;
+            let audit = {
+                initial_bet: this.initial_bet,
+                doubled: this.doubbled,
+                dealer_hand: this.dealer_hand.map(card => card.text),
+                player_hand: this.player_hand.map(card => card.text),
+                winner: winner,
+                purse_adjustment: 0,
+            };
+            console.log(winner);
 
             switch(winner) {
                 case winner_player:
+                case player_blackjack:
                     this.scoreboard.wins++;
-                    this.player_purse += (2 * this.current_bet);
+                    purse_adjustment += (2 * this.current_bet);
                     break;
                 case winner_dealer:
+                case player_bust:
+                case dealer_blackjack:
                     this.scoreboard.losses++;
                     break;
                 default:
                     this.scoreboard.draws++;
-                    this.player_purse += this.current_bet;
+                    purse_adjustment += this.current_bet;
             }
 
-            let result_message = 'Round ' + this.scoreboard_total +': ' + message.result;
-            this.message = message.message;
+            if (winner === player_blackjack) {
+                purse_adjustment += 0.5 * this.current_bet;
+            }
 
-            switch(message.message) {
-                case end_messages.dealer_blackjack.message:
-                case end_messages.lose.message:
-                case end_messages.bust.message:
-                    this.message_class = text_danger;
-                    result_message = result_message + '. Player lost ' + this.current_bet;
+            audit.purse_adjustment = purse_adjustment;
+            audit.round = this.scoreboard_total;
+            this.audit.push(audit);
+
+            this.player_purse += purse_adjustment;
+            this.message = end_messages[winner].message;
+            this.message_class = end_messages[winner].class;
+
+            let result_message = 'Round ' + this.scoreboard_total +': ' + end_messages[winner].result;
+
+            switch(winner) {
+                case dealer_blackjack:
+                case winner_dealer:
+                case player_bust:
+                    result_message = result_message + this.current_bet;
                     break;
-                case end_messages.player_blackjack.message:
-                    result_message = result_message + '. Player won ' + (1.5 * this.current_bet);
-                    this.message_class = text_success;
+                case player_blackjack:
+                    result_message = result_message + (1.5 * this.current_bet);
                     break;
-                case end_messages.win.message:
-                    result_message = result_message + '. Player won ' + this.current_bet;
-                    this.message_class = text_success;
+                case winner_player:
+                    result_message = result_message + this.current_bet;
                     break;
-                default:
-                    this.message_class = text_black;
             }
 
             this.results.push(result_message);
@@ -400,7 +447,7 @@ let blackjack = new Vue({
             this.player_hand.push(this.dealCard());
 
             if (this.player_status.value > 21) {
-                this.endGame(winner_dealer, end_messages.bust)
+                this.endGame(player_bust)
             }
         },
 
@@ -413,15 +460,16 @@ let blackjack = new Vue({
             }
 
             if (this.dealer_status.value > 21 || this.player_status.value > this.dealer_status.value) {
-                this.endGame(winner_player, end_messages.win);
+                this.endGame(winner_player);
             } else if (this.dealer_status.value > this.player_status.value) {
-                this.endGame(winner_dealer, end_messages.lose);
+                this.endGame(winner_dealer);
             } else {
-                this.endGame(winner_push, end_messages.push);
+                this.endGame(winner_push);
             }
         },
 
         doubleDown() {
+            this.doubbled = true;
             this.player_purse -= this.current_bet;
             this.current_bet *= 2;
             this.player_hand.push(this.dealCard());
