@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="column is-full">
-                                <div v-if="game_over" class="columns is-mobile is-multiline">
+                                <div v-show="game_over" class="columns is-mobile is-multiline">
                                     <div class="column is-full">
                                         Bet: {{ initial_bet }}
                                     </div>
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
 
-                                <div v-else class="columns is-mobile is-multiline">
+                                <div v-show="!game_over" class="columns is-mobile is-multiline">
                                     <div class="column is-full">
                                         Bet: {{ current_bet }}
                                     </div>
@@ -175,6 +175,7 @@
                         ></results>
                     </div>
 
+                    <!-- Intentionally an if, no need to render as most will not touch this -->
                     <div v-if="show_audit" class="column is-full">
                         <audit
                           :audit="audit"
