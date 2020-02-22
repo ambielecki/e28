@@ -428,7 +428,7 @@ let blackjack = new Vue({
             let purse_adjustment = 0;
             let audit = {
                 initial_bet: this.initial_bet,
-                doubled: this.doubbled,
+                doubled: this.doubled ? 'True' : 'False',
                 dealer_hand: this.dealer_hand.map(card => card.text),
                 dealer_total: this.dealer_status.value,
                 player_hand: this.player_hand.map(card => card.text),
@@ -513,7 +513,7 @@ let blackjack = new Vue({
         },
 
         doubleDown() {
-            this.doubbled = true;
+            this.doubled = true;
             this.player_purse -= this.current_bet;
             this.current_bet *= 2;
             this.player_hand.push(this.dealCard());
