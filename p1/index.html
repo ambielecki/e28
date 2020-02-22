@@ -38,8 +38,8 @@
 
                             <div v-show="message" class="column is-full">
                                 <message
-                                  v-bind:message="message"
-                                  v-bind:message_class="message_class"
+                                  :message="message"
+                                  :message_class="message_class"
                                 ></message>
                             </div>
                         </div>
@@ -107,13 +107,13 @@
                     <div class="card-content columns is-multiline has-background-success" id="card_table">
                         <playing-area
                           owner="Dealer"
-                          v-bind:owner_score="dealer_score_view"
-                          v-bind:cards="dealer_hand"
+                          :owner_score="dealer_score_view"
+                          :cards="dealer_hand"
                         ></playing-area>
                         <playing-area
                           owner="Player"
-                          v-bind:owner_score="player_score_view"
-                          v-bind:cards="player_hand">
+                          :owner_score="player_score_view"
+                          :cards="player_hand">
                         </playing-area>
                     </div>
                 </div>
@@ -168,21 +168,19 @@
                     </div>
 
                     <div v-if="results.length > 0" class="column is-full">
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">Results</p>
-                            </header>
-
-                            <div class="card-content">
-                                <ul>
-                                    <li v-for="(result, index) in results" v-bind:key="index">{{ result }}</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <results
+                          :show_audit="show_audit"
+                          :results="results"
+                          v-on:show-audit="show_audit = true"
+                        ></results>
                     </div>
 
                     <div v-if="show_audit" class="column is-full">
-                        <audit v-bind:audit="audit"></audit>
+                        <audit
+                          :audit="audit"
+                          :show_audit="show_audit"
+                          v-on:hide-audit="show_audit = false"
+                        ></audit>
                     </div>
 
                     <div class="column is-full">

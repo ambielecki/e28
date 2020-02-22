@@ -152,6 +152,31 @@ Vue.component('playing-card', {
     },
 });
 
+Vue.component('results', {
+    template: `
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Results</p>
+            </header>
+
+            <div class="card-content">
+                <ul>
+                    <li v-for="(result, index) in results" :key="index">{{ result }}</li>
+                </ul>
+
+                <button
+                  class="button is-primary is-small"
+                  v-on:click="$emit('show-audit', true)"
+                  v-if="!show_audit"
+                >
+                    Show Audit
+                </button>
+            </div>
+        </div>
+    `,
+    props: ['results', 'show_audit'],
+});
+
 Vue.component('audit', {
     template: `
         <div class="card">
@@ -160,13 +185,29 @@ Vue.component('audit', {
             </header>
 
             <div class="card-content">
-                <ul>
-                    <li v-for="(record, index) in audit" v-bind:key="index">{{ record }}</li>
-                </ul>
+                <div class="columns is-multiline">
+                    <div class="column is-full">
+                        <div v-for="(record, index) in audit" :key="index" class="card">
+                            <div class="card-content audit">
+                                <p><b>Round: {{ record.round }}</b></p>
+                                <p><b>Dealer:</b> {{ record.dealer_total }}  {{ record.dealer_hand }}</p>
+                                <p><b>Player:</b> {{ record.player_total }}  {{ record.player_hand }}</p>
+                                <p><b>Winner:</b> {{ record.winner }}</p>
+                                <p><b>Initial Bet:</b> {{ record.initial_bet }}, <b>Doubled:</b> {{ record.doubled }}, <b>Purse:</b> {{ record.purse_adjustment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button 
+                  class="button is-primary is-small" 
+                  v-on:click="$emit('hide-audit', true)"
+                >
+                    Hide Audit
+                </button>
             </div>
         </div>
     `,
-    props: ['audit'],
+    props: ['audit', 'show_audit'],
 });
 
 Vue.component('message', {
@@ -389,7 +430,9 @@ let blackjack = new Vue({
                 initial_bet: this.initial_bet,
                 doubled: this.doubbled,
                 dealer_hand: this.dealer_hand.map(card => card.text),
+                dealer_total: this.dealer_status.value,
                 player_hand: this.player_hand.map(card => card.text),
+                player_total: this.player_status.value,
                 winner: winner,
                 purse_adjustment: 0,
             };
@@ -414,6 +457,7 @@ let blackjack = new Vue({
             if (winner === player_blackjack) {
                 purse_adjustment += 0.5 * this.current_bet;
             }
+            console.log(purse_adjustment);
 
             audit.purse_adjustment = purse_adjustment;
             audit.round = this.scoreboard_total;

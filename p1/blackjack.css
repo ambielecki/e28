@@ -39,3 +39,7 @@ body {
 .diamonds, .hearts {
     color: red;
 }
+
+.audit p {
+    margin-bottom: 0.1rem !important;
+}
