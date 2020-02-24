@@ -244,9 +244,11 @@ let blackjack = new Vue({
         dealer_score_view: function () {
             if (this.dealer_hand.length === 2 && this.dealer_status.value === 21) {
                 return 'Blackjack';
+            } else if (this.is_dealer_turn) {
+                return this.dealer_status.value;
+            } else {
+                return  'Shows ' + this.dealer_status.shown_value;
             }
-
-            return this.is_dealer_turn ? this.dealer_status.value : 'Shows ' + this.dealer_status.shown_value;
         },
 
         player_score_view: function () {
@@ -282,7 +284,7 @@ let blackjack = new Vue({
             if (has_ace && value + 10 <= 21) {
                 return {
                     value: value + 10,
-                    shown_value: shown_value + 10,
+                    shown_value: shown_value === 1 ? shown_value + 10 : shown_value,
                     is_soft: true
                 };
             }
