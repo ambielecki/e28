@@ -43,3 +43,7 @@ body {
 .audit p {
     margin-bottom: 0.1rem !important;
 }
+
+#blackjack {
+    margin: 1em 0;
+}
