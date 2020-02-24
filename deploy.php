@@ -37,8 +37,8 @@ task('deploy', [
     'deploy:lock',
     'deploy:release',
     'deploy:update_code',
-    'deploy:shared',
-    'deploy:writable',
+//    'deploy:shared',
+//    'deploy:writable',
 //    'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
@@ -46,15 +46,6 @@ task('deploy', [
     'cleanup',
     'success'
 ]);
-
-task('test', function () {
-    writeln('Hello deployer');
-});
-
-task('pwd', function () {
-    $result = run('pwd');
-    writeln("Current dir: {$result}");
-});
 
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');

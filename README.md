@@ -5,6 +5,9 @@ Course Website: <https://hesweb.dev/e28>
 * LinkedIn: <https://www.linkedin.com/in/andrew-bielecki-5835b5123/>
 * Github user: [ambielecki](https://github.com/ambielecki)
 * Coursework Repo: <https://github.com/ambielecki/e28>
+
+## E28 Work
+* Deployed to DO with Deployer - dep deploy production
 * Practice Project
   * Repo: <https://github.com/ambielecki/e28/tree/master/game>
   * JSFiddle: <https://jsfiddle.net/ambielecki/o6n5wbtx/>
