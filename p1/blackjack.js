@@ -448,7 +448,7 @@ let blackjack = new Vue({
                 purse_adjustment += 0.5 * this.current_bet;
             }
 
-            this.setAudit(purse_adjustment);
+            this.setAudit(purse_adjustment, winner);
 
             this.player_purse += purse_adjustment;
             this.message = end_messages[winner].message;
@@ -517,7 +517,7 @@ let blackjack = new Vue({
             this.shuffleDeck();
         },
 
-        setAudit(purse_adjustment) {
+        setAudit(purse_adjustment, winner) {
             this.audit.push({
                 initial_bet: this.initial_bet,
                 doubled: this.doubled ? 'True' : 'False',
