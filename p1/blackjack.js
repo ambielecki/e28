@@ -427,17 +427,6 @@ let blackjack = new Vue({
         endGame(winner) {
             this.game_over = true;
             let purse_adjustment = 0;
-            let audit = {
-                initial_bet: this.initial_bet,
-                doubled: this.doubled ? 'True' : 'False',
-                dealer_hand: this.dealer_hand.map(card => card.text),
-                dealer_total: this.dealer_status.value,
-                player_hand: this.player_hand.map(card => card.text),
-                player_total: this.player_status.value,
-                winner: winner,
-                purse_adjustment: 0,
-            };
-            console.log(winner);
 
             switch(winner) {
                 case winner_player:
@@ -458,11 +447,8 @@ let blackjack = new Vue({
             if (winner === player_blackjack) {
                 purse_adjustment += 0.5 * this.current_bet;
             }
-            console.log(purse_adjustment);
 
-            audit.purse_adjustment = purse_adjustment;
-            audit.round = this.scoreboard_total;
-            this.audit.push(audit);
+            this.setAudit(purse_adjustment);
 
             this.player_purse += purse_adjustment;
             this.message = end_messages[winner].message;
@@ -529,6 +515,20 @@ let blackjack = new Vue({
         resetStats() {
             Object.assign(this.$data, getDefaultData());
             this.shuffleDeck();
+        },
+
+        setAudit(purse_adjustment) {
+            this.audit.push({
+                initial_bet: this.initial_bet,
+                doubled: this.doubled ? 'True' : 'False',
+                dealer_hand: this.dealer_hand.map(card => card.text),
+                dealer_total: this.dealer_status.value,
+                player_hand: this.player_hand.map(card => card.text),
+                player_total: this.player_status.value,
+                winner: winner,
+                purse_adjustment: purse_adjustment,
+                round: this.scoreboard_total,
+            });
         },
     },
 
