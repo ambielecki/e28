@@ -22,9 +22,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.querySelectorAll('.navbar-link').forEach(function(navbarLink){
-        navbarLink.addEventListener('click', function(){
+    document.querySelectorAll('.navbar-link').forEach(function (navbarLink){
+        navbarLink.addEventListener('click', function() {
             navbarLink.nextElementSibling.classList.toggle('is-hidden-mobile');
         })
     });
+
+    document
+        .querySelectorAll('.navbar-item.has-dropdown')
+        .forEach(function (dropdown) {
+            dropdown.addEventListener('click', function (event) {
+                let target = event.currentTarget;
+
+                if (target.classList.contains('is-active')) {
+                    target.classList.remove('is-active')
+                } else {
+                    document.querySelectorAll('.navbar-item.has-dropdown')
+                        .forEach(function (element) {
+                            console.log('1');
+                            element.classList.remove('is-active')
+                        });
+
+                    target.classList.add('is-active');
+                }
+            });
+        });
 });
