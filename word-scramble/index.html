@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <title>Week 5 - Word Scramble</title>
+    <meta charset='utf-8'>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+    <script src="scramble.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="scramble.css">
+</head>
+<body>
+    <section id="scramble">
+        <h1>Word Scramble</h1>
+        <label>Enter your player name:
+            <input type="text" v-model="player_name"><button @click="playGame">Let's Play!</button>
+        </label>
+    </section>
+</body>
+</html>
