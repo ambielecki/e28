@@ -11,7 +11,7 @@ let app = new Vue({
         selected_sport: 'baseball',
         words: {
             baseball: {
-                hitter: 'The person holding the bat',
+                batter: 'The person holding the bat',
                 pitcher: 'Stands on the mound',
                 umpire: 'Calls balls and strikes',
                 fastball: 'Pitch with the highest speed',
