@@ -12,8 +12,20 @@
     <section id="scramble">
         <h1>Word Scramble</h1>
         <label>Enter your player name:
-            <input type="text" v-model="player_name"><button @click="playGame">Let's Play!</button>
+            <input type="text" v-model.trim="player_name"><button @click="gameOn">Let's Play!</button>
         </label>
+
+        <div v-if="!game_on">
+            <p>What is your favorite sport?</p>
+            <div v-for="(sport, index) in sports" class="radio">
+                <input type="radio" :id="sport" :value="sport" v-model="selected_sport">
+                <label :for="sport">{{ sport }}</label>
+            </div>
+        </div>
+
+        <div v-else>
+
+        </div>
     </section>
 </body>
 </html>

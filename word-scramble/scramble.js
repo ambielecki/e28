@@ -1,10 +1,10 @@
 let app = new Vue({
     el: '#scramble',
     data: {
-        play: false,
-        player_name: null,
+        game_on: false,
+        player_name: '',
         selected_word: null,
-        sport: null,
+        selected_sport: 'baseball',
         words: {
             baseball: {
                 hitter: 'The person holding the bat',
@@ -36,10 +36,22 @@ let app = new Vue({
             },
         },
     },
-    computed: {},
-    methods: {
-        playGame: function () {
-            this.play = true;
+    computed: {
+        sports: function () {
+            return Object.keys(this.words);
+        },
+
+        available_words: function () {
+            return Object.keys(this.words[this.selected_sport]);
+        },
+
+        shuffled_word: function () {
+
         }
+    },
+    methods: {
+        gameOn: function () {
+            this.play = true;
+        },
     },
 });
