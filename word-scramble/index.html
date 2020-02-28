@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="scramble.css">
 </head>
 <body>
-    <section id="scramble">
+    <section id="scramble" v-cloak>
         <h1>Word Scramble</h1>
         <label>Enter your player name:
             <input type="text" v-model.trim="player_name"><button @click="gameOn">Let's Play!</button>

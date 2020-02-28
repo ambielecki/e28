@@ -3,7 +3,7 @@ let app = new Vue({
     data: {
         game_on: false,
         player_name: '',
-        selected_word: null,
+        selected_word: '',
         selected_sport: 'baseball',
         words: {
             baseball: {
@@ -46,12 +46,18 @@ let app = new Vue({
         },
 
         shuffled_word: function () {
+            let word_array = this.selected_word.split('');
+            let word_length = this.selected_word.length;
 
+            return [word_array, word_length];
         }
     },
     methods: {
         gameOn: function () {
-            this.play = true;
+            this.game_on = true;
+
+            let filtered_words = this.available_words.filter(word => word !== this.selected_word);
+            this.selected_word = filtered_words[Math.floor(Math.random() * filtered_words.length)];
         },
     },
 });
