@@ -121,8 +121,8 @@ Vue.component('playing-area', {
                 
                 <playing-card 
                   v-for="(card, index) in cards" 
-                  v-bind:card="card"
-                  v-bind:key="index"
+                  :card="card"
+                  :key="index"
                 ></playing-card>
             </div>
         </div>
@@ -136,7 +136,7 @@ Vue.component('playing-card', {
         <div class="column level is-narrow">
             <div 
               class="card has-text-centered level-item playing_card" 
-              v-bind:class="[card.class, card.show_card ? '' : 'has-background-link']"
+              :class="[card.card_class, { 'has-background-link': !card.show_card }]"
             >
                 <div class="card-content">
                     <p v-html="card_text"></p>
@@ -211,7 +211,7 @@ Vue.component('audit', {
 
 Vue.component('message', {
     template: `
-        <p v-bind:class="message_class" class="card-header-title">
+        <p :class="message_class" class="card-header-title">
             {{ message }}
         </p>
     `,
@@ -355,7 +355,7 @@ let blackjack = new Vue({
                         this.deck.push({
                             value: card_types[card_type],
                             text: card_type,
-                            class: suit,
+                            card_class: suit,
                             suit: suits[suit],
                             show_card: false,
                         });
