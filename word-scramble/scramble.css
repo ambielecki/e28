@@ -10,3 +10,16 @@
 .hint {
     font-style: italic;
 }
+
+.message {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    width: auto;
+    display: inline-block;
+    padding: 0.25rem;
+}
+
+.message.success {
+    background-color: green;
+}

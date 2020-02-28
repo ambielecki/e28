@@ -3,6 +3,7 @@ let app = new Vue({
     data: {
         correct_guess: false,
         game_on: false,
+        guessed: false,
         message: '',
         player_guess: '',
         player_name: '',
@@ -64,6 +65,8 @@ let app = new Vue({
     methods: {
         gameOn: function () {
             this.game_on = true;
+            this.guessed = false;
+            this.player_guess = '';
             let filtered_words = this.available_words.filter(word => word !== this.selected_word);
 
             // get random item from array https://stackoverflow.com/questions/5915096/get-random-item-from-javascript-array
@@ -71,11 +74,15 @@ let app = new Vue({
         },
 
         guess: function () {
+            this.guessed = true;
             this.correct_guess = this.player_guess.toLowerCase() === this.selected_word;
             this.message = this.correct_guess
                 ? 'You got it! Nice work'
                 : "Sorry, that's not correct. Please try again.";
-        }
+        },
 
+        playAgain: function () {
+            this.game_on = false;
+        }
     },
 });

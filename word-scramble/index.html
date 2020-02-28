@@ -17,7 +17,7 @@
                 <input type="text" v-model.trim="player_name"><button @click="gameOn">Let's Play!</button>
             </label>
 
-            <p>What is your favorite sport?</p>
+            <p>Pick a sport:</p>
             <div v-for="(sport, index) in sports">
                 <input type="radio" :id="sport" :value="sport" v-model="selected_sport">
                 <label :for="sport">{{ sport }}</label>
@@ -28,11 +28,17 @@
             <p>Game on {{ player_name }}!</p>
             <p>Your mystery word is: <span class="shuffled_word">{{ shuffled_word }}</span></p>
             <p>Hint: <span class="hint">{{ words[selected_sport][selected_word] }}</span></p>
-            <label>Your guess:
-                <input type="text" v-model.trim="player_guess"><button @click="guess">Submit Guess</button>
-            </label>
+            <div>
+                <label>Your guess:
+                    <input type="text" v-model.trim="player_guess"><button @click="guess">Submit Guess</button>
+                </label>
+            </div>
 
 
+            <p v-if="guessed" :class="{success: correct_guess}" class="message">
+                {{ message }}
+                <button v-if="correct_guess" @click="playAgain">Play Again?</button>
+            </p>
         </div>
     </section>
 </body>
