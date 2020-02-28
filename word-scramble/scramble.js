@@ -45,10 +45,6 @@ let app = new Vue({
             return Object.keys(this.words);
         },
 
-        available_words: function () {
-            return Object.keys(this.words[this.selected_sport]);
-        },
-
         // Randomize JS array https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
         shuffled_word: function () {
             let word_array = this.selected_word.split('');
@@ -67,7 +63,10 @@ let app = new Vue({
             this.game_on = true;
             this.guessed = false;
             this.player_guess = '';
-            let filtered_words = this.available_words.filter(word => word !== this.selected_word);
+
+            // make sure we don't get the same word twice in a row
+            let filtered_words = Object.keys(this.words[this.selected_sport])
+                .filter(word => word !== this.selected_word);
 
             // get random item from array https://stackoverflow.com/questions/5915096/get-random-item-from-javascript-array
             this.selected_word = filtered_words[Math.floor(Math.random() * filtered_words.length)];
