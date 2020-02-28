@@ -84,7 +84,7 @@ const winner_player = 'player';
 const player_blackjack = 'player_blackjack';
 const winner_push = 'push';
 
-// makes it easier to reset the default game state
+// makes it easier to reset the default game state https://github.com/vuejs/vue/issues/702
 function getDefaultData() {
     return {
         audit: [],
