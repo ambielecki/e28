@@ -84,33 +84,6 @@ const winner_player = 'player';
 const player_blackjack = 'player_blackjack';
 const winner_push = 'push';
 
-// makes it easier to reset the default game state https://github.com/vuejs/vue/issues/702
-function getDefaultData() {
-    return {
-        audit: [],
-        can_double: false,
-        current_bet: null,
-        dealer_hand: [],
-        deck: [],
-        doubled: false,
-        game_over: true,
-        initial_bet: minimum_bet,
-        is_dealer_turn: false,
-        message: null,
-        message_class: null,
-        minimum_bet: minimum_bet,
-        player_hand: [],
-        player_purse: 5000,
-        results: [],
-        scoreboard: {
-            draws: 0,
-            losses: 0,
-            wins: 0,
-        },
-        show_audit: false,
-    };
-}
-
 Vue.component('playing-area', {
     template: `
         <div class="column is-full" id="dealer_area">
@@ -221,9 +194,29 @@ Vue.component('message', {
 
 let blackjack = new Vue({
     el: '#blackjack',
-
-    data: getDefaultData(),
-
+    data: {
+        audit: [],
+        can_double: false,
+        current_bet: null,
+        dealer_hand: [],
+        deck: [],
+        doubled: false,
+        game_over: true,
+        initial_bet: minimum_bet,
+        is_dealer_turn: false,
+        message: null,
+        message_class: null,
+        minimum_bet: minimum_bet,
+        player_hand: [],
+        player_purse: 5000,
+        results: [],
+        scoreboard: {
+            draws: 0,
+            losses: 0,
+            wins: 0,
+        },
+        show_audit: false,
+    },
     computed: {
         dealer_status: function () {
             return this.calculateStatus(this.dealer_hand);
@@ -513,7 +506,27 @@ let blackjack = new Vue({
         },
 
         resetStats() {
-            Object.assign(this.$data, getDefaultData());
+            this.audit = [];
+            this.can_double = false;
+            this.current_bet = null;
+            this.dealer_hand = [];
+            this.deck = [];
+            this.doubled = false;
+            this.game_over = true;
+            this.initial_bet = minimum_bet;
+            this.is_dealer_turn = false;
+            this.message = null;
+            this.message_class = null;
+            this.player_hand = [];
+            this.player_purse = 5000;
+            this.results = [];
+            this.scoreboard = {
+                draws: 0,
+                losses: 0,
+                wins: 0,
+            };
+            this.show_audit = false;
+
             this.shuffleDeck();
         },
 
