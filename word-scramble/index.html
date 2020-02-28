@@ -14,13 +14,18 @@
 
         <div v-if="!game_on">
             <label>Enter your player name:
-                <input type="text" v-model.trim="player_name"><button @click="gameOn">Let's Play!</button>
+                <input type="text" v-model.trim="player_name">
             </label>
 
             <p>Pick a sport:</p>
+
             <div v-for="(sport, index) in sports">
                 <input type="radio" :id="sport" :value="sport" v-model="selected_sport">
                 <label :for="sport">{{ sport }}</label>
+            </div>
+            <br>
+            <div>
+                <button @click="gameOn">Let's Play!</button>
             </div>
         </div>
 
@@ -30,7 +35,8 @@
             <p>Hint: <span class="hint">{{ words[selected_sport][selected_word] }}</span></p>
             <div>
                 <label>Your guess:
-                    <input type="text" v-model.trim="player_guess"><button @click="guess">Submit Guess</button>
+                    <input type="text" v-model.trim="player_guess" @keyup.enter="guess">
+                    <button @click="guess">Submit Guess</button>
                 </label>
             </div>
 
