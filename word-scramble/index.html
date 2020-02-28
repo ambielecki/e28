@@ -14,17 +14,17 @@
 
         <div v-if="!game_on">
             <label>Enter your player name:
-                <input type="text" v-model.trim="player_name">
+                <input type="text" v-model.trim="player_name"><span v-if="!player_name" class="required"> (required)</span>
             </label>
 
-            <p>Pick a sport:</p>
+            <p>Pick a sport<span v-if="!selected_sport" class="required"> (required)</span>:</p>
 
             <div v-for="(sport, index) in sports">
                 <input type="radio" :id="sport" :value="sport" v-model="selected_sport">
                 <label :for="sport">{{ sport }}</label>
             </div>
             <br>
-            <div>
+            <div v-if="player_name && selected_sport">
                 <button @click="gameOn">Let's Play!</button>
             </div>
         </div>
