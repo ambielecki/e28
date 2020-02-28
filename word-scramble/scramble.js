@@ -1,7 +1,10 @@
 let app = new Vue({
     el: '#scramble',
     data: {
+        correct_guess: false,
         game_on: false,
+        message: '',
+        player_guess: '',
         player_name: '',
         selected_word: '',
         selected_sport: 'baseball',
@@ -45,19 +48,34 @@ let app = new Vue({
             return Object.keys(this.words[this.selected_sport]);
         },
 
+        // Randomize JS array https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
         shuffled_word: function () {
             let word_array = this.selected_word.split('');
             let word_length = this.selected_word.length;
 
-            return [word_array, word_length];
-        }
+            for (let i = word_length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [word_array[i], word_array[j]] = [word_array[j], word_array[i]];
+            }
+
+            return word_array.join('');
+        },
     },
     methods: {
         gameOn: function () {
             this.game_on = true;
-
             let filtered_words = this.available_words.filter(word => word !== this.selected_word);
+
+            // get random item from array https://stackoverflow.com/questions/5915096/get-random-item-from-javascript-array
             this.selected_word = filtered_words[Math.floor(Math.random() * filtered_words.length)];
         },
+
+        guess: function () {
+            this.correct_guess = this.player_guess.toLowerCase() === this.selected_word;
+            this.message = this.correct_guess
+                ? 'You got it! Nice work'
+                : "Sorry, that's not correct. Please try again.";
+        }
+
     },
 });

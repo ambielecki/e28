@@ -11,19 +11,27 @@
 <body>
     <section id="scramble" v-cloak>
         <h1>Word Scramble</h1>
-        <label>Enter your player name:
-            <input type="text" v-model.trim="player_name"><button @click="gameOn">Let's Play!</button>
-        </label>
 
         <div v-if="!game_on">
+            <label>Enter your player name:
+                <input type="text" v-model.trim="player_name"><button @click="gameOn">Let's Play!</button>
+            </label>
+
             <p>What is your favorite sport?</p>
-            <div v-for="(sport, index) in sports" class="radio">
+            <div v-for="(sport, index) in sports">
                 <input type="radio" :id="sport" :value="sport" v-model="selected_sport">
                 <label :for="sport">{{ sport }}</label>
             </div>
         </div>
 
         <div v-else>
+            <p>Game on {{ player_name }}!</p>
+            <p>Your mystery word is: <span class="shuffled_word">{{ shuffled_word }}</span></p>
+            <p>Hint: <span class="hint">{{ words[selected_sport][selected_word] }}</span></p>
+            <label>Your guess:
+                <input type="text" v-model.trim="player_guess"><button @click="guess">Submit Guess</button>
+            </label>
+
 
         </div>
     </section>
