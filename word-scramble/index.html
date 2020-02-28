@@ -33,13 +33,13 @@
             <p>Game on {{ player_name }}!</p>
             <p>Your mystery word is: <span class="shuffled_word">{{ shuffled_word }}</span></p>
             <p>Hint: <span class="hint">{{ words[selected_sport][selected_word] }}</span></p>
+
             <div>
                 <label>Your guess:
                     <input type="text" v-model.trim="player_guess" @keyup.enter="guess">
                     <button @click="guess">Submit Guess</button>
                 </label>
             </div>
-
 
             <p v-if="guessed" :class="{success: correct_guess}" class="message">
                 {{ message }}
