@@ -48,9 +48,8 @@ let app = new Vue({
         // Randomize JS array https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
         shuffled_word: function () {
             let word_array = this.selected_word.split('');
-            let word_length = this.selected_word.length;
 
-            for (let i = word_length - 1; i > 0; i--) {
+            for (let i = this.selected_word.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [word_array[i], word_array[j]] = [word_array[j], word_array[i]];
             }
