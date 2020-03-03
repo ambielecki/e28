@@ -53,6 +53,10 @@ let app = new Vue({
         shuffled_word: function () {
             let word_array = this.selected_word.split('');
 
+            /* I did check, computed properties are lazy, so it won't reevalute on each tick,
+             * just when something it depends on changes
+             * https://vuejs.org/v2/guide/computed.html#Computed-Caching-vs-Methods
+             */
             for (let i = this.selected_word.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [word_array[i], word_array[j]] = [word_array[j], word_array[i]];
