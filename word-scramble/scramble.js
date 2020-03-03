@@ -4,7 +4,6 @@ let app = new Vue({
         correct_guess: false,
         game_on: false,
         guessed: false,
-        message: '',
         player_guess: '',
         player_name: '',
         selected_word: '',
@@ -40,9 +39,14 @@ let app = new Vue({
             }
         },
     },
+
     computed: {
         sports: function () {
             return Object.keys(this.words);
+        },
+
+        message: function () {
+            return this.correct_guess ? 'You got it! Nice work' : "Sorry, that's not correct. Please try again.";
         },
 
         // Randomize JS array https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -57,6 +61,7 @@ let app = new Vue({
             return word_array.join('');
         },
     },
+
     methods: {
         gameOn: function () {
             this.game_on = true;
@@ -74,9 +79,6 @@ let app = new Vue({
         guess: function () {
             this.guessed = true;
             this.correct_guess = this.player_guess.toLowerCase() === this.selected_word;
-            this.message = this.correct_guess
-                ? 'You got it! Nice work'
-                : "Sorry, that's not correct. Please try again.";
         },
 
         playAgain: function () {
