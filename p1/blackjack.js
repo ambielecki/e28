@@ -217,6 +217,7 @@ let blackjack = new Vue({
         },
         show_audit: false,
     },
+
     computed: {
         dealer_status: function () {
             return this.calculateStatus(this.dealer_hand);
