@@ -5,3 +5,4 @@
 ## Outside resources
 * [Randomize JS Array](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
 * [Get Random Item From Array](https://stackoverflow.com/questions/5915096/get-random-item-from-javascript-array)
+* [Computed Caching in Vue](https://vuejs.org/v2/guide/computed.html#Computed-Caching-vs-Methods)
