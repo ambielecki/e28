@@ -5,6 +5,7 @@
 
 ### Containers, Images, Volumes - oh my
 ### Why Use Docker over XAMPP?
+### Other Options (VMs)
 
 ## Installation
 
@@ -18,9 +19,16 @@
 ### docker-compose.yml
 #### Dockerfile
 #### Linking your files
-#### Other Services (database)
+#### Other Services (MySQL)
 
 ## Important Commands
 ### Up, Start, Stop
 ### Terminal
-### Cleanup images
+### Cleanup - images etc
+
+## Advanced Topics / Tips
+### Other services
+#### Mongo
+#### Node Server <https://nodejs.org/de/docs/guides/nodejs-docker-webapp/> 
+
+## Quickstart
