@@ -18,4 +18,9 @@
 ### docker-compose.yml
 #### Dockerfile
 #### Linking your files
-#### Other Services
+#### Other Services (database)
+
+## Important Commands
+### Up, Start, Stop
+### Terminal
+### Cleanup images
