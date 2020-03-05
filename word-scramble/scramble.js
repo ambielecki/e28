@@ -39,7 +39,7 @@ let app = new Vue({
         player_name: '',
         selected_word: '',
         selected_sport: '',
-        sports: Object.keys(words),
+        sports: Object.keys(words), // not needed, but easier to manage
         words: words,
     },
 
