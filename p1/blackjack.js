@@ -189,11 +189,9 @@ Vue.component('toggle-button', {
     },
 });
 
-Vue.component('message', {
+Vue.component('blackjack-message', {
     template: `
-        <p :class="message_class" class="card-header-title">
-            {{ message }}
-        </p>
+        <p :class="message_class" class="card-header-title">{{ message }}</p>
     `,
     props: ['message', 'message_class'],
 });
