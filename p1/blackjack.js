@@ -125,32 +125,7 @@ Vue.component('playing-card', {
     },
 });
 
-Vue.component('results', {
-    template: `
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Results</p>
-            </header>
-
-            <div class="card-content">
-                <ul>
-                    <li v-for="(result, index) in results" :key="index">{{ result }}</li>
-                </ul>
-
-                <button
-                  class="button is-primary is-small"
-                  v-on:click="$emit('show-audit', true)"
-                  v-if="!show_audit"
-                >
-                    Show Audit
-                </button>
-            </div>
-        </div>
-    `,
-    props: ['results', 'show_audit'],
-});
-
-Vue.component('audit', {
+Vue.component('result-list', {
     template: `
         <div class="card">
             <header class="card-header">
@@ -158,28 +133,60 @@ Vue.component('audit', {
             </header>
 
             <div class="card-content">
-                <div class="columns is-multiline">
-                    <div class="column is-full">
-                        <div v-for="(record, index) in audit" :key="index" class="audit">
-                            <p><b>Round: {{ record.round }}</b></p>
-                            <p><b>Dealer:</b> {{ record.dealer_total }}  {{ record.dealer_hand }}</p>
-                            <p><b>Player:</b> {{ record.player_total }}  {{ record.player_hand }}</p>
-                            <p><b>Winner:</b> {{ record.winner }}</p>
-                            <p><b>Initial Bet:</b> {{ record.initial_bet }}, <b>Doubled:</b> {{ record.doubled }}, <b>Purse:</b> {{ record.purse_adjustment }}</p>
-                            <hr>
-                        </div>
-                    </div>
-                </div>
-                <button 
-                  class="button is-primary is-small" 
-                  v-on:click="$emit('hide-audit', true)"
-                >
-                    Hide Audit
-                </button>
+                <slot name="results"></slot>
+                <slot name="toggle"></slot>
             </div>
         </div>
     `,
-    props: ['audit', 'show_audit'],
+});
+
+Vue.component('result-content', {
+    template: `
+        <ul>
+            <li v-for="(result, index) in results" :key="index">{{ result }}</li>
+        </ul>
+    `,
+    props: ['results'],
+});
+
+Vue.component('audit-content', {
+    template: `
+        <div class="columns is-multiline">
+            <div class="column is-full">
+                <div v-for="(record, index) in audit" :key="index" class="audit">
+                    <p><b>Round: {{ record.round }}</b></p>
+                    <p><b>Dealer:</b> {{ record.dealer_total }}  {{ record.dealer_hand }}</p>
+                    <p><b>Player:</b> {{ record.player_total }}  {{ record.player_hand }}</p>
+                    <p><b>Winner:</b> {{ record.winner }}</p>
+                    <p><b>Initial Bet:</b> {{ record.initial_bet }}, <b>Doubled:</b> {{ record.doubled }}, <b>Purse:</b> {{ record.purse_adjustment }}</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    `,
+    props: ['audit'],
+});
+
+Vue.component('toggle-button', {
+    template: `
+        <button 
+          v-if="display"
+          class="button is-primary is-small" 
+          v-on:click="$emit('toggle', true)"
+        >
+            {{ text }}
+        </button>
+    `,
+    props: {
+        display: {
+            type: Boolean,
+            default: true,
+        },
+        text: {
+            type: String,
+            default: 'Toggle',
+        }
+    },
 });
 
 Vue.component('message', {
