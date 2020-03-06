@@ -85,38 +85,13 @@ const player_blackjack = 'player_blackjack';
 const winner_push = 'push';
 
 Vue.component('playing-area', {
-    template: `
-        <div class="column is-full" id="dealer_area">
-            <div class="columns is-mobile is-multiline">
-                <div class="column is-full">
-                    <h2 class="subtitle has-text-white">{{ owner + ': ' + owner_score}}</h2>
-                </div>
-                
-                <playing-card 
-                  v-for="(card, index) in cards" 
-                  :card="card"
-                  :key="index"
-                ></playing-card>
-            </div>
-        </div>
-    `,
+    template: '#playing-area',
     props: ['owner', 'owner_score', 'cards'],
 });
 
 // can find conditional formatting here
 Vue.component('playing-card', {
-    template: `
-        <div class="column level is-narrow">
-            <div 
-              class="card has-text-centered level-item playing_card" 
-              :class="[card.card_class, { 'has-background-link': !card.show_card }]"
-            >
-                <div class="card-content">
-                    <p v-html="card_text"></p>
-                </div>
-            </div>
-        </div>
-    `,
+    template: '#playing-card',
     props: ['is_dealer_turn', 'card'],
     computed: {
         card_text() {
@@ -126,57 +101,22 @@ Vue.component('playing-card', {
 });
 
 Vue.component('result-list', {
-    template: `
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Audit</p>
-            </header>
-
-            <div class="card-content">
-                <slot name="results"></slot>
-                <slot name="toggle"></slot>
-            </div>
-        </div>
-    `,
+    template: '#result-list',
+    props: ['title'],
 });
 
 Vue.component('result-content', {
-    template: `
-        <ul>
-            <li v-for="(result, index) in results" :key="index">{{ result }}</li>
-        </ul>
-    `,
+    template: '#result-content',
     props: ['results'],
 });
 
 Vue.component('audit-content', {
-    template: `
-        <div class="columns is-multiline">
-            <div class="column is-full">
-                <div v-for="(record, index) in audit" :key="index" class="audit">
-                    <p><b>Round: {{ record.round }}</b></p>
-                    <p><b>Dealer:</b> {{ record.dealer_total }}  {{ record.dealer_hand }}</p>
-                    <p><b>Player:</b> {{ record.player_total }}  {{ record.player_hand }}</p>
-                    <p><b>Winner:</b> {{ record.winner }}</p>
-                    <p><b>Initial Bet:</b> {{ record.initial_bet }}, <b>Doubled:</b> {{ record.doubled }}, <b>Purse:</b> {{ record.purse_adjustment }}</p>
-                    <hr>
-                </div>
-            </div>
-        </div>
-    `,
+    template: '#audit-content',
     props: ['audit'],
 });
 
 Vue.component('toggle-button', {
-    template: `
-        <button 
-          v-if="display"
-          class="button is-primary is-small" 
-          v-on:click="$emit('toggle', true)"
-        >
-            {{ text }}
-        </button>
-    `,
+    template: '#toggle-button',
     props: {
         display: {
             type: Boolean,
@@ -190,9 +130,7 @@ Vue.component('toggle-button', {
 });
 
 Vue.component('blackjack-message', {
-    template: `
-        <p :class="message_class" class="card-header-title">{{ message }}</p>
-    `,
+    template: '#blackjack-message',
     props: ['message', 'message_class'],
 });
 
