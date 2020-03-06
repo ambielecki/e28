@@ -1,7 +1,7 @@
 <script type="text/x-template" id="audit-content">
     <div class="columns is-multiline">
         <div class="column is-full">
-            <div v-for="(record, index) in audit" :key="index" class="audit">
+            <div v-for="record in audit" class="audit">
                 <p><b>Round: {{ record.round }}</b></p>
                 <p><b>Dealer:</b> {{ record.dealer_total }}  {{ record.dealer_hand }}</p>
                 <p><b>Player:</b> {{ record.player_total }}  {{ record.player_hand }}</p>
