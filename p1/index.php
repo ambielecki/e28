@@ -228,6 +228,7 @@
             </p>
         </div>
     </footer>
+    <?php // Hope you don't mind a slightly cleaner way to use html templates ?>
     <?php include ('./templates/blackjack-message.php'); ?>
     <?php include ('./templates/playing-area.php'); ?>
     <?php include ('./templates/playing-card.php'); ?>
