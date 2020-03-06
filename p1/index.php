@@ -228,12 +228,10 @@
             </p>
         </div>
     </footer>
-    <?php // Hope you don't mind a slightly cleaner way to use html templates ?>
-    <?php include ('./templates/blackjack-message.php'); ?>
-    <?php include ('./templates/playing-area.php'); ?>
-    <?php include ('./templates/playing-card.php'); ?>
-    <?php include ('./templates/result-content.php'); ?>
-    <?php include ('./templates/audit-content.php'); ?>
-    <?php include ('./templates/toggle-button.php'); ?>
-    <?php include ('./templates/result-list.php'); ?>
+    <?php
+        // reusable templates with a JS build step :)
+        foreach (glob('./templates/*.php') as $file) {
+            include $file;
+        }
+    ?>
 </body>
