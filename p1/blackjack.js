@@ -102,6 +102,7 @@ Vue.component('playing-card', {
 
 Vue.component('result-list', {
     template: '#result-list',
+    props: ['title'],
 });
 
 Vue.component('result-content', {
