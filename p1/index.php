@@ -228,4 +228,11 @@
             </p>
         </div>
     </footer>
+    <?php include ('./templates/blackjack-message.php'); ?>
+    <?php include ('./templates/playing-area.php'); ?>
+    <?php include ('./templates/playing-card.php'); ?>
+    <?php include ('./templates/result-list.php'); ?>
+    <?php include ('./templates/result-content.php'); ?>
+    <?php include ('./templates/audit-content.php'); ?>
+    <?php include ('./templates/toggle-button.php'); ?>
 </body>
