@@ -166,14 +166,14 @@
                     </div>
 
                     <div v-if="results.length > 0" class="column is-full">
-                        <result-list :title="'Results'">
+                        <result-list title="Results">
                             <template v-slot:results>
                                 <result-content :results="results"></result-content>
                             </template>
                             <template v-slot:toggle>
                                 <toggle-button
                                   v-on:toggle="show_audit = true"
-                                  :text="'Show Audit'"
+                                  text="Show Audit"
                                   :display="!show_audit"
                                 ></toggle-button>
                             </template>
@@ -182,14 +182,14 @@
 
                     <!-- Intentionally an if, no need to render as most will not touch this -->
                     <div v-if="show_audit" class="column is-full">
-                        <result-list :title="'Audit'">
+                        <result-list title="Audit">
                             <template v-slot:results>
                                 <audit-content :audit="audit"></audit-content>
                             </template>
                             <template v-slot:toggle>
                                 <toggle-button
                                   v-on:toggle="show_audit = false"
-                                  :text="'Hide Audit'"
+                                  text="Hide Audit"
                                 ></toggle-button>
                             </template>
                         </result-list>
