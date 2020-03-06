@@ -229,7 +229,7 @@
         </div>
     </footer>
     <?php
-        // reusable templates with a JS build step :)
+        // reusable templates without a JS build step :)
         foreach (glob('./templates/*.php') as $file) {
             include $file;
         }
