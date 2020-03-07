@@ -14,6 +14,7 @@ get rid of annoying message
 Define object properties in JSDoc
 * [Deployer](https://deployer.org/) - not really part of the project, but decided to use this to push to DO (fewer 
 dependencies than Capistrano since I already have PHP in my local environment)
+* [Playing Cards Favicon](https://www.freefavicon.com/freefavicons/objects/iconinfo/playing-cards-152-170641.html)
 
 ## Notes for instructor
 * You can easily cheat, the dealer's hole card is set to start 

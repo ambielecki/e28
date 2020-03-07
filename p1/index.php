@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src="blackjack.js" defer></script>
     <link rel="stylesheet" href="blackjack.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <div class="content">
