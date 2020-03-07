@@ -360,7 +360,7 @@ let blackjack = new Vue({
             });
         },
 
-        // handle bets and end messaging
+        // handle bets and end messaging (needs a refactor)
         endGame(winner) {
             this.game_over = true;
             let purse_adjustment = 0;
