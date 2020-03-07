@@ -10,7 +10,7 @@
 to show the suit ascii
 * [Component lists should have keys](https://stackoverflow.com/questions/42476942/console-warning-component-lists-rendered-with-v-for-should-have-explicit-keys) - 
 get rid of annoying message
-* [JSdoc Return Object](https://stackoverflow.com/questions/28763257/jsdoc-return-object-structure) - 
+* [JSDoc Return Object](https://stackoverflow.com/questions/28763257/jsdoc-return-object-structure) - 
 Define object properties in JSDoc
 * [Deployer](https://deployer.org/) - not really part of the project, but decided to use this to push to DO (fewer 
 dependencies than Capistrano since I already have PHP in my local environment)
