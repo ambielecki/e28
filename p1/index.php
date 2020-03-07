@@ -64,15 +64,15 @@
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-dark" v-on:click="startGame">Deal</button>
+                                        <button class="button is-dark" @click="startGame">Deal</button>
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-success" v-on:click="increaseBet">Bet +</button>
+                                        <button class="button is-success" @click="increaseBet">Bet +</button>
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-danger" v-on:click="decreaseBet">Bet -</button>
+                                        <button class="button is-danger" @click="decreaseBet">Bet -</button>
                                     </div>
                                 </div>
 
@@ -82,15 +82,15 @@
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-success" v-on:click="hitMe">Hit Me!</button>
+                                        <button class="button is-success" @click="hitMe">Hit Me!</button>
                                     </div>
 
                                     <div class="column is-one-third">
-                                        <button class="button is-danger" v-on:click="stay">Stay</button>
+                                        <button class="button is-danger" @click="stay">Stay</button>
                                     </div>
 
                                     <div v-if="allowed_to_double" class="column is-one-third">
-                                        <button class="button is-warning" v-on:click="doubleDown">Double</button>
+                                        <button class="button is-warning" @click="doubleDown">Double</button>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@
                                     <div class="column is-full">
                                         <div class="columns">
                                             <div class="column is-one-third">
-                                                <button class="button is-danger" v-on:click="resetStats">Reset</button>
+                                                <button class="button is-danger" @click="resetStats">Reset</button>
                                             </div>
                                         </div>
                                     </div>
@@ -167,12 +167,12 @@
 
                     <div v-if="results.length > 0" class="column is-full">
                         <result-list title="Results">
-                            <template v-slot:results>
+                            <template #results>
                                 <result-content :results="results"></result-content>
                             </template>
-                            <template v-slot:toggle>
+                            <template #toggle>
                                 <toggle-button
-                                  v-on:toggle="show_audit = true"
+                                  @toggle="show_audit = true"
                                   text="Show Audit"
                                   :display="!show_audit"
                                 ></toggle-button>
@@ -183,12 +183,12 @@
                     <!-- Intentionally an if, no need to render as most will not touch this -->
                     <div v-if="show_audit" class="column is-full">
                         <result-list title="Audit">
-                            <template v-slot:results>
+                            <template #results>
                                 <audit-content :audit="audit"></audit-content>
                             </template>
-                            <template v-slot:toggle>
+                            <template #toggle>
                                 <toggle-button
-                                  v-on:toggle="show_audit = false"
+                                  @toggle="show_audit = false"
                                   text="Hide Audit"
                                 ></toggle-button>
                             </template>

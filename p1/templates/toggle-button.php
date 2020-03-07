@@ -2,7 +2,7 @@
     <button
         v-if="display"
         class="button is-primary is-small"
-        v-on:click="$emit('toggle', true)"
+        v-on:click="$emit('toggle')"
     >
         {{ text }}
     </button>
