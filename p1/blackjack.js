@@ -84,8 +84,8 @@ const winner_player = 'player';
 const player_blackjack = 'player_blackjack';
 const winner_push = 'push';
 
-Vue.component('playing-area', {
-    template: '#playing-area',
+Vue.component('blackjack-table', {
+    template: '#blackjack-table',
     props: ['owner', 'owner_score', 'cards'],
 });
 
@@ -100,13 +100,13 @@ Vue.component('blackjack-card', {
     },
 });
 
-Vue.component('result-list', {
-    template: '#result-list',
+Vue.component('blackjack-list-area', {
+    template: '#blackjack-list-area',
     props: ['title'],
 });
 
-Vue.component('result-content', {
-    template: '#result-content',
+Vue.component('blackjack-results', {
+    template: '#blackjack-results',
     props: ['results'],
 });
 
@@ -115,8 +115,8 @@ Vue.component('blackjack-audit', {
     props: ['audit'],
 });
 
-Vue.component('toggle-button', {
-    template: '#toggle-button',
+Vue.component('blackjack-toggle', {
+    template: '#blackjack-toggle',
     props: {
         display: {
             type: Boolean,

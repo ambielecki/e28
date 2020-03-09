@@ -1,4 +1,4 @@
-<script type="text/x-template" id="result-list">
+<script type="text/x-template" id="blackjack-list-area">
     <div class="card">
         <header class="card-header">
             <p class="card-header-title">{{ title }}</p>

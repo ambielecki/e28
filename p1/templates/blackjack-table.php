@@ -1,15 +1,15 @@
-<script type="text/x-template" id="playing-area">
+<script type="text/x-template" id="blackjack-table">
     <div class="column is-full" id="dealer_area">
         <div class="columns is-mobile is-multiline">
             <div class="column is-full">
                 <h2 class="subtitle has-text-white">{{ owner + ': ' + owner_score}}</h2>
             </div>
 
-            <playing-card
+            <blackjack-card
                 v-for="(card, index) in cards"
                 :card="card"
                 :key="index"
-            ></playing-card>
+            ></blackjack-card>
         </div>
     </div>
 </script>

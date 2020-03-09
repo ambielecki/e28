@@ -104,16 +104,16 @@
             <div class="column is-half">
                 <div class="card">
                     <div class="card-content columns is-multiline has-background-success" id="card_table">
-                        <playing-area
+                        <blackjack-table
                           owner="Dealer"
                           :owner_score="dealer_score_view"
                           :cards="dealer_hand"
-                        ></playing-area>
-                        <playing-area
+                        ></blackjack-table>
+                        <blackjack-table
                           owner="Player"
                           :owner_score="player_score_view"
                           :cards="player_hand">
-                        </playing-area>
+                        </blackjack-table>
                     </div>
                 </div>
             </div>
@@ -167,33 +167,33 @@
                     </div>
 
                     <div v-if="results.length > 0" class="column is-full">
-                        <result-list title="Results">
+                        <blackjack-list-area title="Results">
                             <template #results>
-                                <result-content :results="results"></result-content>
+                                <blackjack-results :results="results"></blackjack-results>
                             </template>
                             <template #toggle>
-                                <toggle-button
+                                <blackjack-toggle
                                   @toggle="show_audit = true"
                                   text="Show Audit"
                                   :display="!show_audit"
-                                ></toggle-button>
+                                ></blackjack-toggle>
                             </template>
-                        </result-list>
+                        </blackjack-list-area>
                     </div>
 
                     <!-- Intentionally an if, no need to render as most will not touch this -->
                     <div v-if="show_audit" class="column is-full">
-                        <result-list title="Audit">
+                        <blackjack-list-area title="Audit">
                             <template #results>
                                 <blackjack-audit :audit="audit"></blackjack-audit>
                             </template>
                             <template #toggle>
-                                <toggle-button
+                                <blackjack-toggle
                                   @toggle="show_audit = false"
                                   text="Hide Audit"
-                                ></toggle-button>
+                                ></blackjack-toggle>
                             </template>
-                        </result-list>
+                        </blackjack-list-area>
                     </div>
 
                     <div class="column is-full">
