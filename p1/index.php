@@ -185,7 +185,7 @@
                     <div v-if="show_audit" class="column is-full">
                         <result-list title="Audit">
                             <template #results>
-                                <audit-content :audit="audit"></audit-content>
+                                <blackjack-audit :audit="audit"></blackjack-audit>
                             </template>
                             <template #toggle>
                                 <toggle-button

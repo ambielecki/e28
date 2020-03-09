@@ -1,4 +1,4 @@
-<script type="text/x-template" id="audit-content">
+<script type="text/x-template" id="blackjack-audit">
     <div class="columns is-multiline">
         <div class="column is-full">
             <div v-for="record in audit" class="audit">

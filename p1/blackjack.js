@@ -90,8 +90,8 @@ Vue.component('playing-area', {
 });
 
 // can find conditional formatting here
-Vue.component('playing-card', {
-    template: '#playing-card',
+Vue.component('blackjack-card', {
+    template: '#blackjack-card',
     props: ['is_dealer_turn', 'card'],
     computed: {
         card_text() {
@@ -110,8 +110,8 @@ Vue.component('result-content', {
     props: ['results'],
 });
 
-Vue.component('audit-content', {
-    template: '#audit-content',
+Vue.component('blackjack-audit', {
+    template: '#blackjack-audit',
     props: ['audit'],
 });
 

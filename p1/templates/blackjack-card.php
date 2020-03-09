@@ -1,4 +1,4 @@
-<script type="text/x-template" id="playing-card">
+<script type="text/x-template" id="blackjack-card">
     <div class="column level is-narrow">
         <div
             class="card has-text-centered level-item playing_card"
