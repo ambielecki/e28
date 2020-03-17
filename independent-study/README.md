@@ -1,7 +1,7 @@
 # Docker and Docker-Compose for Development Environments
 
 ## What is Docker? 
-<https://docs.docker.com/install/>
+<https://docs.docker.com/get-started/>
 
 ### Containers, Images, Volumes - oh my <
 <https://www.infoworld.com/article/3204171/what-is-docker-the-spark-for-the-container-revolution.html>
@@ -14,16 +14,24 @@
 <https://docs.docker.com/docker-for-windows/install/>
 <https://docs.docker.com/docker-for-mac/install/>
 
-### Simple Test Container
+### Simple Test
+<https://docs.docker.com/get-started/>
+
 First we want to test that our installation of docker desktop was successful.  Open a terminal 
 window and type the following `docker run hello-world`.  You should see something similar to the 
 following:
+
 ![hello-world example](images/hello-world.png)
 
-<https://docs.docker.com/get-started/>
-#### Opening a terminal
-<https://docs.docker.com/engine/reference/commandline/exec/>
-<https://docs.docker.com/docker-for-mac/dashboard/>
+The text is pretty self explanatory, Docker performed the following tasks:
+* Checked to see if we had a local copy of the hello-world image (we did not)
+* Pulled a copy from Docker Hub
+* Created a container with that image
+* That image is programmed to output the text you see
+
+Great, we know our setup is working correctly. There are many more things we could do with just 
+Docker and the command line, but we will skip directly to a much more user-friendly (and commonly 
+used in the workplace) tool: docker-compose.
 
 ## Docker-Compose
 <https://docs.docker.com/compose/compose-file/>
@@ -33,6 +41,9 @@ following:
 <https://docs.docker.com/docker-for-mac/osxfs-caching/>
 #### Other Services (MySQL)
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
+#### Opening a terminal
+<https://docs.docker.com/engine/reference/commandline/exec/>
+<https://docs.docker.com/docker-for-mac/dashboard/>
 
 
 ## Important Commands
