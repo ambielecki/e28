@@ -36,35 +36,36 @@ used in the workplace) tool: docker-compose.
 ## Docker-Compose
 <https://docs.docker.com/compose/compose-file/>
 ### docker-compose.yml
-#### Dockerfile
-#### Linking your files (volumes)
+### Dockerfile
+### Linking your files (volumes)
 <https://docs.docker.com/docker-for-mac/osxfs-caching/>
-#### Other Services (MySQL)
+### Other Services (MySQL)
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
-#### Opening a terminal
-<https://docs.docker.com/engine/reference/commandline/exec/>
-<https://docs.docker.com/docker-for-mac/dashboard/>
-
 
 ## Important Commands
+### Opening a terminal
+<https://docs.docker.com/engine/reference/commandline/exec/>
+<https://docs.docker.com/docker-for-mac/dashboard/>
 ### Up, Start, Stop
 <https://docs.docker.com/compose/reference/>
 ### Cleanup - images etc
 <https://docs.docker.com/config/pruning/>
 
-## Orchestrating Many Containers
-### nginx-proxy 
+## Advanced Topics / Tips
+### Orchestrating Many Containers
+#### nginx-proxy 
 <https://github.com/nginx-proxy/nginx-proxy>
 <https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-encrypt/>
 <http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>
 
-## Advanced Topics / Tips
+
 ### Other services
 #### Mongo
 <https://medium.com/faun/managing-mongodb-on-docker-with-docker-compose-26bf8a0bbae3>
 #### Node Server 
 <https://nodejs.org/de/docs/guides/nodejs-docker-webapp/>
-#### Saving to Docker Hub
+
+### Saving to Docker Hub
 <https://docs.docker.com/docker-hub/builds/>
 
 ## Quickstart - The TLDR
