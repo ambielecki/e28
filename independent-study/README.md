@@ -18,7 +18,7 @@
 First we want to test that our installation of docker desktop was successful.  Open a terminal 
 window and type the following `docker run hello-world`.  You should see something similar to the 
 following:
-![hello-world example](../images/hello-world.png)
+![hello-world example](images/hello-world.png)
 
 <https://docs.docker.com/get-started/>
 #### Opening a terminal
