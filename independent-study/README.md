@@ -3,8 +3,28 @@
 ## What is Docker? 
 <https://docs.docker.com/get-started/>
 
-### Containers, Images, Volumes - oh my <
+The simplest (technical) answer is that Docker is an engine for creating and running containers. 
+Docker provides the interface between these containers and your operating system.  A container is a 
+way of packaging code and its dependencies (os, drivers, packages, etc) so it can run virtually 
+anywhere and in isolation. So, there is a version of the Docker engine for Mac, Windows, or Linux. 
+This engine will allow the same containers to run on any system by providing the interface to OS 
+APIs.
+
+![docker containers](images/docker-container.png)
+
+What does that mean for you the developer?  It means simpler development on near production systems 
+on a local environment of your choosing. It does not matter if members of your team work with Windows, 
+Linux, or Mac, with a few simple tweaks you can all work with the same dev environment. As a solo 
+developer you gain the comfort of knowing that your code is running in a near production 
+environment in your container (so if you intend to deploy on Ubuntu 18.04, you can develop in a 
+container with Ubuntu 18.04). Your containers also provide code isolation so you can run many 
+versions of a tool (for example PHP 7.1 and 7.4 for different projects) without interference. And, 
+best of all, no more installing programs on your root OS (my personal example - installing PostgreSQL 
+locally and having it ruin everything - leading to a fresh Windows install).
+
+### Containers, Images, Volumes - oh my
 <https://www.infoworld.com/article/3204171/what-is-docker-the-spark-for-the-container-revolution.html>
+<https://www.docker.com/resources/what-container>
 ### Why Use Docker over XAMPP?
 ### Other Options (VMs)
 
@@ -35,6 +55,7 @@ used in the workplace) tool: docker-compose.
 
 ## Docker-Compose
 <https://docs.docker.com/compose/compose-file/>
+
 ### docker-compose.yml
 ### Dockerfile
 ### Linking your files (volumes)
@@ -43,6 +64,7 @@ used in the workplace) tool: docker-compose.
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
 
 ## Important Commands
+
 ### Opening a terminal
 <https://docs.docker.com/engine/reference/commandline/exec/>
 <https://docs.docker.com/docker-for-mac/dashboard/>
@@ -52,6 +74,7 @@ used in the workplace) tool: docker-compose.
 <https://docs.docker.com/config/pruning/>
 
 ## Advanced Topics / Tips
+
 ### Orchestrating Many Containers
 #### nginx-proxy 
 <https://github.com/nginx-proxy/nginx-proxy>
