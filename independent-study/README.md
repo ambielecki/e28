@@ -1,8 +1,6 @@
 # Docker and Docker-Compose for Development Environments
 
 ## What is Docker? 
-<https://docs.docker.com/get-started/>
-
 The simplest (technical) answer is that Docker is an engine for creating and running containers. 
 Docker provides the interface between these containers and your operating system.  A container is a 
 way of packaging code and its dependencies (os, drivers, packages, etc) so it can run virtually 
@@ -14,7 +12,7 @@ APIs.
 
 What does that mean for you the developer?  It means simpler development on near production systems 
 on a local environment of your choosing. It does not matter if members of your team work with Windows, 
-Linux, or Mac, with a few simple tweaks you can all work with the same dev environment. As a solo 
+Linux, or Mac; with a few simple tweaks you can all work with the same dev environment. As a solo 
 developer you gain the comfort of knowing that your code is running in a near production 
 environment in your container (so if you intend to deploy on Ubuntu 18.04, you can develop in a 
 container with Ubuntu 18.04). Your containers also provide code isolation so you can run many 
@@ -22,9 +20,32 @@ versions of a tool (for example PHP 7.1 and 7.4 for different projects) without 
 best of all, no more installing programs on your root OS (my personal example - installing PostgreSQL 
 locally and having it ruin everything - leading to a fresh Windows install).
 
-### Containers, Images, Volumes - oh my
-<https://www.infoworld.com/article/3204171/what-is-docker-the-spark-for-the-container-revolution.html>
-<https://www.docker.com/resources/what-container>
+Sources:  
+[Docker - Get Started](https://docs.docker.com/get-started/)  
+[InfoWorld - What is Docker?](https://www.infoworld.com/article/3204171/what-is-docker-the-spark-for-the-container-revolution.html)
+
+### Images, Containers, Volumes - oh my
+
+There are many new terms to deal with when getting started with Docker, with three of the fundamental 
+building blocks being Images, Containers, and Volumes. Every environment you create will most likely 
+use all three of these objects, so having a basic understanding of them will be helpful.
+
+#### Images
+
+Quite simply, an image is the blueprint for our docker container.
+
+Sources:
+[Docker - Overview](https://docs.docker.com/engine/docker-overview/)
+
+
+#### Containers
+
+Sources:  
+[Docker - What is a Container](https://www.docker.com/resources/what-container)
+
+
+#### Volumes
+
 ### Why Use Docker over XAMPP?
 ### Other Options (VMs)
 
