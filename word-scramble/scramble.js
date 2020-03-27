@@ -29,6 +29,24 @@ const words = {
     }
 };
 
+Vue.component('scramble-results', {
+    template: `
+        <div>
+            <h2>Results</h2>
+            <div v-for="(result, index) in results" :key="index">
+                <ul>
+                    <li><b>Player: </b>{{ result.player }}</li>
+                    <li><b>Sport: </b>{{ result.sport }}</li>
+                    <li><b>Shuffled Word: </b>{{ result.shuffled_word }}</li>
+                    <li><b>Guess: </b>{{ result.guess }}</li>
+                    <li><b>Correct: </b>{{ result.correct ? 'Yes' : 'No' }}</li>
+                </ul>
+            </div>
+        </div>
+    `,
+    props: ['results'],
+});
+
 let app = new Vue({
     el: '#scramble',
     data: {
@@ -37,6 +55,7 @@ let app = new Vue({
         guessed: false,
         player_guess: '',
         player_name: '',
+        results: [],
         selected_word: '',
         selected_sport: '',
         sports: Object.keys(words), // not needed, but easier to manage
@@ -80,8 +99,20 @@ let app = new Vue({
         },
 
         guess: function () {
+            let guess = this.player_guess.toLowerCase();
+            let correct = guess === this.selected_word;
+
+            let result = {
+                player: this.player_name,
+                sport: this.selected_sport,
+                shuffled_word: this.shuffled_word,
+                guess: guess,
+                correct: correct,
+            };
+
+            this.results.push(result);
             this.guessed = true;
-            this.correct_guess = this.player_guess.toLowerCase() === this.selected_word;
+            this.correct_guess = correct;
         },
 
         playAgain: function () {

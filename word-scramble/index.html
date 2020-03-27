@@ -46,6 +46,8 @@
                 <button v-if="correct_guess" @click="playAgain">Play Again?</button>
             </p>
         </div>
+
+        <scramble-results v-if="results.length > 0" :results="results"></scramble-results>
     </section>
 </body>
 </html>
