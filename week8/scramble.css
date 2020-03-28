@@ -1,0 +1,29 @@
+[v-cloak] {
+    display: none !important;
+}
+
+.shuffled_word {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.hint {
+    font-style: italic;
+}
+
+.message {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    width: auto;
+    display: inline-block;
+    padding: 0.25rem;
+}
+
+.message.success {
+    background-color: green;
+}
+
+.required {
+    color: red;
+}

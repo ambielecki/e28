@@ -4,8 +4,7 @@
     <title>Week 5 - Word Scramble</title>
     <meta charset='utf-8'>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
-    <script src="scramble.js" defer></script>
+    <script src="js/master.js" defer></script>
     <link rel="stylesheet" type="text/css" href="scramble.css">
 </head>
 <body>
@@ -47,7 +46,7 @@
             </p>
         </div>
 
-        <scramble-results v-if="results.length > 0" :results="results"></scramble-results>
+        <round-detail v-if="results.length > 0" :results="results"></round-detail>
     </section>
 </body>
 </html>

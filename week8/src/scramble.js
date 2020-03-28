@@ -1,3 +1,6 @@
+import RoundDetailComponent from './components/RoundDetailComponent'
+import Vue from 'vue';
+
 const words = {
     baseball: {
         batter: 'The person holding the bat',
@@ -29,24 +32,6 @@ const words = {
     }
 };
 
-Vue.component('scramble-results', {
-    template: `
-        <div>
-            <h2>Results</h2>
-            <div v-for="(result, index) in results" :key="index">
-                <ul>
-                    <li><b>Player: </b>{{ result.player }}</li>
-                    <li><b>Sport: </b>{{ result.sport }}</li>
-                    <li><b>Shuffled Word: </b>{{ result.shuffled_word }}</li>
-                    <li><b>Guess: </b>{{ result.guess }}</li>
-                    <li><b>Correct: </b>{{ result.correct ? 'Yes' : 'No' }}</li>
-                </ul>
-            </div>
-        </div>
-    `,
-    props: ['results'],
-});
-
 let app = new Vue({
     el: '#scramble',
     data: {
@@ -60,6 +45,10 @@ let app = new Vue({
         selected_sport: '',
         sports: Object.keys(words), // not needed, but easier to manage
         words: words,
+    },
+
+    components: {
+        'round-detail': RoundDetailComponent,
     },
 
     computed: {
