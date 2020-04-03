@@ -67,5 +67,18 @@ task('week9-build', function () {
     run("cd {{release_path}}/week9 && {{bin/npm}} run build");
 });
 
+task('p2-install', function () {
+    if (has('previous_release')) {
+        if (test('[ -d {{previous_release}}/p2/node_modules ]')) {
+            run('cp -R {{previous_release}}/p2/node_modules {{release_path}}/p2');
+        }
+    }
+    run("cd {{release_path}}/p2 && {{bin/npm}} ci");
+});
+
+task('p2-build', function () {
+    run("cd {{release_path}}/p2 && {{bin/npm}} run build");
+});
+
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');

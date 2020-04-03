@@ -4,7 +4,7 @@ mix.js('src/scramble.js', 'js/master.js');
 
 mix.options({
     hmrOptions: {
-        host: 'vue-node',
+        host: 'e28hot.test',
         port: 80,
     }
 });
@@ -17,7 +17,7 @@ mix.webpackConfig({
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
-        host: "vue-node",
+        host: "e28hot.test",
         port: 80,
         watchOptions: {
             poll: true
