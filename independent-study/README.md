@@ -32,13 +32,26 @@ use all three of these objects, so having a basic understanding of them will be 
 
 #### Images
 
-Quite simply, an image is the blueprint for our docker container.
+Quite simply, an image is the blueprint for our docker container. An image is a binary file 
+that contains all the code, libraries, etc to run a specific task.  An image can be as simple as an 
+OS build such as Ubuntu, to the full code stack of an application.
+
+We will usually deal with images that will contain the the base dev ops components of a deployment,
+OS, web server, runtimes for things such as PHP, Node, or Python.  We will also see images for databases such as MySQL 
+or Mongo, and services such as Redis caching or simple queue services.  From there we will add the specifics of our 
+deployment, libraries we need for our code such as a PDF generator, library managers such as NPM or Composer, or database drivers.
+
+If we choose, a snapshot in time can be taken once our dev environment is set up, with all of these components in place, 
+to create a shareable image. 
 
 Sources:
 [Docker - Overview](https://docs.docker.com/engine/docker-overview/)
 
 
 #### Containers
+
+Containers are built from images, it is the process on your machine that contains the code necessary for running our task. 
+We will spend our time interacting with our application in container.
 
 Sources:  
 [Docker - What is a Container](https://www.docker.com/resources/what-container)
