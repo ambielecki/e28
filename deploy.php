@@ -23,6 +23,8 @@ set('bin/npm', function () {
     return run('which npm');
 });
 
+set('default_timeout', 600);
+
 // Hosts
 
 host('andrewbielecki.com')
