@@ -19,6 +19,9 @@ set('shared_dirs', []);
 // Writable dirs by web server 
 set('writable_dirs', []);
 
+set('bin/npm', function () {
+    return run('which npm');
+});
 
 // Hosts
 
@@ -40,12 +43,27 @@ task('deploy', [
 //    'deploy:shared',
 //    'deploy:writable',
 //    'deploy:vendors',
+    'week9-install',
+    'week9-build',
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
     'success'
 ]);
+
+task('week9-install', function () {
+    if (has('previous_release')) {
+        if (test('[ -d {{previous_release}}/week9/node_modules ]')) {
+            run('cp -R {{previous_release}}/week9/node_modules {{release_path}}/week9');
+        }
+    }
+    run("cd {{release_path}}/week9 && {{bin/npm}} ci");
+});
+
+task('week9-build', function () {
+    run("cd {{release_path}}/week9 && {{bin/npm}} run build");
+});
 
 // [Optional] If deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
