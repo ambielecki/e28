@@ -47,6 +47,8 @@ task('deploy', [
 //    'deploy:vendors',
     'week9-install',
     'week9-build',
+    'p2-install',
+    'p2-build',
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
