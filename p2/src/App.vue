@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Andrew Bielecki's P2 Placeholder"/>
-  </div>
+    <div id="app">
+        <section class="hero is-dark">
+            <div class="container">
+                <h1 class="title">
+                    Homebrew Helper
+                </h1>
+                <h2 class="subtitle">
+                    Written With Vue.js
+                </h2>
+            </div>
+        </section>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: 'App',
+        components: {}
+    }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    @import './assets/scss/beer.scss';
 </style>

@@ -12,7 +12,9 @@
 *List the features in your application that are persisting and retrieving data from the server*
 
 ## Outside resources
-*Your list of outside resources go here*
+* [Beer Mug Favicon](http://www.iconarchive.com/show/food-drink-icons-by-graphicloads/beer-icon.html)
+* [Import CSS Frameworks in Vue](https://alligator.io/vuejs/css-frameworks-vuejs/)
+* [Bulma](https://bulma.io)
 
 ## Notes for instructor
 *Any notes for me to refer to while grading; if none, omit this section*
