@@ -61,7 +61,9 @@
                 </div>
             </div>
         </nav>
-        <router-view></router-view>
+        <section class="container">
+            <router-view></router-view>
+        </section>
     </div>
 </template>
 

@@ -1,6 +1,10 @@
+import './../node_modules/bulma/css/bulma.css';
+
+import Beer from './Beer';
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import './../node_modules/bulma/css/bulma.css';
+
+// components
 import App from './App.vue'
 import BeerHome from './components/BeerHome';
 import BeerTools from './components/BeerTools';
@@ -12,11 +16,11 @@ import BeerLogEdit from './components/log/BeerLogEdit';
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/tools', name: 'tools', component: BeerTools },
     { path: '/log/create', name: 'log-create', component: BeerLogCreate },
     { path: '/log/:id', name: 'log-view', component: BeerLogView },
     { path: '/log/edit/:id', name: 'log-edit', component: BeerLogEdit },
     { path: '/log', name: 'log', component: BeerLogList },
+    { path: '/tools', name: 'tools', component: BeerTools },
     { path: '/', name: 'home', component: BeerHome },
 ];
 
@@ -30,4 +34,7 @@ const router = new VueRouter({
 new Vue({
     router: router,
     render: h => h(App),
+    mounted: function () {
+        Beer.initializeNavbar();
+    }
 }).$mount('#app');
