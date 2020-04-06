@@ -6,12 +6,12 @@ import VueRouter from 'vue-router'
 
 // components
 import App from './App.vue'
-import BeerHome from './components/BeerHome';
-import BeerTools from './components/BeerTools';
-import BeerLogList from './components/log/BeerLogList';
-import BeerLogCreate from './components/log/BeerLogCreate';
-import BeerLogView from './components/log/BeerLogView';
-import BeerLogEdit from './components/log/BeerLogEdit';
+import BeerHome from './assets/components/BeerHome';
+import BeerTools from './assets/components/BeerTools';
+import BeerLogList from './assets/components/log/BeerLogList';
+import BeerLogCreate from './assets/components/log/BeerLogCreate';
+import BeerLogView from './assets/components/log/BeerLogView';
+import BeerLogEdit from './assets/components/log/BeerLogEdit';
 
 Vue.use(VueRouter);
 
