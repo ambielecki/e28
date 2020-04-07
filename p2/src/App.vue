@@ -16,9 +16,8 @@
 
             <div id="beer_navbar" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item">
-                        Home
-                    </a>
+                    <router-link :to="{ name: 'home' }">Home</router-link>
+                    <router-link :to="{ name: 'home' }">Home</router-link>
 
                     <a class="navbar-item">
                         Documentation

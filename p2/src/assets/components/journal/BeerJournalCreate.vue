@@ -1,14 +1,14 @@
 <template>
     <div>
         <h1>Create Placeholder</h1>
-        <beer-log-form :test="'Create Test'"></beer-log-form>
+        <beer-journal-form :test="'Create Test'"></beer-journal-form>
     </div>
 </template>
 
 <script>
-    import BeerLogForm from "./BeerLogForm";
+    import BeerJournalForm from "./BeerJournalForm";
     export default {
-        components: { BeerLogForm },
+        components: { BeerJournalForm },
         data: function () {
             return {};
         }

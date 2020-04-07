@@ -1,14 +1,14 @@
 <template>
     <div>
         <h1>Edit Placeholder</h1>
-        <beer-log-form :test="'Edit Test for ' + id "></beer-log-form>
+        <beer-journal-form :test="'Edit Test for ' + id "></beer-journal-form>
     </div>
 </template>
 
 <script>
-    import BeerLogForm from "./BeerLogForm";
+    import BeerJournalForm from "./BeerJournalForm";
     export default {
-        components: { BeerLogForm },
+        components: { BeerJournalForm },
         data: function () {
             return {
                 id: this.$route.params.id,

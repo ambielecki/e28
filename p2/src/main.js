@@ -8,11 +8,12 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import BeerHome from './assets/components/BeerHome';
 import BeerTools from './assets/components/BeerTools';
-import BeerLogList from './assets/components/log/BeerLogList';
-import BeerLogCreate from './assets/components/log/BeerLogCreate';
-import BeerLogView from './assets/components/log/BeerLogView';
-import BeerLogEdit from './assets/components/log/BeerLogEdit';
+import BeerJournalList from './assets/components/journal/BeerJournalList';
+import BeerJournalCreate from './assets/components/journal/BeerJournalCreate';
+import BeerJournalView from './assets/components/journal/BeerJournalView';
+import BeerJournalEdit from './assets/components/journal/BeerJournalEdit';
 
+// want to be able to set local vs prod api
 window.Axios = require('axios').default.create({
     baseURL: process.env.VUE_APP_API_URL,
 });
@@ -20,10 +21,10 @@ window.Axios = require('axios').default.create({
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/log/create', name: 'log-create', component: BeerLogCreate },
-    { path: '/log/:id', name: 'log-view', component: BeerLogView },
-    { path: '/log/edit/:id', name: 'log-edit', component: BeerLogEdit },
-    { path: '/log', name: 'log', component: BeerLogList },
+    { path: '/journal/create', name: 'journal-create', component: BeerJournalCreate },
+    { path: '/journal/:id', name: 'journal-view', component: BeerJournalView },
+    { path: '/journal/edit/:id', name: 'journal-edit', component: BeerJournalEdit },
+    { path: '/journal', name: 'journal', component: BeerJournalList },
     { path: '/tools', name: 'tools', component: BeerTools },
     { path: '/', name: 'home', component: BeerHome },
 ];
