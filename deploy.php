@@ -42,6 +42,7 @@ task('deploy', [
     'deploy:lock',
     'deploy:release',
     'deploy:update_code',
+    'p2-env',
 //    'deploy:shared',
 //    'deploy:writable',
 //    'deploy:vendors',
@@ -67,6 +68,10 @@ task('week9-install', function () {
 
 task('week9-build', function () {
     run("cd {{release_path}}/week9 && {{bin/npm}} run build");
+});
+
+task('p2-env', function () {
+    run("cp {{deploy_path}}/shared/p2/.env {{release_path}}/p2/.env");
 });
 
 task('p2-install', function () {
