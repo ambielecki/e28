@@ -13,6 +13,10 @@ import BeerLogCreate from './assets/components/log/BeerLogCreate';
 import BeerLogView from './assets/components/log/BeerLogView';
 import BeerLogEdit from './assets/components/log/BeerLogEdit';
 
+window.Axios = require('axios').default.create({
+    baseURL: process.env.VUE_APP_API_URL,
+});
+
 Vue.use(VueRouter);
 
 const routes = [
