@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <nav class="navbar" role="navigation" aria-label="main navigation">
+        <nav class="navbar is-light" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <router-link to="/" exact class="navbar-item">
                     <img src="/images/logo.png" width="21" height="30">
@@ -16,50 +16,13 @@
 
             <div id="beer_navbar" class="navbar-menu">
                 <div class="navbar-start">
-                    <router-link :to="{ name: 'home' }">Home</router-link>
-                    <router-link :to="{ name: 'home' }">Home</router-link>
-
-                    <a class="navbar-item">
-                        Documentation
-                    </a>
-
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            More
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                About
-                            </a>
-                            <a class="navbar-item">
-                                Jobs
-                            </a>
-                            <a class="navbar-item">
-                                Contact
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                Report an issue
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a class="button is-primary">
-                                <strong>Sign up</strong>
-                            </a>
-                            <a class="button is-light">
-                                Log in
-                            </a>
-                        </div>
-                    </div>
+                    <router-link :to="{ name: 'home' }" class="navbar-item">Home</router-link>
+                    <router-link :to="{ name: 'journal' }" class="navbar-item">Journal</router-link>
+                    <router-link :to="{ name: 'tools' }" class="navbar-item">Tools</router-link>
                 </div>
             </div>
         </nav>
+
         <div class="container">
             <router-view></router-view>
         </div>
