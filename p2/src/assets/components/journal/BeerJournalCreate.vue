@@ -1,6 +1,6 @@
 <template>
     <div class="columns">
-        <div class="col is-full">
+        <div class="column is-full">
             <div class="card">
                 <header class="card-header">
                     <p class="card-header-title">
@@ -10,7 +10,7 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form></beer-journal-form>
+                        <beer-journal-form :beer="beer" :styles="state.styles"></beer-journal-form>
                     </div>
                 </div>
             </div>
@@ -24,8 +24,11 @@
         components: { BeerJournalForm },
         data: function () {
             return {
-
+                beer: {
+                    style: '',
+                }
             };
-        }
+        },
+        props: ['state'],
     };
 </script>

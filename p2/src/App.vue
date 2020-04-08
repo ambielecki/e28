@@ -26,7 +26,7 @@
         <br>
 
         <div class="container">
-            <router-view></router-view>
+            <router-view :state="state"></router-view>
         </div>
     </div>
 </template>
@@ -34,7 +34,23 @@
 <script>
     export default {
         name: 'App',
-        components: {}
+        data: function () {
+            return {
+                state: {
+                    styles: {},
+                },
+
+            };
+        },
+        mounted: function () {
+            window.Axios.get('/beer/styles')
+                .then(response => {
+                    this.$data.state.styles = response.data.data.styles;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
     }
 </script>
 
