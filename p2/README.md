@@ -36,6 +36,6 @@
 * [CKEditor Vue Component](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html)
 
 ## Notes for instructor
-* API is live (written in Laravel - shocking, right?) - it's a mess as I ahve been playing with multiple test
+* API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
 projects. <https://github.com/ambielecki/e28-api>
 * Should probablu abstract a bunch of this to services
