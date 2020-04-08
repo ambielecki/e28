@@ -1,6 +1,4 @@
 import './../node_modules/bulma/bulma.sass';
-import './../node_modules/bulma-calendar/dist/css/bulma-calendar.min.css';
-import './../node_modules/bulma-calendar/dist/js/bulma-calendar';
 
 import Beer from './Beer';
 import Vue from 'vue'
@@ -25,6 +23,8 @@ window.Axios = require('axios').default.create({
         },
     },
 });
+
+window.Moment = require('moment-timezone');
 
 Vue.use(VueRouter);
 

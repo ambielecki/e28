@@ -17,6 +17,7 @@
 * [Import CSS Frameworks in Vue](https://alligator.io/vuejs/css-frameworks-vuejs/)
 * [Bulma](https://bulma.io)
 * [Vue Bulma Datepicker](https://github.com/vue-bulma/datepicker)
+* [Moment Timezone](https://momentjs.com/timezone/)
 
 ## Notes for instructor
 *Any notes for me to refer to while grading; if none, omit this section*
