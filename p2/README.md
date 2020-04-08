@@ -18,6 +18,7 @@
 * [Bulma](https://bulma.io)
 * [Vue Bulma Datepicker](https://github.com/vue-bulma/datepicker)
 * [Moment Timezone](https://momentjs.com/timezone/)
+* [CKEditor Vue Component](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html)
 
 ## Notes for instructor
 *Any notes for me to refer to while grading; if none, omit this section*

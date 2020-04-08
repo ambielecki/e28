@@ -11,6 +11,18 @@
                 <div class="card-content">
                     <div class="content">
                         <beer-journal-form :beer="beer" :styles="state.styles"></beer-journal-form>
+                        <div class="columns">
+                            <div class="column is-full">
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button class="button is-link" @click="submit">Add Entry</button>
+                                    </div>
+                                    <div class="control">
+                                        <button class="button is-link is-light" @click="cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,10 +38,28 @@
             return {
                 beer: {
                     style: null,
-                    primary_fermentation_start: window.Moment.tz('America/New_York').format('d/m/YYYY H:i')
-                }
+                    primary_fermentation_start: window.Moment.tz('America/New_York').format('YYYY-M-D H:mm'),
+                    rating: null,
+                },
             };
         },
         props: ['state'],
+        methods: {
+            submit: function () {
+                console.log(this.beer);
+                window.Axios.post('/beer', this.beer)
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error.response);
+                    });
+            },
+
+            cancel: function () {
+                console.log('cancel');
+                this.$router.push( {name: 'journal'} )
+            }
+        },
     };
 </script>
