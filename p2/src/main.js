@@ -16,6 +16,12 @@ import BeerJournalEdit from './assets/components/journal/BeerJournalEdit';
 // want to be able to set local vs prod api
 window.Axios = require('axios').default.create({
     baseURL: process.env.VUE_APP_API_URL,
+    headers: {
+        common: {
+            'Content-Type': 'application/json',
+            'Accepts': 'application/json',
+        },
+    },
 });
 
 Vue.use(VueRouter);
@@ -36,10 +42,18 @@ const router = new VueRouter({
     mode: 'history',
 });
 
-new Vue({
+let app = new Vue({
     router: router,
     render: h => h(App),
+    data: {
+        logged_in: false,
+    },
     mounted: function () {
         Beer.initializeNavbar();
+        Beer.testLogin()
+            .then(logged_in => {
+                app.$data.logged_in = logged_in;
+            });
+        Beer.initializeHeartbeat();
     }
 }).$mount('#app');

@@ -7,15 +7,5 @@
         data: function () {
             return {};
         },
-
-        mounted: function () {
-            window.Axios.get('health-check')
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
     };
 </script>

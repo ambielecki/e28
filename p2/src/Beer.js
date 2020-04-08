@@ -28,4 +28,45 @@ export default class Beer {
             });
         }
     }
+
+    /**
+     * Refresh user token if logged in
+     */
+    static initializeHeartbeat() {
+        window.setInterval(function () {
+            if (window.localStorage.getItem('token') !== null) {
+                window.Axios.post('/refresh', {})
+                    .then(response => {
+                        let token = response.data.data.access_token;
+
+                        window.localStorage.setItem('token', token);
+                        window.Axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        }, 60000);
+    }
+
+    // Auth was already setup in the API, this way we can see how the app would work
+    static testLogin() {
+        return window.Axios.post('/login', {
+            email: 'testy@test.com',
+            password: 'foobarfizzbuzz',
+        })
+            .then(response => {
+                let token = response.data.data.access_token;
+
+                window.localStorage.setItem('token', token);
+                window.Axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+                return true;
+            })
+            .catch(error => {
+                console.log(error);
+
+                return false;
+            });
+    }
 }
