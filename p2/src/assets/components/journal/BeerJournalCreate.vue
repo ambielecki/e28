@@ -1,7 +1,20 @@
 <template>
-    <div>
-        <h1>Create Placeholder</h1>
-        <beer-journal-form :test="'Create Test'"></beer-journal-form>
+    <div class="columns">
+        <div class="col is-full">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Create New Journal Entry
+                    </p>
+                </header>
+
+                <div class="card-content">
+                    <div class="content">
+                        <beer-journal-form></beer-journal-form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -10,7 +23,9 @@
     export default {
         components: { BeerJournalForm },
         data: function () {
-            return {};
+            return {
+
+            };
         }
     };
 </script>
