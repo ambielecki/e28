@@ -16,6 +16,7 @@
 * [Beer Logo](http://pngimg.com/download/2383)
 * [Import CSS Frameworks in Vue](https://alligator.io/vuejs/css-frameworks-vuejs/)
 * [Bulma](https://bulma.io)
+* [Bulma Calendar](https://creativebulma.net/product/calendar/demo)
 
 ## Notes for instructor
 *Any notes for me to refer to while grading; if none, omit this section*

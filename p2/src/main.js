@@ -1,4 +1,6 @@
 import './../node_modules/bulma/bulma.sass';
+import './../node_modules/bulma-calendar/dist/css/bulma-calendar.min.css';
+import './../node_modules/bulma-calendar/dist/js/bulma-calendar';
 
 import Beer from './Beer';
 import Vue from 'vue'

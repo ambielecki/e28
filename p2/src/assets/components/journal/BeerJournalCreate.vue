@@ -25,7 +25,8 @@
         data: function () {
             return {
                 beer: {
-                    style: '',
+                    style: null,
+                    primary_fermentation_start: '',
                 }
             };
         },
