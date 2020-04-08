@@ -46,7 +46,6 @@
         props: ['state'],
         methods: {
             submit: function () {
-                console.log(this.beer);
                 window.Axios.post('/beer', this.beer)
                     .then(response => {
                         console.log(response.data);
@@ -57,8 +56,7 @@
             },
 
             cancel: function () {
-                console.log('cancel');
-                this.$router.push( {name: 'journal'} )
+                this.$router.push({ name: 'journal' })
             }
         },
     };
