@@ -3,13 +3,28 @@
 + Production URL: <https://e28p2.andrewbielecki.com>
 
 ## Pages summary
-*List the "pages" of your application*
+* / - Home page, all hardcoded
+* /journal - List of brewing journal entries (filterable)
+* /journal/{id} - Journal Entry details
+* /journal/create - Add a journal entry
+* /journal/edit/{id} = Edit a journal entry
+* /tools - Brewer helper tool page (barebones at the moment)
 
 ## SFC summary
-*List the SFCs of your application*
-  
+* /src/assets/components/BeerHome.vue - homepage
+* /src/assets/components/BeerTools.vue - tools page shell
+* /src/assets/components/tools/BeerAlcoholCalculator.vue - ABV calculator widget
+* /src/assets/components/journal/BeerJournalList.vue - List of journal entries
+* /src/assets/components/journal/BeerJournalView.vue - View a specific entry
+* /src/assets/components/journal/BeerJournalCreate.vue - Create journal shell
+* /src/assets/components/journal/BeerJournalEdit.vue - Edit journal shell
+* /src/assets/components/journal/BeerJournalForm.vue - Shared form for journal entry create/edit
+
 ## Server interaction
-*List the features in your application that are persisting and retrieving data from the server*
+* Mock login / JWT refresh for a test account (automatic from main.js load)
+* Journal list retrieves entries from API
+* Journal list can filter entries with API call
+* Create / Edit / View for Journal entries from API
 
 ## Outside resources
 * [Beer Mug Favicon](https://favicon.io/emoji-favicons/beer-mug/)
@@ -21,4 +36,6 @@
 * [CKEditor Vue Component](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html)
 
 ## Notes for instructor
-*Any notes for me to refer to while grading; if none, omit this section*
+* API is live (written in Laravel - shocking, right?) - it's a mess as I ahve been playing with multiple test
+projects. <https://github.com/ambielecki/e28-api>
+* Should probablu abstract a bunch of this to services
