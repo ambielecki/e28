@@ -1,6 +1,7 @@
 # Project 2
 + By: Andrew Bielecki
 + Production URL: <https://e28p2.andrewbielecki.com>
++ API Test URL: <https://e28-api.andrewbielecki.com/api/health-check>
 
 ## Pages summary
 * / - Home page, all hardcoded
