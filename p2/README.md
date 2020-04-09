@@ -35,6 +35,8 @@
 * [Vue Bulma Datepicker](https://github.com/vue-bulma/datepicker)
 * [Moment Timezone](https://momentjs.com/timezone/)
 * [CKEditor Vue Component](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html)
+* [Vue Truncate Filter](https://forum.vuejs.org/t/truncate-filter-with-html/50023)
+* [JS Truncate Words Function](https://www.w3resource.com/javascript-exercises/javascript-string-exercise-24.php)
 
 ## Notes for instructor
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test

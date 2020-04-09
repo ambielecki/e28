@@ -26,6 +26,19 @@ window.Axios = require('axios').default.create({
 
 window.Moment = require('moment-timezone');
 
+Vue.filter('truncate', function (value, length) {
+    let split_words = value.split(' ');
+    let number_of_words = split_words.length;
+
+    let truncated = split_words.splice(0, length).join(' ');
+
+    if (number_of_words > length) {
+        truncated = truncated + ' ...';
+    }
+
+    return truncated;
+});
+
 Vue.use(VueRouter);
 
 const routes = [
