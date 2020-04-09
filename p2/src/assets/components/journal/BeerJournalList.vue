@@ -17,7 +17,7 @@
         <div v-for="(beer, key) in beers" :key="key" class="column is-half">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">{{ beer.name }}</p>
+                    <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }}</router-link>
                 </header>
 
                 <div class="card-content">
