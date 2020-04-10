@@ -22,7 +22,7 @@
         <div v-for="(beer, key) in beers" :key="key" class="column is-half">
             <div class="card">
                 <header class="card-header">
-                    <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }} - {{ beer.id }}</router-link>
+                    <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }}</router-link>
                 </header>
 
                 <div class="card-content">
@@ -105,7 +105,7 @@
 
         computed: {
             load_more: function () {
-                return (this.page - 1) * this.limit < this.count && this.count !== 0;
+                return (this.page - 1) * this.limit < this.count && this.count !== 0 && this.count > this.beers.length;
             },
 
             is_initial_load: function () {
