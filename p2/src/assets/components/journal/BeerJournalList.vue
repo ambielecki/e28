@@ -33,7 +33,7 @@
                             </div>
 
                             <div v-if="beer.primary_fermentation_start" class="column is-half">
-                                <b>Start Date: </b>{{ beer.primary_fermentation_start }}
+                                <b>Start Date: </b>{{ beer.primary_fermentation_start | date-format }}
                             </div>
 
                             <div v-if="beer.yeast" class="column is-half">

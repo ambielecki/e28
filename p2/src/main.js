@@ -39,6 +39,10 @@ Vue.filter('truncate', function (value, length) {
     return truncated;
 });
 
+Vue.filter('date-format', function (value) {
+    return window.Moment.tz(value, 'America/New_York').format('YYYY-MM-DD');
+});
+
 Vue.use(VueRouter);
 
 const routes = [

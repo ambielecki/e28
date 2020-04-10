@@ -3,7 +3,7 @@
         <nav class="navbar is-light" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <router-link to="/" exact class="navbar-item">
-                    <img src="/images/logo.png" width="21" height="30">
+                    <img src="./assets/images/logo.png" width="21" height="30">
                 </router-link>
 
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
