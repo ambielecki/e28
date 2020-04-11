@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import BeerJournalForm from "./BeerJournalForm";
+    import BeerJournalForm from "./parts/BeerJournalForm";
     export default {
         components: { BeerJournalForm },
         data: function () {

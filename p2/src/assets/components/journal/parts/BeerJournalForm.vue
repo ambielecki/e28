@@ -72,27 +72,11 @@
 
             <div class="column is-half">
                 <div class="field">
-                    <label class="label" for="primary_fermentation_end">Primary Fermentation End</label>
+                    <label class="label" for="secondary_fermentation_start">Secondary Fermentation Start</label>
                     <datepicker
                         placeholder="Select Date"
-                        id="primary_fermentation_end"
-                        v-model="beer.primary_fermentation_end"
-                        :config="{
-                            dateFormat: 'Y-m-d H:i',
-                            enableTime: true,
-                            static: true
-                        }"
-                    ></datepicker>
-                </div>
-            </div>
-
-            <div class="column is-half">
-                <div class="field">
-                    <label class="label" for="secondary_fermentation_end">Secondary Fermentation End</label>
-                    <datepicker
-                        placeholder="Select Date"
-                        id="secondary_fermentation_end"
-                        v-model="beer.secondary_fermentation_end"
+                        id="secondary_fermentation_start"
+                        v-model="beer.secondary_fermentation_start"
                         :config="{
                             dateFormat: 'Y-m-d H:i',
                             enableTime: true,

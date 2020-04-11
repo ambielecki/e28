@@ -19,63 +19,23 @@
             </div>
         </div>
 
-        <div v-for="(beer, key) in beers" :key="key" class="column is-half">
-            <div class="card">
-                <header class="card-header">
-                    <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }}</router-link>
-                </header>
-
-                <div class="card-content">
-                    <div class="content">
-                        <div class="columns is-multiline is-mobile">
-                            <div v-if="beer.style" class="column is-half">
-                                <b>Style: </b>{{ state.styles[beer.style] }}
-                            </div>
-
-                            <div v-if="beer.primary_fermentation_start" class="column is-half">
-                                <b>Start Date: </b>{{ beer.primary_fermentation_start | date-format }}
-                            </div>
-
-                            <div v-if="beer.yeast" class="column is-half">
-                                <b>Yeast: </b>{{ beer.yeast }}
-                            </div>
-
-                            <div v-if="beer.rating" class="column is-half">
-                                <b>Rating: </b>{{ beer.rating }}
-                            </div>
-                        </div>
-
-                        <div class="columns is-multiline">
-                            <div v-if="beer.recipe" class="column is-full">
-                                <b>Recipe:</b>
-                                <br>
-                                <div v-html="$options.filters.truncate(beer.recipe, 50)"></div>
-                            </div>
-
-                            <div v-if="beer.brew_notes" class="column is-full">
-                                <b>Brew Notes:</b>
-                                <br>
-                                <div v-html="$options.filters.truncate(beer.brew_notes, 50)"></div>
-                            </div>
-
-                            <div v-if="beer.tasting_notes" class="column is-full">
-                                <b>Tasting Notes:</b>
-                                <br>
-                                <div v-html="$options.filters.truncate(beer.tasting_notes, 50)"></div>
-                            </div>
-                        </div>
-
-                        <div class="columns">
-                            <div class="column is-full">
-                                <div class="buttons">
-                                    <button class="button is-link" @click="viewBeer(beer.id)">View More</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <template v-for="(beer, key) in beers">
+            <beer-journal-view-compressed
+                v-if="!beer.is_expanded"
+                :beer="beer"
+                :state="state"
+                :key="key"
+                @expand-beer="beer.is_expanded = true"
+            ></beer-journal-view-compressed>
+            <beer-journal-view-expanded
+                v-else
+                :beer="beer"
+                :state="state"
+                :key="key"
+                :show_collapse="true"
+                @collapse-beer="beer.is_expanded = false"
+            ></beer-journal-view-expanded>
+        </template>
 
         <div v-if="load_more" class="column is-full">
             <div class="buttons is-centered">
@@ -86,7 +46,11 @@
 </template>
 
 <script>
+    import BeerJournalViewCompressed from "./parts/BeerJournalViewCompressed";
+    import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
+
     export default {
+        components: {BeerJournalViewExpanded, BeerJournalViewCompressed },
         data: function () {
             return {
                 beers: [],
@@ -124,25 +88,23 @@
                         },
                     })
                         .then(response => {
-                            this.beers = this.beers.concat(response.data.data.beers);
+                            let beers = response.data.data.beers;
+                            beers.map(beer => {
+                                beer.is_expanded = false;
+
+                                return beer;
+                            });
+
+                            this.beers = this.beers.concat(beers);
                             this.page = response.data.data.page;
                             this.count = response.data.data.count;
                             this.is_loading = false;
                         })
-                        .catch(function (error) {
+                        .catch(error => {
                             console.log(error);
                             this.is_loading = false;
                         });
                 }
-            },
-
-            viewBeer(id) {
-                this.$router.push({
-                    name: 'journal-view',
-                    params: {
-                        id: id,
-                    },
-                })
             }
         },
     };
