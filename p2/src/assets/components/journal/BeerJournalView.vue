@@ -37,9 +37,7 @@
                 is_loading: true,
             };
         },
-
         props: ['state'],
-
         mounted: function () {
             window.Axios.get('/beer/' + this.$route.params.id, {})
                 .then(response => {
