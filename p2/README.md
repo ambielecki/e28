@@ -37,8 +37,14 @@
 * [CKEditor Vue Component](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html)
 * [Vue Truncate Filter](https://forum.vuejs.org/t/truncate-filter-with-html/50023)
 * [JS Truncate Words Function](https://www.w3resource.com/javascript-exercises/javascript-string-exercise-24.php)
+* [Alcohol By Volume Calculation](http://www.brewunited.com/abv_calculator.php)
 
 ## Notes for instructor
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
 projects. <https://github.com/ambielecki/e28-api>
-* Should probablu abstract a bunch of this to services
+* Should probably abstract a bunch of this to services
+* Auth is mostly setup but being ignored (haven't implemented registration / signin)
+* Beer journal flow - go to /journal -> expand a beer -> click View beer to get to /journal/id -> click Edit Beer to
+go to /journal/edit/{id} OR got to /journal -> click Add Entry to go to /journal/create
+* No client side form validation at this time (there is some server side built in, but it is basic)
+* Passing some cobbled together global state

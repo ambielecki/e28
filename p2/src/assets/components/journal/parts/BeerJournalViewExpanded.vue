@@ -22,15 +22,15 @@
                     </div>
 
                     <div class="columns is-multiline">
-                        <div v-if="beer.primary_fermentation_start" class="column is-third">
+                        <div v-if="beer.primary_fermentation_start" class="column is-one-third">
                             <b>Primary Fermentation Start: </b>{{ beer.primary_fermentation_start | date-format }}
                         </div>
 
-                        <div v-if="beer.secondary_fermentation_start" class="column is-third">
+                        <div v-if="beer.secondary_fermentation_start" class="column is-one-third">
                             <b>Secondary Fermentation Start: </b>{{ beer.secondary_fermentation_start | date-format }}
                         </div>
 
-                        <div v-if="beer.bottling" class="column is-third">
+                        <div v-if="beer.bottling" class="column is-one-third">
                             <b>Bottling Date: </b>{{ beer.bottling | date-format }}
                         </div>
                     </div>

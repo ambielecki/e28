@@ -7,7 +7,7 @@ import VueRouter from 'vue-router'
 // components
 import App from './App.vue'
 import BeerHome from './assets/components/BeerHome';
-import BeerTools from './assets/components/BeerTools';
+import BeerTools from './assets/components/tools/BeerTools';
 import BeerJournalList from './assets/components/journal/BeerJournalList';
 import BeerJournalCreate from './assets/components/journal/BeerJournalCreate';
 import BeerJournalView from './assets/components/journal/BeerJournalView';
@@ -24,7 +24,9 @@ window.Axios = require('axios').default.create({
     },
 });
 
+// Time and number formats, two things I hate about JS
 window.Moment = require('moment-timezone');
+window.Accounting = require('accounting');
 
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
