@@ -9,9 +9,20 @@
                 <div class="card-content">
                     <div class="content">
                         <div class="columns">
-                            <div class="column is-full">
-                                <progress v-if="is_initial_load" class="progress is-large is-info" max="100"></progress>
-                                <p v-else>Filters will go here</p>
+                            <div class="column is-full" v-if="is_initial_load">
+                                <progress  class="progress is-large is-info" max="100"></progress>
+
+                            </div>
+                            <div v-else class="column is-full">
+                                <p>Filters will go here</p>
+                                <div class="buttons">
+                                    <button
+                                        class="button is-link"
+                                        @click="$router.push({ name: 'journal-create' })"
+                                    >
+                                        Add New Entry
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

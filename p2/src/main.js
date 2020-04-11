@@ -71,10 +71,7 @@ let app = new Vue({
     },
     mounted: function () {
         Beer.initializeNavbar();
-        Beer.testLogin()
-            .then(logged_in => {
-                app.$data.logged_in = logged_in;
-            });
+        Beer.testLogin();
         Beer.initializeHeartbeat();
     }
 }).$mount('#app');

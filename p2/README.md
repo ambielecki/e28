@@ -34,6 +34,7 @@
 * [Bulma](https://bulma.io)
 * [Vue Bulma Datepicker](https://github.com/vue-bulma/datepicker)
 * [Moment Timezone](https://momentjs.com/timezone/)
+* [Accounting JS](http://openexchangerates.github.io/accounting.js/)
 * [CKEditor Vue Component](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html)
 * [Vue Truncate Filter](https://forum.vuejs.org/t/truncate-filter-with-html/50023)
 * [JS Truncate Words Function](https://www.w3resource.com/javascript-exercises/javascript-string-exercise-24.php)

@@ -25,6 +25,8 @@ set('bin/npm', function () {
 
 set('default_timeout', 600);
 
+set('keep_releases', 3);
+
 // Hosts
 
 host('andrewbielecki.com')

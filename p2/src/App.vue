@@ -23,6 +23,8 @@
             </div>
         </nav>
 
+        <beer-flash-message :state="state"></beer-flash-message>
+
         <br>
 
         <div class="container">
@@ -32,8 +34,11 @@
 </template>
 
 <script>
+    import BeerFlashMessage from "./assets/components/helpers/BeerFlashMessage";
+
     export default {
         name: 'App',
+        components: { BeerFlashMessage },
         data: function () {
             return {
                 state: {
