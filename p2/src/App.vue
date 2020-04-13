@@ -43,6 +43,10 @@
             return {
                 state: {
                     styles: {},
+                    success_messages: [
+                        { message: 'You were successful', time: 5 },
+                        { message: 'Also Success', time: 10 },
+                    ],
                 },
 
             };
@@ -55,7 +59,21 @@
                 .catch(error => {
                     console.log(error);
                 });
-        }
+        },
+        created: function () {
+            // Clear messages after set interval
+            window.setInterval(() => {
+                this.state.success_messages.map(function (message) {
+                    message.time--;
+
+                    return message
+                });
+
+                this.state.success_messages = this.state.success_messages.filter(function (message) {
+                    return message.time > 0;
+                });
+            }, 1000);
+        },
     }
 </script>
 
