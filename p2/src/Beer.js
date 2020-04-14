@@ -77,4 +77,23 @@ export default class Beer {
 
         return has_data && has_test_property;
     }
+
+    static formatErrorMessages(error) {
+        let messages = [];
+
+        if (Object.prototype.hasOwnProperty.call(error, 'response')) {
+            if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
+                if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
+                    for (let error_group in error.response.data.data.errors) {
+                        error.response.data.data.errors[error_group].forEach(message => {
+                            messages.push(error_group + ': ' + message);
+
+                        });
+                    }
+                }
+            }
+        }
+
+        return messages;
+    }
 }

@@ -48,7 +48,6 @@
      */
 
     import BeerFlashMessage from "./assets/components/helpers/BeerFlashMessage";
-    const beer = require('./Beer.js').default;
 
     export default {
         name: 'App',
@@ -78,9 +77,9 @@
             },
         },
         mounted: function () {
-            beer.testLogin()
+            window.Beer.testLogin()
                 .then(response => {
-                    if (beer.validateResponse(response, 'access_token')) {
+                    if (window.Beer.validateResponse(response, 'access_token')) {
                         this.state.logged_in = true;
                     }
                 })

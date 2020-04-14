@@ -1,6 +1,5 @@
 import './../node_modules/bulma/bulma.sass';
 
-const beer = require('./Beer.js').default;
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -27,6 +26,8 @@ window.Axios = require('axios').default.create({
 // Time and number formats, two things I hate about JS
 window.Moment = require('moment-timezone');
 window.Accounting = require('accounting');
+
+window.Beer = require('./Beer.js').default;
 
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
@@ -68,7 +69,7 @@ new Vue({
     render: h => h(App),
     data: {},
     mounted: function () {
-        beer.initializeNavbar();
-        beer.initializeHeartbeat();
+        window.Beer.initializeNavbar();
+        window.Beer.initializeHeartbeat();
     }
 }).$mount('#app');
