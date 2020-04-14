@@ -52,3 +52,4 @@ projects. <https://github.com/ambielecki/e28-api>
 go to /journal/edit/{id} OR got to /journal -> click Add Entry to go to /journal/create
 * No client side form validation at this time (there is some server side built in, but it is basic)
 * Passing some cobbled together global state
+* Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
