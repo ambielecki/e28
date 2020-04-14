@@ -61,11 +61,11 @@
         },
         methods: {
             removeSuccess(key) {
-                this.state.success_messages.splice(key);
+                this.state.success_messages.splice(key, 1);
             },
             removeWarning(key) {
                 console.log(key);
-                this.state.warning_messages.splice(key);
+                this.state.warning_messages.splice(key, 1);
             },
             decrementMessageTime(messages) {
                 messages.map(function (message) {

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="state.success_messages.length > 0" class="notifications container">
+    <div v-if="show_messages" class="notifications container">
         <transition-group name="fade">
             <div v-for="(success_message, key) in state.success_messages" :key="key + 'success'" class="notification is-success">
                 <button class="delete" @click="$emit('remove-success', key)"></button>
