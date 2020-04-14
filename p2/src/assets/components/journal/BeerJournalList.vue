@@ -213,7 +213,8 @@
                 this.getBeers();
             },
             searchBeers() {
-                beer.debounce(this.testDebounce(), 3000);
+                console.log('outer');
+
             },
             testDebounce() {
                 console.log('testing');
