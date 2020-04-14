@@ -8,13 +8,90 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <div class="columns">
+                        <div class="columns is-multiline">
                             <div class="column is-full" v-if="is_initial_load">
                                 <progress  class="progress is-large is-info" max="100"></progress>
-
                             </div>
-                            <div v-else class="column is-full">
-                                <p>Filters will go here</p>
+                            <div class="column is-full">
+                                <h5>Filters</h5>
+                                <div class="columns">
+                                    <div class="column is-one-fourth">
+                                        <div class="field">
+                                            <label class="label" for="style">Style</label>
+                                            <div class="control is-expanded">
+                                                <div class="select is-fullwidth">
+                                                    <select
+                                                        id="style"
+                                                        v-model="params.style"
+                                                        @change="filterBeers()"
+                                                    >
+                                                        <option :value="null">All</option>
+                                                        <option
+                                                            v-for="(name, value) in state.styles"
+                                                            :value="value"
+                                                            :key="value"
+                                                        >
+                                                            {{ name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-one-fourth">
+                                        <div class="field">
+                                            <label class="label" for="sort">Sort</label>
+                                            <div class="control is-expanded">
+                                                <div class="select is-fullwidth">
+                                                    <select
+                                                        id="sort"
+                                                        v-model="params.sort"
+                                                        @change="filterBeers()"
+                                                    >
+                                                        <option value="primary_fermentation_start">Start Date</option>
+                                                        <option value="name">Name</option>
+                                                        <option value="style">Style</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-one-fourth">
+                                        <div class="field">
+                                            <label class="label" for="sort_direction">Sort Direction</label>
+                                            <div class="control is-expanded">
+                                                <div class="select is-fullwidth">
+                                                    <select
+                                                        id="sort_direction"
+                                                        v-model="params.sort_direction"
+                                                        @change="filterBeers()"
+                                                    >
+                                                        <option value="DESC">Descending</option>
+                                                        <option value="ASC">Ascending</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-one-fourth">
+                                        <div class="field">
+                                            <label class="label" for="search">Search</label>
+                                            <div class="control">
+                                                <input
+                                                    id="search"
+                                                    class="input"
+                                                    type="text"
+                                                    placeholder="Search By Name or Yeast"
+                                                    v-model="params.search"
+                                                    @keyup="searchBeers"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="buttons">
                                     <button
                                         class="button is-link"
@@ -70,7 +147,13 @@
                 beers: [],
                 page: 0,
                 count: 0,
-                limit: 5,
+                params: {
+                    limit: 5,
+                    style: null,
+                    search: '',
+                    sort: 'primary_fermentation_start',
+                    sort_direction: 'DESC',
+                },
                 is_loading: false,
             };
         },
@@ -80,7 +163,7 @@
         },
         computed: {
             load_more: function () {
-                return (this.page - 1) * this.limit < this.count && this.count !== 0 && this.count > this.beers.length;
+                return (this.page - 1) * this.params.limit < this.count && this.count !== 0 && this.count > this.beers.length;
             },
 
             is_initial_load: function () {
@@ -91,11 +174,10 @@
             getBeers(page = 1) {
                 if (this.is_loading === false) {
                     this.is_loading = true;
+                    let params = this.params;
+                    params.page = page;
                     window.Axios.get('/beer', {
-                        params: {
-                            page: page,
-                            limit: this.limit,
-                        },
+                        params: params,
                     })
                         .then(response => {
                             if (beer.validateResponse(response, 'beers')) {
@@ -125,6 +207,16 @@
                             this.is_loading = false;
                         });
                 }
+            },
+            filterBeers() {
+                this.beers = [];
+                this.getBeers();
+            },
+            searchBeers() {
+                beer.debounce(this.testDebounce(), 3000);
+            },
+            testDebounce() {
+                console.log('testing');
             }
         },
     };
