@@ -9,7 +9,7 @@ export default class Beer {
      * Initialize Bulma mobile navbar
      * from https://bulma.io/documentation/components/navbar/
      */
-    static initializeNavbar() {
+    initializeNavbar() {
         const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
         // Check if there are any navbar burgers
@@ -35,7 +35,7 @@ export default class Beer {
     /**
      * Refresh user token if logged in
      */
-    static initializeHeartbeat() {
+    initializeHeartbeat() {
         window.setInterval(function () {
             if (window.localStorage.getItem('token') !== null) {
                 window.Axios.post('/refresh', {})
@@ -53,7 +53,7 @@ export default class Beer {
     }
 
     // Auth was already setup in the API, this way we can see how the app would work
-    static testLogin() {
+    testLogin() {
         return window.Axios.post('/login', {
             email: 'testy@test.com',
             password: 'foobarfizzbuzz',
@@ -71,14 +71,14 @@ export default class Beer {
             });
     }
 
-    static validateResponse(response, test_property) {
+    validateResponse(response, test_property) {
         let has_data = Object.prototype.hasOwnProperty.call(response.data, 'data');
         let has_test_property = has_data ? Object.prototype.hasOwnProperty.call(response.data.data, test_property) : false;
 
         return has_data && has_test_property;
     }
 
-    static formatErrorMessages(error) {
+    formatErrorMessages(error) {
         let messages = [];
 
         if (Object.prototype.hasOwnProperty.call(error, 'response')) {

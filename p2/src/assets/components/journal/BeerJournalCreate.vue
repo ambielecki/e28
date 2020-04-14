@@ -32,6 +32,8 @@
 
 <script>
     import BeerJournalForm from "./parts/BeerJournalForm";
+    const Beer = require('../../../Beer').default;
+    let beer = new Beer();
 
     export default {
         components: { BeerJournalForm },
@@ -49,7 +51,7 @@
             submit: function () {
                 window.Axios.post('/beer', this.beer)
                     .then(response => {
-                        if (window.Beer.validateResponse(response, 'beer')) {
+                        if (beer.validateResponse(response, 'beer')) {
                             this.$emit('set-message', {
                                 time: 5,
                                 type: 'is-success',
@@ -60,8 +62,7 @@
                         }
                     })
                     .catch(error => {
-                        // const app = this;
-                        let error_messages = window.Beer.formatErrorMessages(error);
+                        let error_messages = beer.formatErrorMessages(error);
                         error_messages.forEach(error_message => {
                             this.$emit('set-message', {
                                 time: 5,

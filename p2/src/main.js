@@ -27,7 +27,8 @@ window.Axios = require('axios').default.create({
 window.Moment = require('moment-timezone');
 window.Accounting = require('accounting');
 
-window.Beer = require('./Beer.js').default;
+const Beer = require('./Beer').default;
+let beer = new Beer();
 
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
@@ -69,7 +70,7 @@ new Vue({
     render: h => h(App),
     data: {},
     mounted: function () {
-        window.Beer.initializeNavbar();
-        window.Beer.initializeHeartbeat();
+        beer.initializeNavbar();
+        beer.initializeHeartbeat();
     }
 }).$mount('#app');
