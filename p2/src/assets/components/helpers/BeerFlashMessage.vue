@@ -1,6 +1,6 @@
 <template>
-    <transition name="fade">
-        <div v-if="show_messages" class="notifications container">
+    <div v-if="show_messages" class="notifications container">
+        <transition-group name="fade">
             <div
                 v-for="(message, key) in state.messages"
                 :key="key"
@@ -10,8 +10,9 @@
                 <button class="delete" @click="$emit('remove-message', key)"></button>
                 {{ message.message }}
             </div>
-        </div>
-    </transition>
+
+        </transition-group>
+    </div>
 </template>
 
 <script>

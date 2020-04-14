@@ -2,6 +2,9 @@
  * Class holding utility functions for the application
  */
 export default class Beer {
+    constructor() {
+    }
+
     /**
      * Initialize Bulma mobile navbar
      * from https://bulma.io/documentation/components/navbar/
@@ -61,12 +64,17 @@ export default class Beer {
                 window.localStorage.setItem('token', token);
                 window.Axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
-                return true;
+                return response;
             })
             .catch(error => {
-                console.log(error);
-
-                return false;
+                return error;
             });
+    }
+
+    static validateResponse(response, test_property) {
+        let has_data = Object.prototype.hasOwnProperty.call(response.data, 'data');
+        let has_test_property = has_data ? Object.prototype.hasOwnProperty.call(response.data.data, test_property) : false;
+
+        return has_data && has_test_property;
     }
 }

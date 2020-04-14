@@ -32,6 +32,7 @@
 
 <script>
     import BeerJournalForm from "./parts/BeerJournalForm";
+    const beer = require('../../../Beer.js').default;
 
     export default {
         components: { BeerJournalForm },
@@ -49,10 +50,33 @@
             submit: function () {
                 window.Axios.post('/beer', this.beer)
                     .then(response => {
-                        console.log(response.data);
+                        if (beer.validateResponse(response, 'beer')) {
+                            this.$emit('set-message', {
+                                time: 5,
+                                type: 'is-success',
+                                message: 'Beer created successfully',
+                            });
+
+                            this.$router.push({ name:'journal' });
+                        }
                     })
                     .catch(error => {
-                        console.log(error.response);
+                        // const app = this;
+                        if (Object.prototype.hasOwnProperty.call(error, 'response')) {
+                            if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
+                                if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
+                                    for (let error_group in error.response.data.data.errors) {
+                                        error.response.data.data.errors[error_group].forEach(message => {
+                                            this.$emit('set-message', {
+                                                time: 5,
+                                                type: 'is-danger',
+                                                message: error_group + ': ' + message,
+                                            });
+                                        });
+                                    }
+                                }
+                            }
+                        }
                     });
             },
 

@@ -31,13 +31,24 @@
         <br>
 
         <div class="container">
-            <router-view :state="state"></router-view>
+            <router-view
+                :state="state"
+                @set-message="setMessage"
+            ></router-view>
         </div>
     </div>
 </template>
 
 <script>
+    /**
+     * @typedef {Object} FlashMessage
+     * @property {number} time - expiration in seconds
+     * @property {string} type - class, is-danger, is-success
+     * @property {string} message - message to be displayed
+     */
+
     import BeerFlashMessage from "./assets/components/helpers/BeerFlashMessage";
+    const beer = require('./Beer.js').default;
 
     export default {
         name: 'App',
@@ -47,19 +58,36 @@
                 state: {
                     styles: {},
                     messages: [
-                        { time: 5, type: 'is-success', message: 'Success!' },
-                        { time: 5, type: 'is-danger', message: 'Danger Will Robinson!' },
-                    ], // object { time: int, message: 'string', type: 'string (success, danger)' }
+                        // { time: 5, type: 'is-success', message: 'Success!' },
+                        // { time: 5, type: 'is-danger', message: 'Danger Will Robinson!' },
+                    ], // object { time: int, message: 'string', type: 'string (is-success, is-danger)' }
+                    logged_in: false,
                 },
 
             };
         },
         methods: {
+            /**
+             * @param {FlashMessage} message
+             */
+            setMessage(message) {
+                this.state.messages.push(message);
+            },
             removeMessage(key) {
                 this.state.messages.splice(key, 1);
             },
         },
         mounted: function () {
+            beer.testLogin()
+                .then(response => {
+                    if (beer.validateResponse(response, 'access_token')) {
+                        this.state.logged_in = true;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
             window.Axios.get('/beer/styles')
                 .then(response => {
                     this.$data.state.styles = response.data.data.styles;

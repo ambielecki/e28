@@ -1,6 +1,6 @@
 import './../node_modules/bulma/bulma.sass';
 
-import Beer from './Beer';
+const beer = require('./Beer.js').default;
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -63,15 +63,12 @@ const router = new VueRouter({
     mode: 'history',
 });
 
-let app = new Vue({
+new Vue({
     router: router,
     render: h => h(App),
-    data: {
-        logged_in: false,
-    },
+    data: {},
     mounted: function () {
-        Beer.initializeNavbar();
-        Beer.testLogin();
-        Beer.initializeHeartbeat();
+        beer.initializeNavbar();
+        beer.initializeHeartbeat();
     }
 }).$mount('#app');
