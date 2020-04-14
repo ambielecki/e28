@@ -72,7 +72,6 @@
                         });
                     });
             },
-
             cancel: function () {
                 this.$router.push({ name: 'journal' })
             }

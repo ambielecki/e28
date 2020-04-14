@@ -81,8 +81,10 @@ export default class Beer {
     formatErrorMessages(error) {
         let messages = [];
 
+        // just want to make sure everything is defined
         if (Object.prototype.hasOwnProperty.call(error, 'response')) {
             if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
+                // where api validation errors are placed
                 if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
                     for (let error_group in error.response.data.data.errors) {
                         error.response.data.data.errors[error_group].forEach(message => {
@@ -90,6 +92,13 @@ export default class Beer {
 
                         });
                     }
+                }
+            }
+
+            // add the default message if there were no error messages
+            if (messages.length === 0) {
+                if (Object.prototype.hasOwnProperty.call(error.response.data, 'message')) {
+                    messages.push(error.response.data.message);
                 }
             }
         }

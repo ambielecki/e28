@@ -60,6 +60,9 @@
     import BeerJournalViewCompressed from "./parts/BeerJournalViewCompressed";
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
 
+    const Beer = require('../../../Beer').default;
+    let beer = new Beer;
+
     export default {
         components: {BeerJournalViewExpanded, BeerJournalViewCompressed },
         data: function () {
@@ -71,13 +74,10 @@
                 is_loading: false,
             };
         },
-
         props: ['state'],
-
         mounted: function () {
             this.getBeers();
         },
-
         computed: {
             load_more: function () {
                 return (this.page - 1) * this.limit < this.count && this.count !== 0 && this.count > this.beers.length;
@@ -87,7 +87,6 @@
                 return this.is_loading && this.beers.length === 0;
             }
         },
-
         methods: {
             getBeers(page = 1) {
                 if (this.is_loading === false) {
@@ -99,20 +98,30 @@
                         },
                     })
                         .then(response => {
-                            let beers = response.data.data.beers;
-                            beers.map(beer => {
-                                beer.is_expanded = false;
+                            if (beer.validateResponse(response, 'beers')) {
+                                let beers = response.data.data.beers;
+                                beers.map(beer => {
+                                    beer.is_expanded = false;
 
-                                return beer;
-                            });
+                                    return beer;
+                                });
 
-                            this.beers = this.beers.concat(beers);
-                            this.page = response.data.data.page;
-                            this.count = response.data.data.count;
-                            this.is_loading = false;
+                                this.beers = this.beers.concat(beers);
+                                this.page = response.data.data.page;
+                                this.count = response.data.data.count;
+                            }
                         })
                         .catch(error => {
-                            console.log(error);
+                            let error_messages = beer.formatErrorMessages(error);
+                            error_messages.forEach(error_message => {
+                                this.$emit('set-message', {
+                                    time: 5,
+                                    type: 'is-danger',
+                                    message: error_message,
+                                });
+                            });
+                        })
+                        .then(() => {
                             this.is_loading = false;
                         });
                 }

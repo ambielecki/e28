@@ -29,6 +29,9 @@
 <script>
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
 
+    const Beer = require('../../../Beer').default;
+    let beer = new Beer();
+
     export default {
         components: { BeerJournalViewExpanded },
         data: function () {
@@ -41,11 +44,21 @@
         mounted: function () {
             window.Axios.get('/beer/' + this.$route.params.id, {})
                 .then(response => {
-                    this.beer = response.data.data.beer;
-                    this.is_loading = false;
+                    if (beer.validateResponse(response, 'beer')) {
+                        this.beer = response.data.data.beer;
+                    }
                 })
                 .catch(error => {
-                    console.log(error);
+                    let error_messages = beer.formatErrorMessages(error);
+                    error_messages.forEach(error_message => {
+                        this.$emit('set-message', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: error_message,
+                        });
+                    });
+                })
+                .then(() => {
                     this.is_loading = false;
                 });
         }

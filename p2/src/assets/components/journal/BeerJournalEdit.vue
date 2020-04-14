@@ -47,6 +47,9 @@
 <script>
     import BeerJournalForm from "./parts/BeerJournalForm";
 
+    const Beer = require('../../../Beer').default;
+    let beer = new Beer();
+
     export default {
         components: { BeerJournalForm },
         data: function () {
@@ -60,10 +63,30 @@
             submit: function () {
                 window.Axios.put('/beer/' + this.beer.id, this.beer)
                     .then(response => {
-                        console.log(response.data);
+                        if (beer.validateResponse(response, 'beer')) {
+                            this.$emit('set-message', {
+                                time: 5,
+                                type: 'is-success',
+                                message: 'Beer updated successfully',
+                            });
+
+                            this.$router.push({
+                                name:'journal-view',
+                                params: {
+                                    id: this.beer.id
+                                }
+                            });
+                        }
                     })
                     .catch(error => {
-                        console.log(error.response);
+                        let error_messages = beer.formatErrorMessages(error);
+                        error_messages.forEach(error_message => {
+                            this.$emit('set-message', {
+                                time: 5,
+                                type: 'is-danger',
+                                message: error_message,
+                            });
+                        });
                     });
             },
 
@@ -79,11 +102,27 @@
         mounted: function () {
             window.Axios.get('/beer/' + this.$route.params.id, {})
                 .then(response => {
-                    this.beer = response.data.data.beer;
-                    this.is_loading = false;
+                    if (beer.validateResponse(response, 'beer')) {
+                        this.beer = response.data.data.beer;
+                    } else {
+                        this.$emit('set-message', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: 'There was a problem loading this entry',
+                        });
+                    }
                 })
                 .catch(error => {
-                    console.log(error);
+                    let error_messages = beer.formatErrorMessages(error);
+                    error_messages.forEach(error_message => {
+                        this.$emit('set-message', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: error_message,
+                        });
+                    });
+                })
+                .then(() => {
                     this.is_loading = false;
                 });
         }
