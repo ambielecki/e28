@@ -41,7 +41,7 @@
 * [Vue Truncate Filter](https://forum.vuejs.org/t/truncate-filter-with-html/50023)
 * [JS Truncate Words Function](https://www.w3resource.com/javascript-exercises/javascript-string-exercise-24.php)
 * [Alcohol By Volume Calculation](http://www.brewunited.com/abv_calculator.php): Equation to calculate ABV
-* [JS Debounce](https://davidwalsh.name/javascript-debounce-function): A classic JS helper
+* [JS Debounce](https://stackoverflow.com/questions/42199956/how-to-implement-debounce-in-vue2): Getting Debounce Working
 
 ## Notes for instructor
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test

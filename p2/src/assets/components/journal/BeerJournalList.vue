@@ -213,12 +213,12 @@
                 this.getBeers();
             },
             searchBeers() {
-                console.log('outer');
-
+                // https://stackoverflow.com/questions/42199956/how-to-implement-debounce-in-vue2
+                if (this.timeout) clearTimeout(this.timeout);
+                this.timeout = setTimeout(() => {
+                    this.filterBeers();
+                }, 500);
             },
-            testDebounce() {
-                console.log('testing');
-            }
         },
     };
 </script>
