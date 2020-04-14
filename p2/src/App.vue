@@ -23,7 +23,11 @@
             </div>
         </nav>
 
-        <beer-flash-message :state="state"></beer-flash-message>
+        <beer-flash-message
+            :state="state"
+            @remove-success="removeSuccess"
+            @remove-warning="removeWarning"
+        ></beer-flash-message>
 
         <br>
 
@@ -45,11 +49,40 @@
                     styles: {},
                     success_messages: [
                         { message: 'You were successful', time: 5 },
-                        { message: 'Also Success', time: 10 },
+                        { message: 'Success', time: 10 },
+                    ],
+                    warning_messages: [
+                        { message: 'You were unsuccessful', time: 5 },
+                        { message: 'Warning', time: 10 },
                     ],
                 },
 
             };
+        },
+        methods: {
+            removeSuccess(key) {
+                this.state.success_messages.splice(key);
+            },
+            removeWarning(key) {
+                console.log(key);
+                this.state.warning_messages.splice(key);
+            },
+            decrementMessageTime(messages) {
+                messages.map(function (message) {
+                    message.time--;
+
+                    return message;
+                });
+
+                return messages;
+            },
+            filterMessages(messages) {
+                messages = messages.filter(function (message) {
+                    return message.time > 0;
+                });
+
+                return messages;
+            }
         },
         mounted: function () {
             window.Axios.get('/beer/styles')
@@ -63,15 +96,11 @@
         created: function () {
             // Clear messages after set interval
             window.setInterval(() => {
-                this.state.success_messages.map(function (message) {
-                    message.time--;
+                this.state.success_messages = this.decrementMessageTime(this.state.success_messages);
+                this.state.success_messages = this.filterMessages(this.state.success_messages);
 
-                    return message
-                });
-
-                this.state.success_messages = this.state.success_messages.filter(function (message) {
-                    return message.time > 0;
-                });
+                this.state.warning_messages = this.decrementMessageTime(this.state.warning_messages);
+                this.state.warning_messages = this.filterMessages(this.state.warning_messages);
             }, 1000);
         },
     }
