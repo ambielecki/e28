@@ -73,8 +73,6 @@
 
                     return message;
                 });
-
-                return messages;
             },
             filterMessages(messages) {
                 messages = messages.filter(function (message) {
@@ -96,10 +94,10 @@
         created: function () {
             // Clear messages after set interval
             window.setInterval(() => {
-                this.state.success_messages = this.decrementMessageTime(this.state.success_messages);
+                this.decrementMessageTime(this.state.success_messages);
                 this.state.success_messages = this.filterMessages(this.state.success_messages);
 
-                this.state.warning_messages = this.decrementMessageTime(this.state.warning_messages);
+                this.decrementMessageTime(this.state.warning_messages);
                 this.state.warning_messages = this.filterMessages(this.state.warning_messages);
             }, 1000);
         },
