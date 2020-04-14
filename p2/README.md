@@ -47,7 +47,8 @@
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
 projects. <https://github.com/ambielecki/e28-api>
 * Should probably abstract a bunch of this to services
-* Auth is mostly setup but being ignored (haven't implemented registration / signin)
+* Auth is mostly setup but being ignored (haven't implemented registration / signin), still using JWT to allow create 
+to work
 * Beer journal flow - go to /journal -> expand a beer -> click View beer to get to /journal/id -> click Edit Beer to
 go to /journal/edit/{id} OR got to /journal -> click Add Entry to go to /journal/create
 * No client side form validation at this time (there is some server side built in, but it is basic)
