@@ -25,8 +25,7 @@
 
         <beer-flash-message
             :state="state"
-            @remove-success="removeSuccess"
-            @remove-warning="removeWarning"
+            @remove-message="removeMessage"
         ></beer-flash-message>
 
         <br>
@@ -47,40 +46,18 @@
             return {
                 state: {
                     styles: {},
-                    success_messages: [
-                        { message: 'You were successful', time: 5 },
-                        { message: 'Success', time: 10 },
-                    ],
-                    warning_messages: [
-                        { message: 'You were unsuccessful', time: 5 },
-                        { message: 'Warning', time: 10 },
-                    ],
+                    messages: [
+                        { time: 5, type: 'is-success', message: 'Success!' },
+                        { time: 5, type: 'is-danger', message: 'Danger Will Robinson!' },
+                    ], // object { time: int, message: 'string', type: 'string (success, danger)' }
                 },
 
             };
         },
         methods: {
-            removeSuccess(key) {
-                this.state.success_messages.splice(key, 1);
+            removeMessage(key) {
+                this.state.messages.splice(key, 1);
             },
-            removeWarning(key) {
-                console.log(key);
-                this.state.warning_messages.splice(key, 1);
-            },
-            decrementMessageTime(messages) {
-                messages.map(function (message) {
-                    message.time--;
-
-                    return message;
-                });
-            },
-            filterMessages(messages) {
-                messages = messages.filter(function (message) {
-                    return message.time > 0;
-                });
-
-                return messages;
-            }
         },
         mounted: function () {
             window.Axios.get('/beer/styles')
@@ -92,13 +69,17 @@
                 });
         },
         created: function () {
-            // Clear messages after set interval
+            // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
-                this.decrementMessageTime(this.state.success_messages);
-                this.state.success_messages = this.filterMessages(this.state.success_messages);
+                this.state.messages.map(function (message) {
+                    message.time--;
 
-                this.decrementMessageTime(this.state.warning_messages);
-                this.state.warning_messages = this.filterMessages(this.state.warning_messages);
+                    return message;
+                });
+
+                this.state.messages = this.state.messages.filter(function (message) {
+                    return message.time > 0;
+                });
             }, 1000);
         },
     }

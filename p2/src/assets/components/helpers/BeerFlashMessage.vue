@@ -1,17 +1,17 @@
 <template>
-    <div v-if="show_messages" class="notifications container">
-        <transition-group name="fade">
-            <div v-for="(success_message, key) in state.success_messages" :key="key + 'success'" class="notification is-success">
-                <button class="delete" @click="$emit('remove-success', key)"></button>
-                {{ success_message.message }}
+    <transition name="fade">
+        <div v-if="show_messages" class="notifications container">
+            <div
+                v-for="(message, key) in state.messages"
+                :key="key"
+                :class="message.type"
+                class="notification"
+            >
+                <button class="delete" @click="$emit('remove-message', key)"></button>
+                {{ message.message }}
             </div>
-
-            <div v-for="(warning_message, key) in state.warning_messages" :key="key + 'warning'" class="notification is-danger">
-                <button class="delete" @click="$emit('remove-warning', key)"></button>
-                {{ warning_message.message }}
-            </div>
-        </transition-group>
-    </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -22,7 +22,7 @@
         props: ['state'],
         computed: {
             show_messages: function () {
-                return this.state.success_messages.length > 0 || this.state.warning_messages.length > 0;
+                return this.state.messages.length > 0;
             }
         },
     };
