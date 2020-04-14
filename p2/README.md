@@ -20,6 +20,7 @@
 * /src/assets/components/journal/BeerJournalCreate.vue - Create journal shell
 * /src/assets/components/journal/BeerJournalEdit.vue - Edit journal shell
 * /src/assets/components/journal/BeerJournalForm.vue - Shared form for journal entry create/edit
+* /src/assets/component/helpers/BeerFlashMessage.vue - Component to display and manage flash messages
 
 ## Server interaction
 * Mock login / JWT refresh for a test account (automatic from main.js load)
@@ -30,6 +31,7 @@
 ## Outside resources
 * [Beer Mug Favicon](https://favicon.io/emoji-favicons/beer-mug/)
 * [Beer Logo](http://pngimg.com/download/2383)
+* [Beer Banner](https://commons.wikimedia.org/wiki/File:Beer_banner.jpg)
 * [Import CSS Frameworks in Vue](https://alligator.io/vuejs/css-frameworks-vuejs/)
 * [Bulma](https://bulma.io)
 * [Vue Bulma Datepicker](https://github.com/vue-bulma/datepicker)

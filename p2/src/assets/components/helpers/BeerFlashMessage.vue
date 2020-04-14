@@ -28,3 +28,11 @@
         },
     };
 </script>
+
+<style>
+    .notifications {
+        position: sticky;
+        top: 20px;
+        z-index: 10;
+    }
+</style>
