@@ -79,16 +79,6 @@
             },
         },
         mounted: function () {
-            beer.testLogin()
-                .then(response => {
-                    if (beer.validateResponse(response, 'access_token')) {
-                        this.state.logged_in = true;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-
             window.Axios.get('/beer/styles')
                 .then(response => {
                     this.$data.state.styles = response.data.data.styles;
@@ -98,6 +88,25 @@
                 });
         },
         created: function () {
+            // log in the test user and set axios headers
+            beer.testLogin()
+                .then(response => {
+                    if (beer.validateResponse(response, 'access_token')) {
+                        this.state.logged_in = true;
+                    }
+                })
+                .catch(error => {
+                    let error_messages = beer.formatErrorMessages(error);
+
+                    error_messages.forEach(error_message => {
+                        this.$emit('set-message', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: error_message,
+                        });
+                    });
+                });
+
             // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
                 this.state.messages.map(function (message) {
