@@ -57,3 +57,4 @@ go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
 * Transitions on the flash messages are not working correctly, need to fix that at some point
 * List search filtering is just MySQL like statements, so, nothing fancy and will get slow
+* Building on production with a Deployer script, so no assets in the repo
