@@ -31,8 +31,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="columns is-mobile">
-                                    <div class="column is-one-fourth">
+                                <div class="columns is-mobile is-multiline">
+                                    <div class="column is-one-fourth is-half-mobile">
                                         <div class="field">
                                             <label class="label" for="style">Style</label>
                                             <div class="control is-expanded">
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="column is-one-fourth">
+                                    <div class="column is-one-fourth is-half-mobile">
                                         <div class="field">
                                             <label class="label" for="rating">Rating</label>
                                             <div class="control is-expanded">
@@ -80,7 +80,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="column is-one-fourth">
+                                    <div class="column is-one-fourth is-half-mobile">
                                         <div class="field">
                                             <label class="label" for="sort">Sort By</label>
                                             <div class="control is-expanded">
@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="column is-one-fourth">
+                                    <div class="column is-one-fourth is-half-mobile">
                                         <div class="field">
                                             <label class="label" for="sort_direction">Sort Direction</label>
                                             <div class="control is-expanded">
