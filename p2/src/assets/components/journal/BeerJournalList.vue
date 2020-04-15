@@ -72,7 +72,7 @@
                                                             :value="n"
                                                             :key="n"
                                                         >
-                                                            >= {{ n }} {{ n === 1 ? 'Star' : 'Stars' }}
+                                                            {{ n === 5 ? '' : '>=' }} {{ n }} {{ n === 1 ? 'Star' : 'Stars' }}
                                                         </option>
                                                     </select>
                                                 </div>
