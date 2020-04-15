@@ -15,6 +15,23 @@
                             <div class="column is-full">
                                 <h5>Filters</h5>
                                 <div class="columns">
+                                    <div class="column is-full">
+                                        <div class="field">
+                                            <label class="label" for="search">Search</label>
+                                            <div class="control">
+                                                <input
+                                                    id="search"
+                                                    class="input"
+                                                    type="text"
+                                                    placeholder="Search By Name, Yeast, or Recipe"
+                                                    v-model="params.search"
+                                                    @keyup="searchBeers"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile">
                                     <div class="column is-one-fourth">
                                         <div class="field">
                                             <label class="label" for="style">Style</label>
@@ -41,7 +58,31 @@
 
                                     <div class="column is-one-fourth">
                                         <div class="field">
-                                            <label class="label" for="sort">Sort</label>
+                                            <label class="label" for="rating">Rating</label>
+                                            <div class="control is-expanded">
+                                                <div class="select is-fullwidth">
+                                                    <select
+                                                        id="rating"
+                                                        v-model="params.rating"
+                                                        @change="filterBeers()"
+                                                    >
+                                                        <option :value="null">All</option>
+                                                        <option
+                                                            v-for="n in 5"
+                                                            :value="n"
+                                                            :key="n"
+                                                        >
+                                                            >= {{ n }} {{ n === 1 ? 'Star' : 'Stars' }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="column is-one-fourth">
+                                        <div class="field">
+                                            <label class="label" for="sort">Sort By</label>
                                             <div class="control is-expanded">
                                                 <div class="select is-fullwidth">
                                                     <select
@@ -52,6 +93,7 @@
                                                         <option value="primary_fermentation_start">Start Date</option>
                                                         <option value="name">Name</option>
                                                         <option value="style">Style</option>
+                                                        <option value="rating">Rating</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -72,22 +114,6 @@
                                                         <option value="ASC">Ascending</option>
                                                     </select>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="column is-one-fourth">
-                                        <div class="field">
-                                            <label class="label" for="search">Search</label>
-                                            <div class="control">
-                                                <input
-                                                    id="search"
-                                                    class="input"
-                                                    type="text"
-                                                    placeholder="Search By Name or Yeast"
-                                                    v-model="params.search"
-                                                    @keyup="searchBeers"
-                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -149,6 +175,7 @@
                 count: 0,
                 params: {
                     limit: 5,
+                    rating: null,
                     style: null,
                     search: '',
                     sort: 'primary_fermentation_start',

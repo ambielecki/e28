@@ -55,3 +55,5 @@ go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/
 * No client side form validation at this time (there is some server side built in, but it is basic)
 * Passing some cobbled together global state
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
+* Transitions on the flash messages are not working correctly, need to fix that at some point
+* List search filtering is just MySQL like statements, so, nothing fancy and will get slow

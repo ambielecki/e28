@@ -9,7 +9,7 @@
         <div class="card-content">
             <div class="content">
                 <p class="title">
-                    Welcome to A Simple Homebrew Journal
+                    Welcome to Homebrew Helper
                 </p>
                 <div v-html="content" v-cloak></div>
             </div>
