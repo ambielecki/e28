@@ -27,6 +27,7 @@
 * Journal list retrieves entries from API
 * Journal list can filter entries with API call
 * Create / Edit / View for Journal entries from API
+* Homepage gets content via API
 
 ## Outside resources
 * [Beer Mug Favicon](https://favicon.io/emoji-favicons/beer-mug/)
