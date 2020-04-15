@@ -43,6 +43,8 @@
 * [JS Truncate Words Function](https://www.w3resource.com/javascript-exercises/javascript-string-exercise-24.php)
 * [Alcohol By Volume Calculation](http://www.brewunited.com/abv_calculator.php): Equation to calculate ABV
 * [JS Debounce](https://stackoverflow.com/questions/42199956/how-to-implement-debounce-in-vue2): Getting Debounce Working
+* [Deployer](https://deployer.org/) - not really part of the project, but decided to use this to push to DO (fewer 
+dependencies than Capistrano since I already have PHP in my local environment)
 
 ## Notes for instructor
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
