@@ -51,7 +51,7 @@ projects. <https://github.com/ambielecki/e28-api>
 * Auth is mostly setup but being ignored (haven't implemented registration / signin), still using JWT to allow create 
 to work
 * Beer journal flow - go to /journal -> expand a beer -> click View beer to get to /journal/id -> click Edit Beer to
-go to /journal/edit/{id} OR got to /journal -> click Add Entry to go to /journal/create
+go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/create
 * No client side form validation at this time (there is some server side built in, but it is basic)
 * Passing some cobbled together global state
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
