@@ -20,7 +20,7 @@
 * /src/assets/components/journal/BeerJournalCreate.vue - Create journal shell
 * /src/assets/components/journal/BeerJournalEdit.vue - Edit journal shell
 * /src/assets/components/journal/BeerJournalForm.vue - Shared form for journal entry create/edit
-* /src/assets/component/helpers/BeerFlashMessage.vue - Component to display and manage flash messages
+* /src/assets/components/helpers/BeerFlashMessage.vue - Component to display and manage flash messages
 
 ## Server interaction
 * Mock login / JWT refresh for a test account (automatic from main.js load)
