@@ -1,7 +1,7 @@
 # Project 2
-+ By: Andrew Bielecki
-+ Production URL: <https://e28p2.andrewbielecki.com>
-+ API Test URL: <https://e28-api.andrewbielecki.com/api/health-check>
+* By: Andrew Bielecki
+* Production URL: <https://e28p2.andrewbielecki.com>
+* API Test URL: <https://e28-api.andrewbielecki.com/api/health-check>
 
 ## Pages summary
 * / - Home page, all hardcoded
@@ -59,4 +59,3 @@ go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
 * List search filtering is just MySQL like statements, so, nothing fancy and will get slow
 * Building on production with a Deployer script, so no assets in the repo
-* I did not optimize any of the images (what few there are)
