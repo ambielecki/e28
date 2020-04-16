@@ -78,10 +78,20 @@
         mounted: function () {
             window.Axios.get('/beer/styles')
                 .then(response => {
-                    this.$data.state.styles = response.data.data.styles;
+                    if (beer.validateResponse(response, 'styles')) {
+                        this.$data.state.styles = response.data.data.styles;
+                    }
                 })
                 .catch(error => {
-                    console.log(error);
+                    let error_messages = beer.formatErrorMessages(error);
+
+                    error_messages.forEach(error_message => {
+                        this.$emit('set-message', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: error_message,
+                        });
+                    });
                 });
         },
         created: function () {
