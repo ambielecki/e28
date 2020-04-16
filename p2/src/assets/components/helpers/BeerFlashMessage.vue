@@ -13,6 +13,7 @@
 </template>
 
 <script>
+    // Boy this class screams, I need Vuex
     export default {
         data: function () {
             return {};
