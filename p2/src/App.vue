@@ -59,8 +59,8 @@
                 state: {
                     styles: {},
                     messages: [
-                        // { time: 5, type: 'is-success', message: 'Success!' },
-                        // { time: 5, type: 'is-danger', message: 'Danger Will Robinson!' },
+                        { time: 10, type: 'is-success', message: 'Success!' },
+                        { time: 5, type: 'is-danger', message: 'Danger Will Robinson!' },
                     ], // object { time: int, message: 'string', type: 'string (is-success, is-danger)' }
                     logged_in: false,
                 },
