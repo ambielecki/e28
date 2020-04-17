@@ -115,6 +115,7 @@ are comfortable, but still be assured their containers are the same.
 System requirements and installers can be found at the links below for both Windows and Mac.  
 
 <https://docs.docker.com/docker-for-windows/install/>
+
 <https://docs.docker.com/docker-for-mac/install/>
 
 All modern Mac hardware (since 2010), running macOS 10.13 or greater is capable of running Docker.
