@@ -264,8 +264,26 @@ Sources:
 <https://docs.docker.com/docker-for-mac/dashboard/> 
 
 ### Up, Start, Stop
+
+There are a number of important commands to be aware of when using docker-compose (all run in the directory with yml file)
+* `docker-compose start`: this will start all existing containers (that have already 
+been built)
+* `docker-compose stop`: stop all running containers
+* `docker-compose up`: builds new containers and starts them
+* `docker-compose down`: stops and removes containers
+
+See the link in sources for more useful commands and options
+
+Sources:    
 <https://docs.docker.com/compose/reference/>
+
 ### Cleanup - images etc
+
+One downside of docker is that it can create a lot of files and take up a decent amount of storage space. Images can have 
+intermediary build steps that are saved, old containers are left dangling, etc, and this can add up.
+
+
+
 <https://docs.docker.com/config/pruning/>
 
 ## Adding Other Services (MySQL)
