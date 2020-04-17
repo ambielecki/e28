@@ -119,7 +119,7 @@ System requirements and installers can be found at the links below for both Wind
 All modern Mac hardware (since 2010), running macOS 10.13 or greater is capable of running Docker.
 
 Only Windows 10 Pro systems (with Hyper-V support) are capable of running the most up to date version of Docker. 
-There is an older version ([Docker Toolbox]<https://docs.docker.com/toolbox/>), which can run on older versions and 
+There is an older version ([Docker Toolbox](https://docs.docker.com/toolbox/), which can run on older versions and 
 Home versions of Windows, but is now considered legacy software and receives minimal support.
 
 ### Simple Test
