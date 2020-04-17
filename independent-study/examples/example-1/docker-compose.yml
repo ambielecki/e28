@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  e28-web:
+    container_name: 'e28_apache'
+    build: ./build
+    ports:
+      - "8080:80"
+    volumes:
+      - ./volume/html:/var/www/html

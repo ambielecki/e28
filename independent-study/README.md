@@ -145,18 +145,121 @@ used in the workplace) tool: docker-compose.
 ## Docker-Compose
 <https://docs.docker.com/compose/compose-file/>
 
-### docker-compose.yml
-### Dockerfile
-### Linking your files (volumes)
-<https://docs.docker.com/docker-for-mac/osxfs-caching/>
+At it's simplest, we will want two files to get started, a docker-compose.yml file to specify our overall 
+project structure and a Dockerfile with build instructions specific to our container (it can be done with 
+just docker-compose.yml for simple situations where no modifications to the image are necessary).
+
+### Simple Example
+
+In the examples/example-1 directory you can find a very basic docker-compose.yml and Dockerfile, along with a 
+small index.php file. We will create a simple apache server to start.
+
+In the Dockerfile we will specify our image to download as the base of our container.  Conveniently, the 
+official PHP docker builds contain a version with apache on a lightweight Linux distro, Alpine.
+
+```
+FROM php:7.4.4-apache
+```
+
+That's it, we are specifying the php project from Dockerhub, with a tag of 7.4.4-apache as a specifc build.
+
+Next we must create our docker-compose.yml file, 
+
+```yaml
+version: '3'
+
+services:
+  e28-web:
+    container_name: 'e28_apache'
+    build: ./build
+    ports:
+      - "8080:80"
+    volumes:
+      - ./volume/html:/var/www/html
+```
+
+To start, we are using v3 of the docker-compose specification and specify that at the top.  The services 
+section will contain information about each container we will be building (in this case one, our web server). 
+We give the container a name (helpful in other commands).  
+
+build provides the location of our Dockerfile with 
+instructions for getting our image (just the directory name here, Dockerfile is assumed).  
+
+Next, we are specifying how 
+our system will access ports on the containers network.  We are mirroring port 80 of the container (standard HTTP port) 
+to port 8080 on the localhost, so going to http://localhost:8080 will get content from port 80 in the container. We can 
+link multiple ports (add another line), if we had other services or wanted to use 
+
+Finally, we will link a volume to our container, in this case we are placing the directory containing our sample 
+index.php file in the default apache server location `/var/www/html`
+
+In this index.php we simply have 
+
+```php
+<?php
+    phpinfo();
+````
+
+Which will display information about our PHP install and is a good test that our server is up and running.
+
+Sources:
+[Docker Compose](https://docs.docker.com/compose/)
+
+### Start it Up
+
+Next we will build and start our container. Open a terminal and navigate to the directory with our 
+docker-compose.yml file and run the command: `docker-compose up -d --build`
+
+The up command will build and start all containers specificed in our yml file.  -d specifies that this action 
+happens in the background (so when finished we will get our terminal back), and --build will rebuild any containers 
+that have changed since the last build (not entirely necessary for build one).
+
+You should see output similar to this (this was php:7.4.3-apache):
+
+![Docker Compose Up](images/example-1-docker-compose-up.png)
+
+Docker has pulled the image (and its intermediary images) and built our container.
+
+If we navigate to http://localhost:8080 we should now see our phpinfo page:
+
+![phpinfo](images/phpinfo.png)
+
+Yay, we have a web server!
+
+## Important Commands and Opening a Terminal
+
+### Opening a terminal
+
+Great, we have a server, but we need to be able to interact with it. One way to do that is 
+by using the command `docker exec` which will run a command in our container.
+
+From your terminal type:
+ ```
+ docker exec -it e28_apache /bin/bash
+```
+
+We pass the flags i and t for interactive (allows us to interact with the results of the command) TTY,
+which allows a connection to the container.  We then pass the container name and command to run, in this 
+case the bash shell.
+
+![Terminal](images/example-1-terminal.png)
+
+Here I've run a simple ls command in the container itself, showing the linked index.php from our volume.
+
+Another way to open a terminal is through Docker Desktop's Dashboard.
+
+On a Mac on can find the docker icon (a whale) on the top toolbar and right click, select Dashboard from 
+the menu. On windows, find the same icon in the system tray, right click, and again, select Dashboard.
+
+
+
+Sources:
+<https://docs.docker.com/engine/reference/commandline/exec/>
+<https://docs.docker.com/docker-for-mac/dashboard/>
+
 ### Other Services (MySQL)
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
 
-## Important Commands
-
-### Opening a terminal
-<https://docs.docker.com/engine/reference/commandline/exec/>
-<https://docs.docker.com/docker-for-mac/dashboard/>
 ### Up, Start, Stop
 <https://docs.docker.com/compose/reference/>
 ### Cleanup - images etc
