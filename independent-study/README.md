@@ -250,19 +250,23 @@ Another way to open a terminal is through Docker Desktop's Dashboard.
 On a Mac on can find the docker icon (a whale) on the top toolbar and right click, select Dashboard from 
 the menu. On windows, find the same icon in the system tray, right click, and again, select Dashboard.
 
+![Dashboard](images/example-1-dashboard_v2.png)
 
+You should see a list of the Docker networks you have (in this case my example-1 network is running). And can 
+expand to see individual containers. You can click on the terminal icon (looks like `>_`), to open a terminal 
+in your container.
 
 Sources:    
 <https://docs.docker.com/engine/reference/commandline/exec/>    
 <https://docs.docker.com/docker-for-mac/dashboard/> 
 
-### Other Services (MySQL)
-<https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
-
 ### Up, Start, Stop
 <https://docs.docker.com/compose/reference/>
 ### Cleanup - images etc
 <https://docs.docker.com/config/pruning/>
+
+## Adding Other Services (MySQL)
+<https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
 
 ## Advanced Topics / Tips
 
