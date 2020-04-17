@@ -44,7 +44,7 @@ deployment, libraries we need for our code such as a PDF generator, library mana
 If we choose, a snapshot in time can be taken once our dev environment is set up, with all of these components in place, 
 to create a shareable image. 
 
-Sources:
+Sources:    
 [Docker - Overview](https://docs.docker.com/engine/docker-overview/)
 
 
@@ -53,7 +53,7 @@ Sources:
 Containers are built from images, it is the process on your machine that contains the code necessary for running our task. 
 We will spend our time interacting with our application in container.
 
-Sources:  
+Sources:    
 [Docker - What is a Container](https://www.docker.com/resources/what-container)
 
 
@@ -73,7 +73,7 @@ persisted to the local machine.
 This also allows you to rebuild your container without losing data, say from a database. Your database storage directory 
 can be a volume shared with the local filesystem and will persist, even if the container is destroyed.  
 
-Sources:
+Sources:    
 [Docker - Volumes](https://docs.docker.com/storage/volumes/)
 
 ### Why Use Docker over XAMPP?
@@ -113,10 +113,8 @@ are comfortable, but still be assured their containers are the same.
 ### System Requirements
 
 System requirements and installers can be found at the links below for both Windows and Mac.  
-
-<https://docs.docker.com/docker-for-windows/install/>
-
-<https://docs.docker.com/docker-for-mac/install/>
+<https://docs.docker.com/docker-for-windows/install/>   
+<https://docs.docker.com/docker-for-mac/install/>   
 
 All modern Mac hardware (since 2010), running macOS 10.13 or greater is capable of running Docker.
 
@@ -143,7 +141,7 @@ Great, we know our setup is working correctly. There are many more things we cou
 Docker and the command line, but we will skip directly to a much more user-friendly (and commonly 
 used in the workplace) tool: docker-compose.
 
-## Docker-Compose
+## Docker-Compose   
 <https://docs.docker.com/compose/compose-file/>
 
 At it's simplest, we will want two files to get started, a docker-compose.yml file to specify our overall 
@@ -203,7 +201,7 @@ In this index.php we simply have
 
 Which will display information about our PHP install and is a good test that our server is up and running.
 
-Sources:
+Sources:    
 [Docker Compose](https://docs.docker.com/compose/)
 
 ### Start it Up
@@ -254,9 +252,9 @@ the menu. On windows, find the same icon in the system tray, right click, and ag
 
 
 
-Sources:
-<https://docs.docker.com/engine/reference/commandline/exec/>
-<https://docs.docker.com/docker-for-mac/dashboard/>
+Sources:    
+<https://docs.docker.com/engine/reference/commandline/exec/>    
+<https://docs.docker.com/docker-for-mac/dashboard/> 
 
 ### Other Services (MySQL)
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
@@ -270,19 +268,19 @@ Sources:
 
 ### Orchestrating Many Containers
 #### nginx-proxy 
-<https://github.com/nginx-proxy/nginx-proxy>
-<https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-encrypt/>
-<http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>
+<https://github.com/nginx-proxy/nginx-proxy>    
+<https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-encrypt/>   
+<http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>  
 
 
 ### Other services
 #### Mongo
-<https://medium.com/faun/managing-mongodb-on-docker-with-docker-compose-26bf8a0bbae3>
+<https://medium.com/faun/managing-mongodb-on-docker-with-docker-compose-26bf8a0bbae3>   
 #### Node Server 
-<https://nodejs.org/de/docs/guides/nodejs-docker-webapp/>
+<https://nodejs.org/de/docs/guides/nodejs-docker-webapp/>   
 
 ### Saving to Docker Hub
-<https://docs.docker.com/docker-hub/builds/>
+<https://docs.docker.com/docker-hub/builds/>    
 
 ## Quickstart - The TLDR
 TODO :: Will provide some examples of docker-compose.yml for simple to more complex setups
