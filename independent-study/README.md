@@ -13,9 +13,9 @@ APIs.
 What does that mean for you the developer?  It means simpler development on near production systems 
 on a local environment of your choosing. It does not matter if members of your team work with Windows, 
 Linux, or Mac; with a few simple tweaks you can all work with the same dev environment. As a solo 
-developer you gain the comfort of knowing that your code is running in a near production 
+developer you gain the comfort of knowing your code is running in a near production 
 environment in your container (so if you intend to deploy on Ubuntu 18.04, you can develop in a 
-container with Ubuntu 18.04). Your containers also provide code isolation so you can run many 
+container with Ubuntu 18.04). Your containers also provide code isolation, so you can run many 
 versions of a tool (for example PHP 7.1 and 7.4 for different projects) without interference. And, 
 best of all, no more installing programs on your root OS (my personal example - installing PostgreSQL 
 locally and having it ruin everything - leading to a fresh Windows install).
@@ -131,7 +131,7 @@ following:
 
 ![hello-world example](images/hello-world.png)
 
-The text is pretty self explanatory, Docker performed the following tasks:
+The text is mostly self-explanatory, Docker performed the following tasks:
 * Checked to see if we had a local copy of the hello-world image (we did not)
 * Pulled a copy from Docker Hub
 * Created a container with that image
@@ -263,7 +263,7 @@ Sources:
 <https://docs.docker.com/engine/reference/commandline/exec/>    
 <https://docs.docker.com/docker-for-mac/dashboard/> 
 
-### Up, Start, Stop
+### Basic Docker-Compose Commands
 
 There are a number of important commands to be aware of when using docker-compose (all run in the directory with yml file)
 * `docker-compose start`: this will start all existing containers (that have already 
@@ -280,13 +280,85 @@ Sources:
 ### Cleanup - images etc
 
 One downside of docker is that it can create a lot of files and take up a decent amount of storage space. Images can have 
-intermediary build steps that are saved, old containers are left dangling, etc, and this can add up.
+intermediary build steps that are saved, old containers can be left dangling, etc, and this can add up.
 
-
-
+Sources:    
 <https://docs.docker.com/config/pruning/>
 
 ## Adding Other Services (MySQL)
+
+Very often we will need multiple containers to interact with multiple services, such as a database. In example-2 we will 
+add in the link to a mysql-8 database.
+
+Our docker-compose.yml will now look like:
+```yaml
+version: '3'
+
+services:
+  e28-web:
+    container_name: 'e28_apache_2'
+    build: ./builds/web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./volumes/html:/var/www/html
+    links:
+      - e28-db
+
+  e28-db:
+    container_name: 'e28_mysql'
+    image: mysql:8.0.14
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --default-authentication-plugin=mysql_native_password
+    ports:
+      - "33060:3306"
+    volumes:
+      - ./volumes/db:/var/lib/mysql
+    working_dir: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=e28
+```
+
+Our web server has been renamed e28_apache_2 to avoid collisions with our previous container and we have 
+added a link to our new service, e28-db.  This shows that the e28-web container relies on e28-db and will need to start 
+together.
+
+We've added a new instruction to our Dockerfile for e28-web (which is now in builds/web), 
+```
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql
+```
+the RUN directive will run the command in our container as a part of the build process and persist the changes in a new 
+image, which we will be using.  Here we install the necessary extensions to use connect to mysql with the PHP 
+PDO driver.
+
+Our next service is the database container.  Instead of a Dockerfile, we just specify an image to use (in this case I know 
+I will not be adding more RUN or similar commands).
+
+Next we specify a command, this will be run when the container starts, and in this instance sets some defaults for the mysql 
+service. 
+
+We open a port to the local system at 33060 (the native mysql port is 3306).
+
+`working_dir` allows us to set a directory where docker will execute commands, it is useful as an entrypoint when using 
+a terminal. So, when opening a terminal in this container we will go directly to `/var/lib/mysql`
+
+Finally we set `environment` which contains container environment variables, here we are setting the default root 
+password and database (which helpfully creates the database when creating the container).
+
+A quick `docker-compose up -d --build` and we are good to go.
+
+Our index.php file contains code to show that we can connect to the database.  Going to localhost:8080 should show: 
+
+![Browser](images/example-2-browser.png)
+
+__An important note, communication between containers is done via the container name. A normal connection string 
+would look more like `$conn = new PDO('mysql:host=localhost;dbname=e28', 'root', 'root');`, in this case we replace localhost 
+with the container name, e28-db for `$conn = new PDO('mysql:host=e28-db;dbname=e28', 'root', 'root');`__
+
+Sources:    
+<https://www.php.net/manual/en/pdo.connections.php> 
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
 
 ## Advanced Topics / Tips
