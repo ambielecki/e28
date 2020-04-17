@@ -378,6 +378,7 @@ let us unpack it all.
 
 ![Example 3 Browser](images/example-3-browser.png)
 
+Sources:    
 <https://github.com/nginx-proxy/nginx-proxy>    
 <https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-encrypt/>   
 <http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>    
