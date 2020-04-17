@@ -339,12 +339,13 @@ I will not be adding more RUN or similar commands).
 Next we specify a command, this will be run when the container starts, and in this instance sets some defaults for the mysql 
 service. 
 
-We open a port to the local system at 33060 (the native mysql port is 3306).
+We open a port to the local system at 33060 (the native mysql port is 3306) and set a volume to store db info (you will 
+want to keep this directory out of version control).
 
 `working_dir` allows us to set a directory where docker will execute commands, it is useful as an entrypoint when using 
 a terminal. So, when opening a terminal in this container we will go directly to `/var/lib/mysql`
 
-Finally we set `environment` which contains container environment variables, here we are setting the default root 
+Finally, we set `environment` which contains container environment variables, here we are setting the default root 
 password and database (which helpfully creates the database when creating the container).
 
 A quick `docker-compose up -d --build` and we are good to go.
@@ -361,23 +362,22 @@ Sources:
 <https://www.php.net/manual/en/pdo.connections.php> 
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
 
-## Advanced Topics / Tips
+###Orchestrating Many Containers with nginx-proxy
 
-### Orchestrating Many Containers
-#### nginx-proxy 
+One thing you may have noticed, we have been accessing our web sites via localhost:8080, which is a pain. It is 
+much nicer to use local domains instead, but this can be troublesome with docker.  Only one container at a time 
+can be mapped to a local port, so only one could be mapped to 80, allowing a local domain.  Fortunately, someone has 
+a docker image that can be used to create an automapping nginx-proxy to orchestrate many containers, each 
+responding to its own domain name.
+
+To demonstrate, we will add two new hosts to our local hosts file as described previously, is-1.test and 
+is-2.test.  
+
+In the example-3 folder we can see our new docker-compose.yml file, there's quite a bit going on here, so 
+let us unpack it all.
+
+![Example 3 Browser](images/example-3-browser.png)
+
 <https://github.com/nginx-proxy/nginx-proxy>    
 <https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-encrypt/>   
-<http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>  
-
-
-### Other services
-#### Mongo
-<https://medium.com/faun/managing-mongodb-on-docker-with-docker-compose-26bf8a0bbae3>   
-#### Node Server 
-<https://nodejs.org/de/docs/guides/nodejs-docker-webapp/>   
-
-### Saving to Docker Hub
-<https://docs.docker.com/docker-hub/builds/>    
-
-## Quickstart - The TLDR
-TODO :: Will provide some examples of docker-compose.yml for simple to more complex setups
+<http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>    
