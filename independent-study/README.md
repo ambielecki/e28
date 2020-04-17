@@ -254,7 +254,10 @@ the menu. On windows, find the same icon in the system tray, right click, and ag
 
 You should see a list of the Docker networks you have (in this case my example-1 network is running). And can 
 expand to see individual containers. You can click on the terminal icon (looks like `>_`), to open a terminal 
-in your container.
+in your container. 
+
+You can also find other helpful shortcuts here, you can start and stop containers, delete them, 
+or get more detailed information about them.
 
 Sources:    
 <https://docs.docker.com/engine/reference/commandline/exec/>    
