@@ -59,14 +59,69 @@ Sources:
 
 #### Volumes
 
+In general the data created within a container is incaccessible from the host machine and destroyed along with a 
+container, but it is useful for our container to have access to some files from the host and allow both the container and 
+host to modify the files.  This is where a volume comes in, we can bind data to our container's filesystem, so it can be 
+accessed from both sides.
+
+![docker volumes](images/types-of-mounts-volume.png)
+
+This is particularly useful for the code you are developing, you can work from your local filesystem and have the changes 
+persisted in the container.  Also, the container is free to create or modify files (say generating a pdf), that will be 
+persisted to the local machine.
+
+This also allows you to rebuild your container without losing data, say from a database. Your database storage directory 
+can be a volume shared with the local filesystem and will persist, even if the container is destroyed.  
+
+Sources:
+[Docker - Volumes](https://docs.docker.com/storage/volumes/)
+
 ### Why Use Docker over XAMPP?
-### Other Options (VMs)
+
+This will obviously be from personal experience and slightly opinionated, but I have found docker to be a more 
+versatile solution to installing software such as XAMPP directly on my system.
+
+#### Safety
+
+First and foremost, docker containers are isolated from the host system and can be created and destroyed at 
+will. You reduce the risks of conflicts, data corruption, and general issues with your host system.  From 
+personal experience, I have incapacitated my Windows 10 machine attempting to install Postgres, which was needed 
+for a development project. If I had done that in docker, I would have just deleted the container and moved on.
+
+#### Closer to Production
+
+Most production environments you will encounter are Linux based (unless you are a C#/.NET programmer), which can 
+behave differently than a Windows or Mac environment.  For example, Linux can be more strict on capitalization of 
+file / class names (a problem I ran into developing on XAMPP and deploying to Ubuntu). There are docker images 
+available to mimic every flavor of Linux distro, database version, etc.
+
+#### Ease of Running Multiple Versions
+
+It is trivial to run multiple containers with different versions of software concurrently, say different versions 
+of PHP, or Node, simplifying testing. One could also configure code for a new webserver such as nginx, all without 
+destroying your current setup.
+
+#### Ease of Onboarding Additional Team Members
+
+Docker configurations are stored in Dockerfiles and ochestrated via docker-compose.yml files. These (or examples) can 
+be included in version control, allowing for quick onboarding of new team members and the assurance that everyone 
+has a similar dev environment. As docker will run on both Mac and Windows, developers can choose the system where they 
+are comfortable, but still be assured their containers are the same. 
 
 ## Installation
 
 ### System Requirements
+
+System requirements and installers can be found at the links below for both Windows and Mac.  
+
 <https://docs.docker.com/docker-for-windows/install/>
 <https://docs.docker.com/docker-for-mac/install/>
+
+All modern Mac hardware (since 2010), running macOS 10.13 or greater is capable of running Docker.
+
+Only Windows 10 Pro systems (with Hyper-V support) are capable of running the most up to date version of Docker. 
+There is an older version ([Docker Toolbox]<https://docs.docker.com/toolbox/>), which can run on older versions and 
+Home versions of Windows, but is now considered legacy software and receives minimal support.
 
 ### Simple Test
 <https://docs.docker.com/get-started/>
