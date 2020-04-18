@@ -234,7 +234,7 @@ by using the command `docker exec` which will run a command in our container.
 
 From your terminal type:
  ```
- docker exec -it e28_apache /bin/bash
+docker exec -it e28_apache /bin/bash
 ```
 
 We pass the flags i and t for interactive (allows us to interact with the results of the command) TTY,
@@ -280,7 +280,8 @@ Sources:
 ### Cleanup - images etc
 
 One downside of docker is that it can create a lot of files and take up a decent amount of storage space. Images can have 
-intermediary build steps that are saved, old containers can be left dangling, etc, and this can add up.
+intermediary build steps that are saved, old containers can be left dangling, etc, and this can add up. More information 
+on how to remove old networks, images, and containers can be found at the link below.
 
 Sources:    
 <https://docs.docker.com/config/pruning/>
@@ -324,7 +325,7 @@ added a link to our new service, e28-db.  This shows that the e28-web container 
 together.
 
 We've added a new instruction to our Dockerfile for e28-web (which is now in builds/web), 
-```
+```dockerfile
 RUN docker-php-ext-install \
     pdo \
     pdo_mysql
@@ -362,10 +363,10 @@ Sources:
 <https://www.php.net/manual/en/pdo.connections.php> 
 <https://medium.com/@crmcmullen/how-to-run-mysql-8-0-with-native-password-authentication-502de5bac661>
 
-###Orchestrating Many Containers with nginx-proxy
+## Orchestrating Many Containers with nginx-proxy
 
 One thing you may have noticed, we have been accessing our web sites via localhost:8080, which is a pain. It is 
-much nicer to use local domains instead, but this can be troublesome with docker.  Only one container at a time 
+much nicer to use local domains instead, but this can be troublesome with Docker.  Only one container at a time 
 can be mapped to a local port, so only one could be mapped to 80, allowing a local domain.  Fortunately, someone has 
 a docker image that can be used to create an automapping nginx-proxy to orchestrate many containers, each 
 responding to its own domain name.
@@ -376,9 +377,120 @@ is-2.test.
 In the example-3 folder we can see our new docker-compose.yml file, there's quite a bit going on here, so 
 let us unpack it all.
 
+```yaml
+version: '3'
+
+services:
+  nginx-proxy:
+    container_name: e28_nginx_proxy
+    build: ./builds/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  e28-web-1:
+    container_name: 'e28_apache_3'
+    build: ./builds/web-1
+    volumes:
+      - ./volumes/web-1/html:/var/www/html
+    links:
+      - e28-db
+    environment:
+      - VIRTUAL_HOST=is-1.test
+
+  e28-web-2:
+    container_name: 'e28_apache_4'
+    build: ./builds/web-2
+    volumes:
+      - ./volumes/web-2/html:/var/www/html
+    links:
+      - e28-db
+    environment:
+      - VIRTUAL_HOST=is-2.test
+
+  e28-db:
+    container_name: 'e28_mysql_2'
+    image: mysql:8.0.14
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --default-authentication-plugin=mysql_native_password
+    ports:
+      - "33060:3306"
+    volumes:
+      - ./volumes/db:/var/lib/mysql
+    working_dir: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=e28
+```
+
+We start by adding a new service, nginx-proxy, which will handle all of our incoming requests (it is mirroring port 80 
+to local 80, so domains we register with the host system will be directed to nginx-proxy). The Dockerfile for this service 
+is pulling an ngnix config file that will ensure proper handling of our requests. 
+
+This container will auto-register the other domains on our network as long as they have their domain as an 
+environment variable. You can see this in web-1 and web-2 as `VIRTUAL_HOST=is-1.test`;  As a note, a container can 
+host multiple sites, the VIRTUAL_HOST block becomes a string with a comma separated list, such as:
+
+```
+environment:
+      - "VIRTUAL_HOST=e28.test,e28p1.test,e28p2.test,zipfoods.test"
+```
+We will also add an apache conf file to our web servers for each site it will be serving (in this case a single site), 
+and we will copy that file from the Dockerfile:
+
+```dockerfile
+FROM php:7.4.4-apache
+
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql
+
+RUN a2enmod rewrite
+COPY ./is-1.test.conf /etc/apache2/sites-available/000-default.conf
+```
+
+We see the new `COPY` command here, which is a one time copy of a file or directory into our images, changes from the 
+container are not reflected in the host system.
+
+`docker-compose up -d --build` and we can now show that our two sites are active.
+
 ![Example 3 Browser](images/example-3-browser.png)
 
 Sources:    
 <https://github.com/nginx-proxy/nginx-proxy>    
 <https://blog.ippon.tech/set-up-a-reverse-proxy-nginx-and-docker-gen-bonus-lets-encrypt/>   
 <http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/>    
+
+## Put it All Together - A Final Example
+
+Normally our project files would not live as subdirectories of our docker project, but we would have a struture like:
+```
+|-projects
+|   |-e28
+|   |-e28-api
+|   |-docker
+```
+where the docker folder is a sibling of our e28 repository and an api I am using for the course. This is the setup I 
+use for the course and the example docker-compose.yml and associated Dockerfiles can be found in examples/docker. You 
+can see that my Dockerfile has grown considerably, it contains the depedencies I need for a number of projects and is one 
+I reuse regularly (works great for Laravel for example). It also contains node/npm, so will work well with Vue.
+
+I have actually stored this build on Dockerhub to make it easier to pull into projects. You can read more about that 
+process here: <https://docs.docker.com/docker-hub/builds/>, find my repository on github here: 
+<https://github.com/ambielecki/php-base-box> and the build on Dockerhub here: 
+<https://hub.docker.com/r/ambielecki/php-base-box>. I've used the explicit steps in the example, but one could instead 
+pull in the build from dockerhub with `FROM ambielecki/php-base-box:latest` and then running project specific steps ( 
+such as installing vue-cli in the e28 Dockerfile and setting the apache confs).
+
+The only caveat I have found is that this setup does not play nice with Hot Module Reloading and the Vue Server (creating 
+a pure node container is the next project).  To account for this I build dev dependencies and watch with the following 
+commands added to my package.json scripts section (dev and watch)
+```json
+"scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "vue-cli-service build --mode development",
+    "watch": "vue-cli-service build --mode development --watch"
+  }
+```

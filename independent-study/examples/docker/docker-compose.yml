@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  nginx-proxy:
+    container_name: e28_nginx_proxy
+    build: ./builds/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  e28:
+    container_name: e28_web
+    build: ./builds/e28
+    environment:
+      - "VIRTUAL_HOST=e28.test,e28p1.test,e28p2.test,zipfoods.test"
+    volumes:
+      - ../e28:/var/www/e28:delegated
+    working_dir: /var/www/e28
+
+  mysql-8:
+    image: mysql:8.0.17
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --default-authentication-plugin=mysql_native_password
+    container_name: e28_mysql_8
+    ports:
+      - "33060:3306"
+    volumes:
+      - ./db-data:/var/lib/mysql:delegated
+    working_dir: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+    e28-api:
+      container_name: e28_api
+      build: ./builds/e28-api
+      environment:
+        - VIRTUAL_HOST=e28-api.test
+      volumes:
+        - ../e28-api:/var/www/e28-api:delegated
+      working_dir: /var/www/e28-api
+      links:
+        - mysql-8
