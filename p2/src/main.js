@@ -50,9 +50,9 @@ Vue.filter('date-format', function (value) {
 Vue.use(VueRouter);
 
 const routes = [
+    { path: '/journal/edit/:id', name: 'journal-edit', component: BeerJournalEdit },
     { path: '/journal/create', name: 'journal-create', component: BeerJournalCreate },
     { path: '/journal/:id', name: 'journal-view', component: BeerJournalView },
-    { path: '/journal/edit/:id', name: 'journal-edit', component: BeerJournalEdit },
     { path: '/journal', name: 'journal', component: BeerJournalList },
     { path: '/tools', name: 'tools', component: BeerTools },
     { path: '/', name: 'home', component: BeerHome },
