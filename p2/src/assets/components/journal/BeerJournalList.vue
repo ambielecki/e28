@@ -174,7 +174,7 @@
                 page: 0,
                 count: 0,
                 params: {
-                    limit: 5,
+                    limit: 5, // TODO :: implement ability to change this
                     rating: null,
                     style: null,
                     search: '',
