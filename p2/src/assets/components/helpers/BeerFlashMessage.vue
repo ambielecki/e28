@@ -19,11 +19,6 @@
             return {};
         },
         props: ['state'],
-        computed: {
-            show_messages: function () {
-                return this.state.messages.length > 0;
-            }
-        },
     };
 </script>
 
