@@ -51,7 +51,7 @@
                 .catch(error => {
                     let error_messages = beer.formatErrorMessages(error);
                     error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
+                        this.$store.commit('addMessage', {
                             time: 5,
                             type: 'is-danger',
                             message: error_message,

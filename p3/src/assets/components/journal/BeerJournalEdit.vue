@@ -64,7 +64,7 @@
                 window.Axios.put('/beer/' + this.beer.id, this.beer)
                     .then(response => {
                         if (beer.validateResponse(response, 'beer')) {
-                            this.$emit('set-message', {
+                            this.$store.commit('addMessage', {
                                 time: 5,
                                 type: 'is-success',
                                 message: 'Beer updated successfully',
@@ -81,7 +81,7 @@
                     .catch(error => {
                         let error_messages = beer.formatErrorMessages(error);
                         error_messages.forEach(error_message => {
-                            this.$emit('set-message', {
+                            this.$store.commit('addMessage', {
                                 time: 5,
                                 type: 'is-danger',
                                 message: error_message,
@@ -105,7 +105,7 @@
                     if (beer.validateResponse(response, 'beer')) {
                         this.beer = response.data.data.beer;
                     } else {
-                        this.$emit('set-message', {
+                        this.$store.commit('addMessage', {
                             time: 5,
                             type: 'is-danger',
                             message: 'There was a problem loading this entry',
@@ -115,7 +115,7 @@
                 .catch(error => {
                     let error_messages = beer.formatErrorMessages(error);
                     error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
+                        this.$store.commit('addMessage', {
                             time: 5,
                             type: 'is-danger',
                             message: error_message,
