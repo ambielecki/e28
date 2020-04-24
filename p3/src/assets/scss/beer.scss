@@ -1,0 +1,23 @@
+[v-cloak] {
+    display: none !important;
+}
+
+/* sticky footer setup */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex-shrink: 0;
+    padding: 1.5rem;
+    background-color: whitesmoke;
+}
