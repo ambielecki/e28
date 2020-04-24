@@ -30,7 +30,6 @@
         <div class="container">
             <router-view
                 :state="state"
-                @set-message="setMessage"
             ></router-view>
         </div>
     </div>
@@ -45,8 +44,7 @@
      */
 
     import BeerFlashMessage from "./assets/components/helpers/BeerFlashMessage";
-    const Beer = require('./common/Beer').default;
-    let beer = new Beer();
+    let beer = require('@/common/Beer').default;
 
     export default {
         name: 'App',
@@ -55,22 +53,10 @@
             return {
                 state: {
                     styles: {},
-                    messages: [], // object { time: int, message: 'string', type: 'string (is-success, is-danger)' }
                     logged_in: false,
                 },
 
             };
-        },
-        methods: {
-            /**
-             * @param {FlashMessage} message
-             */
-            setMessage(message) {
-                this.state.messages.push(message);
-            },
-            removeMessage(key) {
-                this.state.messages.splice(key, 1);
-            },
         },
         mounted: function () {
             window.Axios.get('/beer/styles')
@@ -113,16 +99,6 @@
 
             // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
-                this.state.messages.map(function (message) {
-                    message.time--;
-
-                    return message;
-                });
-
-                this.state.messages = this.state.messages.filter(function (message) {
-                    return message.time > 0;
-                });
-
                 this.$store.commit('decrementMessageTimes');
                 this.$store.commit('removeExpiredMessages');
             }, 1000);

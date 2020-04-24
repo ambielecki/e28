@@ -1,7 +1,7 @@
 /**
  * Class holding utility functions for the application
  */
-export default class Beer {
+class Beer {
     constructor() {
     }
 
@@ -106,3 +106,5 @@ export default class Beer {
         return messages;
     }
 }
+
+export default new Beer();

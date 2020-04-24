@@ -29,8 +29,7 @@
 <script>
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
 
-    const Beer = require('../../../common/Beer').default;
-    let beer = new Beer();
+    let beer = require('@/common/Beer').default;
 
     export default {
         components: { BeerJournalViewExpanded },

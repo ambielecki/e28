@@ -2,6 +2,7 @@ import './../node_modules/bulma/bulma.sass';
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import BeerPlugin from "./common/BeerPlugin";
 
 // components
 import App from './App.vue'
@@ -12,7 +13,7 @@ import BeerJournalCreate from './assets/components/journal/BeerJournalCreate';
 import BeerJournalView from './assets/components/journal/BeerJournalView';
 import BeerJournalEdit from './assets/components/journal/BeerJournalEdit';
 
-import store from './common/store';
+import store from '@/common/store';
 
 // want to be able to set local vs prod api
 window.Axios = require('axios').default.create({
@@ -29,8 +30,7 @@ window.Axios = require('axios').default.create({
 window.Moment = require('moment-timezone');
 window.Accounting = require('accounting');
 
-const Beer = require('./common/Beer').default;
-let beer = new Beer();
+let beer = require('@/common/Beer').default;
 
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
@@ -50,6 +50,7 @@ Vue.filter('date-format', function (value) {
 });
 
 Vue.use(VueRouter);
+Vue.use(BeerPlugin);
 
 const routes = [
     { path: '/journal/edit/:id', name: 'journal-edit', component: BeerJournalEdit },
@@ -75,6 +76,6 @@ new Vue({
     mounted: function () {
         beer.initializeNavbar();
         beer.initializeHeartbeat();
-        console.log(this.$store);
+        this.$beerLogin();
     },
 }).$mount('#app');
