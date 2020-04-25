@@ -18,8 +18,6 @@
 </template>
 
 <script>
-    let beer = require('@/common/Beer').default;
-
     export default {
         data: function () {
             return {
@@ -29,7 +27,7 @@
         mounted: function () {
             window.Axios.get('/beer/home')
                 .then(response => {
-                    if (beer.validateResponse(response, 'page')) {
+                    if (this.validateResponse(response, 'page')) {
                         if (Object.prototype.hasOwnProperty.call(response.data.data.page, 'content')) {
                             this.content = response.data.data.page.content;
                         }
@@ -39,7 +37,7 @@
 
                 })
                 .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
+                    let error_messages = this.formatErrorMessages(error);
                     error_messages.forEach(error_message => {
                         this.$store.commit('addMessage', {
                             time: 5,

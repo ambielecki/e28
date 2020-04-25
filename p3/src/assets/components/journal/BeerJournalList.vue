@@ -163,8 +163,6 @@
     import BeerJournalViewCompressed from "./parts/BeerJournalViewCompressed";
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
 
-    let beer = require('@/common/Beer').default;
-
     export default {
         components: {BeerJournalViewExpanded, BeerJournalViewCompressed },
         data: function () {
@@ -206,7 +204,7 @@
                         params: params,
                     })
                         .then(response => {
-                            if (beer.validateResponse(response, 'beers')) {
+                            if (this.validateResponse(response, 'beers')) {
                                 let beers = response.data.data.beers;
                                 beers.map(beer => {
                                     beer.is_expanded = false;
@@ -220,7 +218,7 @@
                             }
                         })
                         .catch(error => {
-                            let error_messages = beer.formatErrorMessages(error);
+                            let error_messages = this.formatErrorMessages(error);
                             error_messages.forEach(error_message => {
                                 this.$store.commit('addMessage', {
                                     time: 5,

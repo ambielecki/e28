@@ -2,7 +2,7 @@ import './../node_modules/bulma/bulma.sass';
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import BeerPlugin from "./common/BeerPlugin";
+import BeerApiPlugin from "./common/BeerApiPlugin";
 
 // components
 import App from './App.vue'
@@ -50,7 +50,7 @@ Vue.filter('date-format', function (value) {
 });
 
 Vue.use(VueRouter);
-Vue.use(BeerPlugin);
+Vue.use(BeerApiPlugin);
 
 const routes = [
     { path: '/journal/edit/:id', name: 'journal-edit', component: BeerJournalEdit },
@@ -66,6 +66,45 @@ Vue.config.productionTip = false;
 const router = new VueRouter({
     routes: routes,
     mode: 'history',
+});
+
+Vue.mixin({
+    methods: {
+        validateResponse: function (response, test_property) {
+            let has_data = Object.prototype.hasOwnProperty.call(response.data, 'data');
+            let has_test_property = has_data ? Object.prototype.hasOwnProperty.call(response.data.data, test_property) : false;
+
+            return has_data && has_test_property;
+        },
+
+        formatErrorMessages(error) {
+            let messages = [];
+
+            // just want to make sure everything is defined
+            if (Object.prototype.hasOwnProperty.call(error, 'response')) {
+                if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
+                    // where api validation errors are placed
+                    if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
+                        for (let error_group in error.response.data.data.errors) {
+                            error.response.data.data.errors[error_group].forEach(message => {
+                                messages.push(error_group + ': ' + message);
+
+                            });
+                        }
+                    }
+                }
+
+                // add the default message if there were no error messages
+                if (messages.length === 0) {
+                    if (Object.prototype.hasOwnProperty.call(error.response.data, 'message')) {
+                        messages.push(error.response.data.message);
+                    }
+                }
+            }
+
+            return messages;
+        },
+    }
 });
 
 new Vue({

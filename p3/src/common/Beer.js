@@ -26,7 +26,6 @@ class Beer {
                     // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
                     el.classList.toggle('is-active');
                     $target.classList.toggle('is-active');
-
                 });
             });
         }
@@ -69,41 +68,6 @@ class Beer {
             .catch(error => {
                 return error;
             });
-    }
-
-    validateResponse(response, test_property) {
-        let has_data = Object.prototype.hasOwnProperty.call(response.data, 'data');
-        let has_test_property = has_data ? Object.prototype.hasOwnProperty.call(response.data.data, test_property) : false;
-
-        return has_data && has_test_property;
-    }
-
-    formatErrorMessages(error) {
-        let messages = [];
-
-        // just want to make sure everything is defined
-        if (Object.prototype.hasOwnProperty.call(error, 'response')) {
-            if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
-                // where api validation errors are placed
-                if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
-                    for (let error_group in error.response.data.data.errors) {
-                        error.response.data.data.errors[error_group].forEach(message => {
-                            messages.push(error_group + ': ' + message);
-
-                        });
-                    }
-                }
-            }
-
-            // add the default message if there were no error messages
-            if (messages.length === 0) {
-                if (Object.prototype.hasOwnProperty.call(error.response.data, 'message')) {
-                    messages.push(error.response.data.message);
-                }
-            }
-        }
-
-        return messages;
     }
 }
 

@@ -61,12 +61,12 @@
         mounted: function () {
             window.Axios.get('/beer/styles')
                 .then(response => {
-                    if (beer.validateResponse(response, 'styles')) {
+                    if (this.validateResponse(response, 'styles')) {
                         this.$data.state.styles = response.data.data.styles;
                     }
                 })
                 .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
+                    let error_messages = this.formatErrorMessages(error);
 
                     error_messages.forEach(error_message => {
                         this.$store.commit('addMessage', {
@@ -81,15 +81,15 @@
             // log in the test user and set axios headers
             beer.testLogin()
                 .then(response => {
-                    if (beer.validateResponse(response, 'access_token')) {
+                    if (this.validateResponse(response, 'access_token')) {
                         this.state.logged_in = true;
                     }
                 })
                 .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
+                    let error_messages = this.formatErrorMessages(error);
 
                     error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
+                        this.$store.commit('addMessage', {
                             time: 5,
                             type: 'is-danger',
                             message: error_message,

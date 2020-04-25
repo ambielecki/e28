@@ -47,8 +47,6 @@
 <script>
     import BeerJournalForm from "./parts/BeerJournalForm";
 
-    let beer = require('@/common/Beer').default;
-
     export default {
         components: { BeerJournalForm },
         data: function () {
@@ -62,7 +60,7 @@
             submit: function () {
                 window.Axios.put('/beer/' + this.beer.id, this.beer)
                     .then(response => {
-                        if (beer.validateResponse(response, 'beer')) {
+                        if (this.validateResponse(response, 'beer')) {
                             this.$store.commit('addMessage', {
                                 time: 5,
                                 type: 'is-success',
@@ -78,7 +76,7 @@
                         }
                     })
                     .catch(error => {
-                        let error_messages = beer.formatErrorMessages(error);
+                        let error_messages = this.formatErrorMessages(error);
                         error_messages.forEach(error_message => {
                             this.$store.commit('addMessage', {
                                 time: 5,
@@ -101,7 +99,7 @@
         mounted: function () {
             window.Axios.get('/beer/' + this.$route.params.id, {})
                 .then(response => {
-                    if (beer.validateResponse(response, 'beer')) {
+                    if (this.validateResponse(response, 'beer')) {
                         this.beer = response.data.data.beer;
                     } else {
                         this.$store.commit('addMessage', {
@@ -112,7 +110,7 @@
                     }
                 })
                 .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
+                    let error_messages = this.formatErrorMessages(error);
                     error_messages.forEach(error_message => {
                         this.$store.commit('addMessage', {
                             time: 5,
