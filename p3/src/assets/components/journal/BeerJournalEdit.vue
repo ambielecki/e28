@@ -55,7 +55,6 @@
                 is_loading: true,
             };
         },
-        props: ['state'],
         methods: {
             submit: function () {
                 window.Axios.put('/beer/' + this.beer.id, this.beer)

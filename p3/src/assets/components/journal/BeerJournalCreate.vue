@@ -44,7 +44,6 @@
                 },
             };
         },
-        props: ['state'],
         methods: {
             submit: function () {
                 window.Axios.post('/beer', this.beer)

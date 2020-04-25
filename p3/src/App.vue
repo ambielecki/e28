@@ -28,9 +28,7 @@
         <br>
 
         <div class="container">
-            <router-view
-                :state="state"
-            ></router-view>
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -49,12 +47,7 @@
         name: 'App',
         components: { BeerFlashMessage },
         data: function () {
-            return {
-                state: {
-                    logged_in: false,
-                },
-
-            };
+            return {};
         },
         created: function () {
             // log in the test user and set axios headers

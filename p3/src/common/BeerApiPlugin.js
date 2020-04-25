@@ -24,6 +24,28 @@ const BeerApiPlugin = {
                 return data;
             },
 
+            getList: async function (params) {
+                let return_data = [];
+
+                await this.axios.get('/beer', {
+                    params: params,
+                })
+                    .then(response => {
+                        if (this.validateResponse(response, 'beers')) {
+                            let beers = response.data.data.beers;
+                            beers.map(beer => {
+                                beer.is_expanded = false;
+
+                                return beer;
+                            });
+
+                            return_data = [beers, response.data.data.page, response.data.data.count];
+                        }
+                    })
+
+                return return_data;
+            },
+
             login: async function (email, password) {
                 let logged_in = false;
 
@@ -44,7 +66,6 @@ const BeerApiPlugin = {
             },
 
             initHeartbeat: function () {
-                console.log('clear');
                 window.setInterval(() => {
                     console.log('lub dub');
                     if (window.localStorage.getItem('token') !== null) {

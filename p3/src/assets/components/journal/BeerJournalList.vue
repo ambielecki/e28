@@ -194,41 +194,34 @@
             }
         },
         methods: {
-            getBeers(page = 1) {
+            getBeers: async function(page = 1) {
                 if (this.is_loading === false) {
                     this.is_loading = true;
                     let params = this.params;
                     params.page = page;
-                    window.Axios.get('/beer', {
-                        params: params,
-                    })
-                        .then(response => {
-                            if (this.validateResponse(response, 'beers')) {
-                                let beers = response.data.data.beers;
-                                beers.map(beer => {
-                                    beer.is_expanded = false;
+                    try {
+                        let data = await this.$beerApi.getList(params);
+                        if (data.length > 0) {
+                            let [beers, page, count] = data;
 
-                                    return beer;
-                                });
+                            this.beers = this.beers.concat(beers);
+                            this.page = page;
+                            this.count = count;
+                        }
 
-                                this.beers = this.beers.concat(beers);
-                                this.page = response.data.data.page;
-                                this.count = response.data.data.count;
-                            }
-                        })
-                        .catch(error => {
-                            let error_messages = this.formatErrorMessages(error);
-                            error_messages.forEach(error_message => {
-                                this.$store.commit('addMessage', {
-                                    time: 5,
-                                    type: 'is-danger',
-                                    message: error_message,
-                                });
+                        this.is_loading = false;
+                    } catch (error) {
+                        let error_messages = this.formatErrorMessages(error);
+                        error_messages.forEach(error_message => {
+                            this.$store.commit('addMessage', {
+                                time: 5,
+                                type: 'is-danger',
+                                message: error_message,
                             });
-                        })
-                        .then(() => {
-                            this.is_loading = false;
                         });
+
+                        this.is_loading = false;
+                    }
                 }
             },
             filterBeers() {

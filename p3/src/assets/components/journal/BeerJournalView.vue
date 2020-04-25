@@ -18,7 +18,6 @@
             <beer-journal-view-expanded
                 v-else
                 :beer="beer"
-                :state="state"
                 :show_collapse="false"
                 @collapse-beer="beer.is_expanded = false"
             ></beer-journal-view-expanded>
@@ -37,7 +36,6 @@
                 is_loading: true,
             };
         },
-        props: ['state'],
         mounted: function () {
             window.Axios.get('/beer/' + this.$route.params.id, {})
                 .then(response => {
