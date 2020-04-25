@@ -30,8 +30,6 @@ window.Axios = require('axios').default.create({
 window.Moment = require('moment-timezone');
 window.Accounting = require('accounting');
 
-let beer = require('@/common/Beer').default;
-
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
     let number_of_words = split_words.length;
@@ -112,9 +110,50 @@ new Vue({
     store: store,
     render: h => h(App),
     data: {},
+    created: function () {
+        this.getStyles();
+    },
     mounted: function () {
-        beer.initializeNavbar();
-        beer.initializeHeartbeat();
-        this.$beerLogin();
+        this.initNavbar();
+        this.$beerApi.initHeartbeat();
+    },
+    methods: {
+        getStyles: async function () {
+            try {
+                this.$store.state.styles = await this.$beerApi.getStyles();
+            } catch (error) {
+                let error_messages = this.formatErrorMessages(error);
+
+                error_messages.forEach(error_message => {
+                    this.$store.commit('addMessage', {
+                        time: 5,
+                        type: 'is-danger',
+                        message: error_message,
+                    });
+                });
+            }
+        },
+
+        initNavbar: function () {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+            // Check if there are any navbar burgers
+            if ($navbarBurgers.length > 0) {
+
+                // Add a click event on each of them
+                $navbarBurgers.forEach(el => {
+                    el.addEventListener('click', () => {
+
+                        // Get the target from the "data-target" attribute
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+
+                        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+                    });
+                });
+            }
+        }
     },
 }).$mount('#app');

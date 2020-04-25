@@ -7,7 +7,7 @@ export default new Vuex.Store({
     state: {
         logged_in: false,
         messages: [],
-        styles: [],
+        styles: {},
     },
     mutations: {
         addMessage(state, message) {

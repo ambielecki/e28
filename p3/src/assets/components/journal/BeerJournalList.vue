@@ -44,7 +44,7 @@
                                                     >
                                                         <option :value="null">All</option>
                                                         <option
-                                                            v-for="(name, value) in state.styles"
+                                                            v-for="(name, value) in styles"
                                                             :value="value"
                                                             :key="value"
                                                         >
@@ -137,14 +137,12 @@
             <beer-journal-view-compressed
                 v-if="!beer.is_expanded"
                 :beer="beer"
-                :state="state"
                 :key="key"
                 @expand-beer="beer.is_expanded = true"
             ></beer-journal-view-compressed>
             <beer-journal-view-expanded
                 v-else
                 :beer="beer"
-                :state="state"
                 :key="key"
                 :show_collapse="true"
                 @collapse-beer="beer.is_expanded = false"
@@ -181,7 +179,6 @@
                 is_loading: false,
             };
         },
-        props: ['state'],
         mounted: function () {
             this.getBeers();
         },
@@ -189,9 +186,11 @@
             load_more: function () {
                 return (this.page - 1) * this.params.limit < this.count && this.count !== 0 && this.count > this.beers.length;
             },
-
             is_initial_load: function () {
                 return this.is_loading && this.beers.length === 0;
+            },
+            styles: function () {
+                return this.$store.state.styles;
             }
         },
         methods: {

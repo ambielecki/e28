@@ -179,7 +179,12 @@
             Datepicker: Datepicker,
             ckeditor: CKEditor.component,
         },
-        props: ['beer', 'styles'],
+        props: ['beer'],
+        computed: {
+            styles: function () {
+                return this.$store.state.styles;
+            }
+        },
         data: function () {
             return {
                 editor: ClassicEditor,

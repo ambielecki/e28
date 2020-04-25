@@ -9,7 +9,7 @@
                 <div class="content">
                     <div class="columns is-multiline">
                         <div v-if="beer.style" class="column is-one-third">
-                            <b>Style: </b>{{ state.styles[beer.style] }}
+                            <b>Style: </b>{{ styles[beer.style] }}
                         </div>
 
                         <div v-if="beer.yeast" class="column is-one-third">
@@ -79,12 +79,14 @@
             beer: {
                 type: Object,
             },
-            state: {
-                type: Object,
-            },
             show_collapse: {
                 type: Boolean,
                 default: false,
+            }
+        },
+        computed: {
+            styles: function () {
+                return this.$store.state.styles;
             }
         },
         methods: {

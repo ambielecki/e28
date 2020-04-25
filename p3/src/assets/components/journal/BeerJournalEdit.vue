@@ -24,7 +24,7 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form :beer="beer" :styles="state.styles"></beer-journal-form>
+                        <beer-journal-form :beer="beer"></beer-journal-form>
                         <div class="columns">
                             <div class="column is-full">
                                 <div class="field is-grouped">

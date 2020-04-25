@@ -44,7 +44,6 @@
      */
 
     import BeerFlashMessage from "./assets/components/helpers/BeerFlashMessage";
-    let beer = require('@/common/Beer').default;
 
     export default {
         name: 'App',
@@ -52,56 +51,37 @@
         data: function () {
             return {
                 state: {
-                    styles: {},
                     logged_in: false,
                 },
 
             };
         },
-        mounted: function () {
-            window.Axios.get('/beer/styles')
-                .then(response => {
-                    if (this.validateResponse(response, 'styles')) {
-                        this.$data.state.styles = response.data.data.styles;
-                    }
-                })
-                .catch(error => {
-                    let error_messages = this.formatErrorMessages(error);
-
-                    error_messages.forEach(error_message => {
-                        this.$store.commit('addMessage', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                });
-        },
         created: function () {
             // log in the test user and set axios headers
-            beer.testLogin()
-                .then(response => {
-                    if (this.validateResponse(response, 'access_token')) {
-                        this.state.logged_in = true;
-                    }
-                })
-                .catch(error => {
-                    let error_messages = this.formatErrorMessages(error);
-
-                    error_messages.forEach(error_message => {
-                        this.$store.commit('addMessage', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                });
+            this.login('testy@test.com', 'foobarfizzbuzz');
 
             // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
                 this.$store.commit('decrementMessageTimes');
                 this.$store.commit('removeExpiredMessages');
             }, 1000);
+        },
+        methods: {
+            login: async function (email, password) {
+                try {
+                    this.$store.state.logged_in = await this.$beerApi.login(email, password);
+                } catch (error) {
+                    let error_messages = this.formatErrorMessages(error);
+
+                    error_messages.forEach(error_message => {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: error_message,
+                        });
+                    });
+                }
+            },
         },
     }
 </script>
