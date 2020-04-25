@@ -75,7 +75,7 @@ Vue.mixin({
             return has_data && has_test_property;
         },
 
-        formatErrorMessages(error) {
+        handleErrors(error) {
             let messages = [];
 
             // just want to make sure everything is defined
@@ -100,7 +100,13 @@ Vue.mixin({
                 }
             }
 
-            return messages;
+            messages.forEach(error_message => {
+                this.$store.commit('addMessage', {
+                    time: 5,
+                    type: 'is-danger',
+                    message: error_message,
+                });
+            });
         },
     }
 });

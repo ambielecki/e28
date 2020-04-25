@@ -75,14 +75,7 @@
                         }
                     })
                     .catch(error => {
-                        let error_messages = this.formatErrorMessages(error);
-                        error_messages.forEach(error_message => {
-                            this.$store.commit('addMessage', {
-                                time: 5,
-                                type: 'is-danger',
-                                message: error_message,
-                            });
-                        });
+                        this.handleErrors(error);
                     });
             },
 
@@ -109,14 +102,7 @@
                     }
                 })
                 .catch(error => {
-                    let error_messages = this.formatErrorMessages(error);
-                    error_messages.forEach(error_message => {
-                        this.$store.commit('addMessage', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
+                    this.handleErrors(error);
                 })
                 .then(() => {
                     this.is_loading = false;
