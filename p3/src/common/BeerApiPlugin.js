@@ -109,9 +109,7 @@ const BeerApiPlugin = {
                 })
                     .then(response => {
                         let token = response.data.data.access_token;
-
-                        window.localStorage.setItem('token', token);
-                        window.localStorage.setItem('token_expiration', window.Moment.tz().add(response.data.data.expires_in - 5, 'm').format())
+                        this.setLocalStorageToken(token, response.data.data.expires_in);
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
                        logged_in = true;
@@ -139,15 +137,25 @@ const BeerApiPlugin = {
                 this.axios.post('/refresh', {})
                     .then(response => {
                         let token = response.data.data.access_token;
-
-                        window.localStorage.setItem('token', token);
-                        window.localStorage.setItem('token_expiration', window.Moment.tz().add(response.data.data.expires_in - 5, 'm').format())
+                        this.setLocalStorageToken(token, response.data.data.expires_in);
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                     })
                     .catch(error => {
+                        // there's some assuming here that everything works, would need to invalidate the login on a failure
                         console.log(error);
                     });
-            }
+            },
+
+            setLocalStorageToken(token, expires_in) {
+                window.localStorage.setItem('token', token);
+                window.localStorage.setItem('token_expiration', window.Moment.tz().add(expires_in - 10, 'm').format())
+            },
+
+            clearAuthHeader() {
+                this.axios.defaults.headers.common['Authorization'] = '';
+                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('token_expiration');
+            },
         }
     }
 }

@@ -17,8 +17,17 @@
             <div id="beer_navbar" class="navbar-menu">
                 <div class="navbar-start">
                     <router-link :to="{ name: 'home' }" class="navbar-item">Home</router-link>
-                    <router-link :to="{ name: 'journal' }" class="navbar-item">Journal</router-link>
+                    <router-link v-if="logged_in" :to="{ name: 'journal' }" class="navbar-item">Journal</router-link>
                     <router-link :to="{ name: 'tools' }" class="navbar-item">Tools</router-link>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <router-link v-if="!logged_in" :to="{ name: 'login' }" class="button is-link">Log In</router-link>
+                            <button class="button is-link" v-else @click="logOut">Log Out</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -49,10 +58,12 @@
         data: function () {
             return {};
         },
+        computed: {
+            logged_in: function () {
+                return this.$store.state.logged_in;
+            },
+        },
         created: function () {
-            // log in the test user and set axios headers
-            this.login('testy@test.com', 'foobarfizzbuzz');
-
             // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
                 this.$store.commit('decrementMessageTimes');
@@ -60,13 +71,19 @@
             }, 1000);
         },
         methods: {
-            login: async function (email, password) {
-                try {
-                    this.$store.state.logged_in = await this.$beerApi.login(email, password);
-                } catch (error) {
-                    this.handleErrors(error);
+            logOut: function () {
+                this.$store.commit('setLogin', false);
+                this.$beerApi.clearAuthHeader();
+                this.$store.commit('addMessage', {
+                    time: 5,
+                    type: 'is-success',
+                    message: 'Successfully logged out, come back soon.',
+                });
+
+                if (this.$route.path !== '/') {
+                    this.$router.push('/');
                 }
-            },
+            }
         },
     }
 </script>

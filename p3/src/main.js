@@ -12,6 +12,7 @@ import BeerJournalList from './assets/components/journal/BeerJournalList';
 import BeerJournalCreate from './assets/components/journal/BeerJournalCreate';
 import BeerJournalView from './assets/components/journal/BeerJournalView';
 import BeerJournalEdit from './assets/components/journal/BeerJournalEdit';
+import BeerLogin from "./assets/components/auth/BeerLogin";
 
 import store from '@/common/store';
 
@@ -56,6 +57,7 @@ const routes = [
     { path: '/journal/:id', name: 'journal-view', component: BeerJournalView },
     { path: '/journal', name: 'journal', component: BeerJournalList },
     { path: '/tools', name: 'tools', component: BeerTools },
+    { path: '/login', name: 'login', component: BeerLogin},
     { path: '/', name: 'home', component: BeerHome },
 ];
 
@@ -133,13 +135,15 @@ new Vue({
             }
         },
 
-        // get stored tokens from local storage and reuse for page reloads
+        // get stored tokens from local storage and reuse for page reloadsg
         checkedCachedToken: function () {
             let expiration = window.localStorage.getItem('token_expiration');
             let token = window.localStorage.getItem('token');
             if (expiration) {
                 if (window.Moment.tz().isBefore(expiration)) {
                     this.$beerApi.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+                    this.$store.commit('setLogin', true);
                 }
             }
         },

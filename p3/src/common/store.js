@@ -41,6 +41,10 @@ export default new Vuex.Store({
         cacheHomeContent(state, content) {
             state.home_content = content;
         },
+
+        setLogin(state, is_logged_in) {
+            state.logged_in = is_logged_in;
+        },
     },
     getters: {
         checkCachedBeer(state) {

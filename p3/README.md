@@ -18,6 +18,7 @@
 * [JS Debounce](https://stackoverflow.com/questions/42199956/how-to-implement-debounce-in-vue2): Getting Debounce Working
 * [SO Vue Global Functions](https://stackoverflow.com/questions/42613061/vue-js-making-helper-functions-globally-available-to-single-file-components): 
 Figured out I needed a Mixin
+* [SO Vue Router Duplication Error](https://stackoverflow.com/questions/57837758/navigationduplicated-navigating-to-current-location-search-is-not-allowed)
 * [Vue Plugin](https://alligator.io/vuejs/creating-custom-plugins/): Wanted to extract API calls to a pseudo-service
 
 ## Notes for instructor
