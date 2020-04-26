@@ -13,6 +13,7 @@ import BeerJournalCreate from './assets/components/journal/BeerJournalCreate';
 import BeerJournalView from './assets/components/journal/BeerJournalView';
 import BeerJournalEdit from './assets/components/journal/BeerJournalEdit';
 import BeerLogin from "./assets/components/auth/BeerLogin";
+import BeerRegister from "./assets/components/auth/BeerRegister";
 
 import store from '@/common/store';
 
@@ -57,7 +58,8 @@ const routes = [
     { path: '/journal/:id', name: 'journal-view', component: BeerJournalView },
     { path: '/journal', name: 'journal', component: BeerJournalList },
     { path: '/tools', name: 'tools', component: BeerTools },
-    { path: '/login', name: 'login', component: BeerLogin},
+    { path: '/login', name: 'login', component: BeerLogin },
+    { path: '/register', name: 'register', component: BeerRegister },
     { path: '/', name: 'home', component: BeerHome },
 ];
 

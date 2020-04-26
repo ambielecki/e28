@@ -23,9 +23,12 @@
 
                 <div class="navbar-end">
                     <div class="navbar-item">
-                        <div class="buttons">
-                            <router-link v-if="!logged_in" :to="{ name: 'login' }" class="button is-link">Log In</router-link>
-                            <button class="button is-link" v-else @click="logOut">Log Out</button>
+                        <div class="buttons" v-if="!logged_in">
+                            <router-link :to="{ name: 'login' }" class="button is-link">Log In</router-link>
+                            <router-link :to="{ name: 'register' }" class="button is-link">Register</router-link>
+                        </div>
+                        <div class="buttons" v-else>
+                            <button class="button is-link" @click="logOut">Log Out</button>
                         </div>
                     </div>
                 </div>
