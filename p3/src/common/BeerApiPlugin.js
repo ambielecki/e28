@@ -111,6 +111,7 @@ const BeerApiPlugin = {
                         let token = response.data.data.access_token;
 
                         window.localStorage.setItem('token', token);
+                        window.localStorage.setItem('token_expiration', window.Moment.tz().add(response.data.data.expires_in - 5, 'm').format())
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
                        logged_in = true;
@@ -122,16 +123,7 @@ const BeerApiPlugin = {
             initHeartbeat: function () {
                 window.setInterval(() => {
                     if (window.localStorage.getItem('token') !== null) {
-                        this.axios.post('/refresh', {})
-                            .then(response => {
-                                let token = response.data.data.access_token;
-
-                                window.localStorage.setItem('token', token);
-                                this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-                            })
-                            .catch(error => {
-                                console.log(error);
-                            });
+                        this.refreshToken();
                     }
                 }, 60000);
             },
@@ -142,6 +134,20 @@ const BeerApiPlugin = {
 
                 return has_data && has_test_property;
             },
+
+            refreshToken: function () {
+                this.axios.post('/refresh', {})
+                    .then(response => {
+                        let token = response.data.data.access_token;
+
+                        window.localStorage.setItem('token', token);
+                        window.localStorage.setItem('token_expiration', window.Moment.tz().add(response.data.data.expires_in - 5, 'm').format())
+                        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
         }
     }
 }

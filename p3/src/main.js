@@ -110,6 +110,7 @@ new Vue({
     data: {},
     created: function () {
         this.getStyles();
+        this.checkedCachedToken();
     },
     mounted: function () {
         this.initNavbar();
@@ -129,6 +130,17 @@ new Vue({
                         message: error_message,
                     });
                 });
+            }
+        },
+
+        // get stored tokens from local storage and reuse for page reloads
+        checkedCachedToken: function () {
+            let expiration = window.localStorage.getItem('token_expiration');
+            let token = window.localStorage.getItem('token');
+            if (expiration) {
+                if (window.Moment.tz().isBefore(expiration)) {
+                    this.$beerApi.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                }
             }
         },
 

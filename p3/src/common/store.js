@@ -42,4 +42,16 @@ export default new Vuex.Store({
             state.home_content = content;
         },
     },
+    getters: {
+        checkCachedBeer(state) {
+            return function (id) {
+                return Object.prototype.hasOwnProperty.call(state.beers, id);
+            }
+        },
+        getCachedBeer(state) {
+            return function (id) {
+                return state.beers[id];
+            }
+        },
+    },
 });
