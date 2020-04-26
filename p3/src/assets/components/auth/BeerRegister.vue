@@ -61,7 +61,7 @@
                                 id="password"
                                 class="input"
                                 type="password"
-                                placeholder="Password"
+                                placeholder="Password: Min 6 Characters"
                                 v-model="user.password"
                             >
                         </div>
@@ -112,7 +112,23 @@
         },
         methods: {
             register: async function() {
+                try {
+                    let is_logged_in = await this.$beerApi.postRegister(this.user);
+                    this.$store.commit('setLogin', is_logged_in);
 
+                    if (is_logged_in) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Thank you for registering!!',
+                        });
+
+                        // from the Vue router docs, this is nice
+                        window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
+                }
             }
         },
     }

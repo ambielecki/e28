@@ -118,6 +118,21 @@ const BeerApiPlugin = {
                 return logged_in;
             },
 
+            postRegister: async function (user) {
+                let logged_in = false;
+
+                await window.Axios.post('register', user)
+                    .then(response => {
+                        let token = response.data.data.access_token;
+                        this.setLocalStorageToken(token, response.data.data.expires_in);
+                        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+                        logged_in = true;
+                    });
+
+                return logged_in;
+            },
+
             initHeartbeat: function () {
                 window.setInterval(() => {
                     if (window.localStorage.getItem('token') !== null) {
