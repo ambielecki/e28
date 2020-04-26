@@ -25,21 +25,17 @@
             };
         },
         mounted: function () {
-            window.Axios.get('/beer/home')
-                .then(response => {
-                    if (this.validateResponse(response, 'page')) {
-                        if (Object.prototype.hasOwnProperty.call(response.data.data.page, 'content')) {
-                            this.content = response.data.data.page.content;
-                        }
-                    } else {
-                        this.content = 'There was a problem loading the home page, please try again.'
-                    }
-
-                })
-                .catch(error => {
+            this.getHome();
+        },
+        methods: {
+            getHome: async function () {
+                try {
+                    this.content = await this.$beerApi.getHome();
+                } catch (error) {
                     this.handleErrors(error);
-                });
-        }
+                }
+            },
+        },
     };
 </script>
 

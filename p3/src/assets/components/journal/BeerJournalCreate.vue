@@ -45,23 +45,24 @@
             };
         },
         methods: {
-            submit: function () {
-                window.Axios.post('/beer', this.beer)
-                    .then(response => {
-                        if (this.validateResponse(response, 'beer')) {
-                            this.$store.commit('addMessage', {
-                                time: 5,
-                                type: 'is-success',
-                                message: 'Beer created successfully',
-                            });
+            submit: async function () {
+                try {
+                    let response_beer = await this.$beerApi.postBeer(this.beer);
 
-                            this.$router.push({ name:'journal' });
-                        }
-                    })
-                    .catch(error => {
-                        this.handleErrors(error);
-                    });
+                    if (response_beer) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Beer created successfully',
+                        });
+
+                        this.$router.push({ name:'journal' });
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
+                }
             },
+
             cancel: function () {
                 this.$router.push({ name: 'journal' })
             }

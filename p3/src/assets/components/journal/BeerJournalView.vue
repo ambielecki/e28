@@ -37,18 +37,19 @@
             };
         },
         mounted: function () {
-            window.Axios.get('/beer/' + this.$route.params.id, {})
-                .then(response => {
-                    if (this.validateResponse(response, 'beer')) {
-                        this.beer = response.data.data.beer;
-                    }
-                })
-                .catch(error => {
+            this.getBeer(this.$route.params.id);
+
+        },
+        methods: {
+            getBeer: async function (id) {
+                try {
+                    this.beer = await this.$beerApi.getBeer(id);
+                } catch (error) {
                     this.handleErrors(error);
-                })
-                .then(() => {
-                    this.is_loading = false;
-                });
-        }
+                }
+
+                this.is_loading = false;
+            },
+        },
     };
 </script>

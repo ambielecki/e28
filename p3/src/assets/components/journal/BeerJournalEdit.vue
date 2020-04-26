@@ -56,27 +56,27 @@
             };
         },
         methods: {
-            submit: function () {
-                window.Axios.put('/beer/' + this.beer.id, this.beer)
-                    .then(response => {
-                        if (this.validateResponse(response, 'beer')) {
-                            this.$store.commit('addMessage', {
-                                time: 5,
-                                type: 'is-success',
-                                message: 'Beer updated successfully',
-                            });
+            submit: async function () {
+                try {
+                    let response_beer = await this.$beerApi.putBeer(this.beer.id, this.beer);
 
-                            this.$router.push({
-                                name:'journal-view',
-                                params: {
-                                    id: this.beer.id
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        this.handleErrors(error);
-                    });
+                    if (response_beer) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Beer updated successfully',
+                        });
+
+                        this.$router.push({
+                            name:'journal-view',
+                            params: {
+                                id: this.beer.id
+                            }
+                        });
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
+                }
             },
 
             cancel: function () {
@@ -86,27 +86,20 @@
                         id: this.beer.id,
                     },
                 })
-            }
+            },
+
+            getBeer: async function (id) {
+                try {
+                    this.beer = await this.$beerApi.getBeer(id);
+                } catch (error) {
+                    this.handleErrors(error);
+                }
+
+                this.is_loading = false;
+            },
         },
         mounted: function () {
-            window.Axios.get('/beer/' + this.$route.params.id, {})
-                .then(response => {
-                    if (this.validateResponse(response, 'beer')) {
-                        this.beer = response.data.data.beer;
-                    } else {
-                        this.$store.commit('addMessage', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: 'There was a problem loading this entry',
-                        });
-                    }
-                })
-                .catch(error => {
-                    this.handleErrors(error);
-                })
-                .then(() => {
-                    this.is_loading = false;
-                });
+            this.getBeer(this.$route.params.id);
         }
     };
 </script>

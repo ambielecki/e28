@@ -68,13 +68,6 @@ const router = new VueRouter({
 
 Vue.mixin({
     methods: {
-        validateResponse: function (response, test_property) {
-            let has_data = Object.prototype.hasOwnProperty.call(response.data, 'data');
-            let has_test_property = has_data ? Object.prototype.hasOwnProperty.call(response.data.data, test_property) : false;
-
-            return has_data && has_test_property;
-        },
-
         handleErrors(error) {
             let messages = [];
 
@@ -86,7 +79,6 @@ Vue.mixin({
                         for (let error_group in error.response.data.data.errors) {
                             error.response.data.data.errors[error_group].forEach(message => {
                                 messages.push(error_group + ': ' + message);
-
                             });
                         }
                     }
