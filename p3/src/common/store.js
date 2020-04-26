@@ -8,6 +8,8 @@ export default new Vuex.Store({
         logged_in: false,
         messages: [],
         styles: {},
+        beers: {},
+        home_content: '',
     },
     mutations: {
         addMessage(state, message) {
@@ -27,6 +29,12 @@ export default new Vuex.Store({
             state.messages = state.messages.filter(function (message) {
                 return message.time > 0;
             })
+        },
+        cacheBeer(state, beer) {
+            state.beers[beer.id] = beer;
+        },
+        cacheHomeContent(state, content) {
+            state.home_content = content;
         },
     },
 });

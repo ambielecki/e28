@@ -56,6 +56,8 @@
                             message: 'Beer created successfully',
                         });
 
+                        this.$store.commit('cacheBeer', response_beer);
+
                         this.$router.push({ name:'journal' });
                     }
                 } catch (error) {

@@ -207,6 +207,8 @@
                             this.beers = this.beers.concat(beers);
                             this.page = page;
                             this.count = count;
+
+                            beers.forEach(beer => this.$store.commit('cacheBeer', beer));
                         }
 
                         this.is_loading = false;

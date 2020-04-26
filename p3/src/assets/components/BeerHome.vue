@@ -29,10 +29,15 @@
         },
         methods: {
             getHome: async function () {
-                try {
-                    this.content = await this.$beerApi.getHome();
-                } catch (error) {
-                    this.handleErrors(error);
+                if (this.$store.state.home_content !== '') {
+                    this.content = this.$store.state.home_content;
+                } else {
+                    try {
+                        this.content = await this.$beerApi.getHome();
+                        this.$store.commit('cacheHomeContent', this.content);
+                    } catch (error) {
+                        this.handleErrors(error);
+                    }
                 }
             },
         },

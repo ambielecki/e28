@@ -42,10 +42,15 @@
         },
         methods: {
             getBeer: async function (id) {
-                try {
-                    this.beer = await this.$beerApi.getBeer(id);
-                } catch (error) {
-                    this.handleErrors(error);
+                if (Object.prototype.hasOwnProperty.call(this.$store.state.beers, id)) {
+                    this.beer = this.$store.state.beers[id];
+                } else {
+                    try {
+                        this.beer = await this.$beerApi.getBeer(id);
+                        this.$store.commit('cacheBeer', this.beer);
+                    } catch (error) {
+                        this.handleErrors(error);
+                    }
                 }
 
                 this.is_loading = false;

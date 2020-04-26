@@ -1,34 +1,7 @@
-# Project 2
+# Project 3
 * By: Andrew Bielecki
-* Production URL: <https://e28p2.andrewbielecki.com>
+* Production URL: 
 * API Test URL: <https://e28-api.andrewbielecki.com/api/health-check>
-
-## Pages summary
-* / - Home page, all hardcoded
-* /journal - List of brewing journal entries (filterable)
-* /journal/{id} - Journal Entry details
-* /journal/create - Add a journal entry
-* /journal/edit/{id} = Edit a journal entry
-* /tools - Brewer helper tool page (barebones at the moment)
-
-## SFC summary
-* /src/assets/components/BeerHome.vue - homepage
-* /src/assets/components/BeerTools.vue - tools page shell
-* /src/assets/components/tools/BeerAlcoholCalculator.vue - ABV calculator widget
-* /src/assets/components/journal/BeerJournalList.vue - List of journal entries
-* /src/assets/components/journal/BeerJournalView.vue - View a specific entry
-* /src/assets/components/journal/BeerJournalCreate.vue - Create journal shell
-* /src/assets/components/journal/BeerJournalEdit.vue - Edit journal shell
-* /src/assets/components/journal/BeerJournalForm.vue - Shared form for journal entry create/edit
-* /src/assets/components/helpers/BeerFlashMessage.vue - Component to display and manage flash messages
-
-## Server interaction
-* Mock login / JWT refresh for a test account (automatic from main.js load)
-* Journal list retrieves entries from API
-* Journal list can filter entries with API call
-* Create / Edit / View for Journal entries from API
-* Homepage gets content via API
-
 ## Outside resources
 * [Beer Mug Favicon](https://favicon.io/emoji-favicons/beer-mug/)
 * [Beer Logo](http://pngimg.com/download/2383)
@@ -43,8 +16,9 @@
 * [JS Truncate Words Function](https://www.w3resource.com/javascript-exercises/javascript-string-exercise-24.php)
 * [Alcohol By Volume Calculation](http://www.brewunited.com/abv_calculator.php): Equation to calculate ABV
 * [JS Debounce](https://stackoverflow.com/questions/42199956/how-to-implement-debounce-in-vue2): Getting Debounce Working
-* [Deployer](https://deployer.org/) - not really part of the project, but decided to use this to push to DO (fewer 
-dependencies than Capistrano since I already have PHP in my local environment)
+* [SO Vue Global Functions](https://stackoverflow.com/questions/42613061/vue-js-making-helper-functions-globally-available-to-single-file-components): 
+Figured out I needed a Mixin
+* [Vue Plugin](https://alligator.io/vuejs/creating-custom-plugins/): Wanted to extract API calls to a pseudo-service
 
 ## Notes for instructor
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
