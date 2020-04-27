@@ -105,6 +105,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    // restrict the journal group to logged in users
     if (to.name.includes('journal') && !store.getters.getLoggedIn() && !checkCachedTokenValidity()) {
         store.commit('addMessage', {
             time: 5,
@@ -185,7 +186,7 @@ new Vue({
             }
         },
 
-        // get stored tokens from local storage and reuse for page reloadsg
+        // get stored tokens from local storage and reuse for page reloading
         checkedCachedToken: function () {
             let expiration = window.localStorage.getItem('token_expiration');
             let token = window.localStorage.getItem('token');
@@ -222,7 +223,11 @@ new Vue({
     },
 }).$mount('#app');
 
-// for route guards, this works if someone navigates by typing a link and using the cached login (this is set through the store yet)
+/*
+ for route guards, this works if someone navigates by typing a link and using the cached login (this is not set
+ through the store yet).  Should probably combine with the method being used to set the token, but then I'd be checking
+ localStorage twice without some funky return here
+ */
 function checkCachedTokenValidity() {
     let has_valid_token = false;
 
