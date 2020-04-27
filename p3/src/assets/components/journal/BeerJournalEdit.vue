@@ -91,8 +91,8 @@
             },
 
             getBeer: async function (id) {
-                if (Object.prototype.hasOwnProperty.call(this.$store.state.beers, id)) {
-                    this.beer = this.$store.state.beers[id];
+                if (this.$store.getters.checkCachedBeer(id)) {
+                    this.beer = this.$store.getters.getCachedBeer(id);
                 } else {
                     try {
                         this.beer = await this.$beerApi.getBeer(id);

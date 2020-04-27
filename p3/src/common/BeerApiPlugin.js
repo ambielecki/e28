@@ -33,11 +33,6 @@ const BeerApiPlugin = {
                     .then(response => {
                         if (this.validateResponse(response, 'beers')) {
                             let beers = response.data.data.beers;
-                            beers.map(beer => {
-                                beer.is_expanded = false;
-
-                                return beer;
-                            });
 
                             return_data = [beers, response.data.data.page, response.data.data.count];
                         }
