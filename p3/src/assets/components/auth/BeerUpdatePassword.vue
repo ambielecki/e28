@@ -81,20 +81,22 @@
         methods: {
             resetPassword: async function () {
                 try {
-                    console.log('reset');
-                    // let is_logged_in = await this.$beerApi.login(this.email, this.password);
-                    // this.$store.commit('setLogin', is_logged_in);
-                    //
-                    // if (is_logged_in) {
-                    //     this.$store.commit('addMessage', {
-                    //         time: 5,
-                    //         type: 'is-success',
-                    //         message: 'Successfully logged in, welcome back!',
-                    //     });
-                    //
-                    //     // from the Vue router docs, this is nice
-                    //     window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
-                    // }
+                    let success = await this.$beerApi.postUpdatePassword({
+                        current_password: this.current_password,
+                        new_password: this.new_password,
+                        new_password_confirmation: this.new_password_confirmation,
+                    });
+
+                    if (success) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Password Reset',
+                        });
+
+                        // from the Vue router docs, this is nice
+                        window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
+                    }
                 } catch (error) {
                     this.handleErrors(error);
                 }

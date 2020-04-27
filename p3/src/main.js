@@ -14,6 +14,7 @@ import BeerJournalView from './assets/components/journal/BeerJournalView';
 import BeerJournalEdit from './assets/components/journal/BeerJournalEdit';
 import BeerLogin from "./assets/components/auth/BeerLogin";
 import BeerRegister from "./assets/components/auth/BeerRegister";
+import BeerUpdatePassword from "./assets/components/auth/BeerUpdatePassword";
 
 import store from '@/common/store';
 
@@ -60,43 +61,19 @@ const routes = [
     { path: '/journal/:id', name: 'journal-view', component: BeerJournalView },
     { path: '/journal', name: 'journal', component: BeerJournalList },
     { path: '/tools', name: 'tools', component: BeerTools },
-    {
-        path: '/login',
-        name: 'login',
-        component: BeerLogin,
-        beforeEnter: (to, from, next) => {
-            if (checkCachedTokenValidity() || store.getters.getLoggedIn()) {
-                store.commit('addMessage', {
-                    time: 5,
-                    type: 'is-warning',
-                    message: 'Already Logged In',
-                });
-
-                next({ name: 'home' });
-            } else {
-                next();
-            }
-        },
-    },
-    {
-        path:'/register',
-        name: 'register',
-        component: BeerRegister,
-        beforeEnter: (to, from, next) => { // if there were more than two routes I'd abstract this, future Andrew problem
-            if (checkCachedTokenValidity() || store.getters.getLoggedIn()) {
-                store.commit('addMessage', {
-                    time: 5,
-                    type: 'is-warning',
-                    message: 'Already Logged In',
-                });
-
-                next({ name: 'home' });
-            } else {
-                next();
-            }
-        },
-    },
+    { path: '/login', name: 'login', component: BeerLogin },
+    { path:'/register', name: 'register', component: BeerRegister },
+    { path: '/password', name: 'password', component: BeerUpdatePassword },
     { path: '/', name: 'home', component: BeerHome },
+];
+
+const only_logged_in = [
+    'password',
+];
+
+const only_guests = [
+    'register',
+    'login',
 ];
 
 const router = new VueRouter({
@@ -106,7 +83,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     // restrict the journal group to logged in users
-    if (to.name.includes('journal') && !store.getters.getLoggedIn() && !checkCachedTokenValidity()) {
+    if ((to.name.includes('journal') || only_logged_in.includes(to.name)) && !store.getters.getLoggedIn() && !checkCachedTokenValidity()) {
         store.commit('addMessage', {
             time: 5,
             type: 'is-danger',
@@ -114,6 +91,15 @@ router.beforeEach((to, from, next) => {
         });
 
         next({ name: 'login' });
+    } else if (only_guests.includes(to.name) && (checkCachedTokenValidity() || store.getters.getLoggedIn())) {
+        // keep logged in users out of guest pages
+        store.commit('addMessage', {
+            time: 5,
+            type: 'is-warning',
+            message: 'Already Logged In',
+        });
+
+        next({ name: 'home' });
     } else {
         next();
     }

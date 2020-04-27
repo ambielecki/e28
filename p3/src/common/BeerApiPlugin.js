@@ -103,7 +103,7 @@ const BeerApiPlugin = {
             login: async function (email, password) {
                 let logged_in = false;
 
-                await window.Axios.post('/login', {
+                await this.axios.post('/login', {
                     email: email,
                     password: password,
                 })
@@ -121,7 +121,7 @@ const BeerApiPlugin = {
             postRegister: async function (user) {
                 let logged_in = false;
 
-                await window.Axios.post('register', user)
+                await this.axios.post('register', user)
                     .then(response => {
                         let token = response.data.data.access_token;
                         this.setLocalStorageToken(token, response.data.data.expires_in);
@@ -131,6 +131,17 @@ const BeerApiPlugin = {
                     });
 
                 return logged_in;
+            },
+
+            postUpdatePassword: async function (data) {
+                let success = false;
+
+                await this.axios.post('password', data)
+                    .then(() => {
+                        success = true;
+                    })
+
+                return success;
             },
 
             initHeartbeat: function () {
