@@ -70,6 +70,7 @@
             }, 1000);
         },
         methods: {
+            // TODO :: need to actually make API call to invalidate token
             logOut: function () {
                 this.$store.commit('setLogin', false);
                 this.$beerApi.clearAuthHeader();
