@@ -82,7 +82,7 @@ const routes = [
         path:'/register',
         name: 'register',
         component: BeerRegister,
-        beforeEnter: (to, from, next) => {
+        beforeEnter: (to, from, next) => { // if there were more than two routes I'd abstract this, future Andrew problem
             if (checkCachedTokenValidity() || store.getters.getLoggedIn()) {
                 store.commit('addMessage', {
                     time: 5,
