@@ -49,6 +49,8 @@ Vue.filter('date-format', function (value) {
     return window.Moment.tz(value, 'America/New_York').format('YYYY-MM-DD');
 });
 
+Vue.config.productionTip = false;
+
 Vue.use(VueRouter);
 Vue.use(BeerApiPlugin);
 
@@ -58,16 +60,62 @@ const routes = [
     { path: '/journal/:id', name: 'journal-view', component: BeerJournalView },
     { path: '/journal', name: 'journal', component: BeerJournalList },
     { path: '/tools', name: 'tools', component: BeerTools },
-    { path: '/login', name: 'login', component: BeerLogin },
-    { path: '/register', name: 'register', component: BeerRegister },
+    {
+        path: '/login',
+        name: 'login',
+        component: BeerLogin,
+        beforeEnter: (to, from, next) => {
+            if (checkCachedTokenValidity() || store.getters.getLoggedIn()) {
+                store.commit('addMessage', {
+                    time: 5,
+                    type: 'is-warning',
+                    message: 'Already Logged In',
+                });
+
+                next({ name: 'home' });
+            } else {
+                next();
+            }
+        },
+    },
+    {
+        path:'/register',
+        name: 'register',
+        component: BeerRegister,
+        beforeEnter: (to, from, next) => {
+            if (checkCachedTokenValidity() || store.getters.getLoggedIn()) {
+                store.commit('addMessage', {
+                    time: 5,
+                    type: 'is-warning',
+                    message: 'Already Logged In',
+                });
+
+                next({ name: 'home' });
+            } else {
+                next();
+            }
+        },
+    },
     { path: '/', name: 'home', component: BeerHome },
 ];
-
-Vue.config.productionTip = false;
 
 const router = new VueRouter({
     routes: routes,
     mode: 'history',
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.name.includes('journal') && !store.getters.getLoggedIn() && !checkCachedTokenValidity()) {
+        store.commit('addMessage', {
+            time: 5,
+            type: 'is-danger',
+            message: 'You Must Be Logged In to View this Page',
+        });
+
+        next({ name: 'login' });
+    } else {
+        next();
+    }
 });
 
 Vue.mixin({
@@ -173,3 +221,17 @@ new Vue({
         }
     },
 }).$mount('#app');
+
+// for route guards, this works if someone navigates by typing a link and using the cached login (this is set through the store yet)
+function checkCachedTokenValidity() {
+    let has_valid_token = false;
+
+    let expiration = window.localStorage.getItem('token_expiration');
+    let token = window.localStorage.getItem('token');
+
+    if (expiration && token) {
+        has_valid_token = window.Moment.tz().isBefore(expiration);
+    }
+
+    return has_valid_token
+}

@@ -1,47 +1,51 @@
 <template>
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">Login</p>
-        </header>
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Login</p>
+                </header>
 
-        <div class="card-content">
-            <div class="columns is-multiline">
-                <div class="column is-half">
-                    <div class="field">
-                        <label class="label" for="email">Email</label>
-                        <div class="control">
-                            <input
-                                id="email"
-                                class="input"
-                                type="text"
-                                placeholder="Email Address"
-                                v-model="email"
-                            >
+                <div class="card-content">
+                    <div class="columns is-multiline">
+                        <div class="column is-full">
+                            <div class="field">
+                                <label class="label" for="email">Email</label>
+                                <div class="control">
+                                    <input
+                                        id="email"
+                                        class="input"
+                                        type="text"
+                                        placeholder="Email Address"
+                                        v-model="email"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column is-full">
+                            <div class="field">
+                                <label class="label" for="password">Password</label>
+                                <div class="control">
+                                    <input
+                                        id="password"
+                                        class="input"
+                                        type="password"
+                                        placeholder="Password"
+                                        v-model="password"
+                                    >
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="column is-half">
-                    <div class="field">
-                        <label class="label" for="password">Password</label>
-                        <div class="control">
-                            <input
-                                id="password"
-                                class="input"
-                                type="password"
-                                placeholder="Password"
-                                v-model="password"
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="columns">
-                <div class="column is-full">
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button is-link" @click="login">Login</button>
+                    <div class="columns">
+                        <div class="column is-full">
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <button class="button is-link" @click="login">Login</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

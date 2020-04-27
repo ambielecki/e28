@@ -57,5 +57,10 @@ export default new Vuex.Store({
                 return state.beers[id];
             }
         },
+        getLoggedIn(state) {
+            return function () {
+                return state.logged_in;
+            }
+        },
     },
 });

@@ -22,14 +22,10 @@
                 </div>
 
                 <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons" v-if="!logged_in">
-                            <router-link :to="{ name: 'login' }" class="button is-link">Log In</router-link>
-                            <router-link :to="{ name: 'register' }" class="button is-link">Register</router-link>
-                        </div>
-                        <div class="buttons" v-else>
-                            <button class="button is-link" @click="logOut">Log Out</button>
-                        </div>
+                    <router-link v-if="!logged_in" :to="{ name: 'login' }" class="navbar-item">Log In</router-link>
+                    <router-link v-if="!logged_in" :to="{ name: 'register' }" class="navbar-item">Register</router-link>
+                    <div class="buttons" v-if="logged_in">
+                        <button class="button is-link" @click="logOut">Log Out</button>
                     </div>
                 </div>
             </div>

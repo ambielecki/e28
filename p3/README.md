@@ -20,6 +20,7 @@
 Figured out I needed a Mixin
 * [SO Vue Router Duplication Error](https://stackoverflow.com/questions/57837758/navigationduplicated-navigating-to-current-location-search-is-not-allowed)
 * [Vue Plugin](https://alligator.io/vuejs/creating-custom-plugins/): Wanted to extract API calls to a pseudo-service
+* [Vue Router Guards](https://router.vuejs.org/guide/advanced/navigation-guards.html#global-after-hooks)
 
 ## Notes for instructor
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
