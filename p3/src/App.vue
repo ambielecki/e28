@@ -77,17 +77,25 @@
         },
         methods: {
             // TODO :: need to actually make API call to invalidate token
-            logOut: function () {
-                this.$store.commit('setLogin', false);
-                this.$beerApi.clearAuthHeader();
-                this.$store.commit('addMessage', {
-                    time: 5,
-                    type: 'is-success',
-                    message: 'Successfully logged out, come back soon.',
-                });
+            logOut: async function () {
+                try {
+                    let logged_out = await this.$beerApi.logout();
 
-                if (this.$route.path !== '/') {
-                    this.$router.push('/');
+                    if (logged_out) {
+                        this.$store.commit('setLogin', false);
+                        this.$beerApi.clearAuthHeader();
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Successfully logged out, come back soon.',
+                        });
+
+                        if (this.$route.path !== '/') {
+                            this.$router.push('/');
+                        }
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
                 }
             }
         },

@@ -113,6 +113,17 @@ const BeerApiPlugin = {
                 return logged_in;
             },
 
+            logout: async function() {
+                let logged_out = false;
+
+                await this.axios.post('/logout', {})
+                    .then(() => {
+                        logged_out = true;
+                    });
+
+                return logged_out;
+            },
+
             postRegister: async function (user) {
                 let logged_in = false;
 
