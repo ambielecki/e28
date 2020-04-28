@@ -16,6 +16,7 @@
                                 type="text"
                                 placeholder="First Name"
                                 v-model="user.first_name"
+                                @keyup.enter="register"
                             >
                         </div>
                     </div>
@@ -31,6 +32,7 @@
                                 type="text"
                                 placeholder="Last Name"
                                 v-model="user.last_name"
+                                @keyup.enter="register"
                             >
                         </div>
                     </div>
@@ -46,6 +48,7 @@
                                 type="text"
                                 placeholder="Email Address"
                                 v-model="user.email"
+                                @keyup.enter="register"
                             >
                         </div>
                     </div>
@@ -63,6 +66,7 @@
                                 type="password"
                                 placeholder="Password: Min 6 Characters"
                                 v-model="user.password"
+                                @keyup.enter="register"
                             >
                         </div>
                     </div>
@@ -78,6 +82,7 @@
                                 type="password"
                                 placeholder="Confirm Password"
                                 v-model="user.password_confirmation"
+                                @keyup.enter="register"
                             >
                         </div>
                     </div>
