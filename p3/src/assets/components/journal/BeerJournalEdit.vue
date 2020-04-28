@@ -24,7 +24,7 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form :beer="beer" :styles="state.styles"></beer-journal-form>
+                        <beer-journal-form :beer="beer"></beer-journal-form>
                         <div class="columns">
                             <div class="column is-full">
                                 <div class="field is-grouped">
@@ -47,9 +47,6 @@
 <script>
     import BeerJournalForm from "./parts/BeerJournalForm";
 
-    const Beer = require('../../../common/Beer').default;
-    let beer = new Beer();
-
     export default {
         components: { BeerJournalForm },
         data: function () {
@@ -58,36 +55,30 @@
                 is_loading: true,
             };
         },
-        props: ['state'],
         methods: {
-            submit: function () {
-                window.Axios.put('/beer/' + this.beer.id, this.beer)
-                    .then(response => {
-                        if (beer.validateResponse(response, 'beer')) {
-                            this.$emit('set-message', {
-                                time: 5,
-                                type: 'is-success',
-                                message: 'Beer updated successfully',
-                            });
+            submit: async function () {
+                try {
+                    let response_beer = await this.$beerApi.putBeer(this.beer.id, this.beer);
 
-                            this.$router.push({
-                                name:'journal-view',
-                                params: {
-                                    id: this.beer.id
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        let error_messages = beer.formatErrorMessages(error);
-                        error_messages.forEach(error_message => {
-                            this.$emit('set-message', {
-                                time: 5,
-                                type: 'is-danger',
-                                message: error_message,
-                            });
+                    if (response_beer) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Beer updated successfully',
                         });
-                    });
+
+                        this.$store.commit('cacheBeer', response_beer);
+
+                        this.$router.push({
+                            name:'journal-view',
+                            params: {
+                                id: this.beer.id
+                            }
+                        });
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
+                }
             },
 
             cancel: function () {
@@ -97,34 +88,25 @@
                         id: this.beer.id,
                     },
                 })
-            }
+            },
+
+            getBeer: async function (id) {
+                if (this.$store.getters.checkCachedBeer(id)) {
+                    this.beer = this.$store.getters.getCachedBeer(id);
+                } else {
+                    try {
+                        this.beer = await this.$beerApi.getBeer(id);
+                        this.$store.commit('cacheBeer', this.beer);
+                    } catch (error) {
+                        this.handleErrors(error);
+                    }
+                }
+
+                this.is_loading = false;
+            },
         },
         mounted: function () {
-            window.Axios.get('/beer/' + this.$route.params.id, {})
-                .then(response => {
-                    if (beer.validateResponse(response, 'beer')) {
-                        this.beer = response.data.data.beer;
-                    } else {
-                        this.$emit('set-message', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: 'There was a problem loading this entry',
-                        });
-                    }
-                })
-                .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
-                    error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                })
-                .then(() => {
-                    this.is_loading = false;
-                });
+            this.getBeer(this.$route.params.id);
         }
     };
 </script>

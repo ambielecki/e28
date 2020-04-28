@@ -18,9 +18,6 @@
 </template>
 
 <script>
-    const Beer = require('../../common/Beer').default;
-    let beer = new Beer;
-
     export default {
         data: function () {
             return {
@@ -28,28 +25,22 @@
             };
         },
         mounted: function () {
-            window.Axios.get('/beer/home')
-                .then(response => {
-                    if (beer.validateResponse(response, 'page')) {
-                        if (Object.prototype.hasOwnProperty.call(response.data.data.page, 'content')) {
-                            this.content = response.data.data.page.content;
-                        }
-                    } else {
-                        this.content = 'There was a problem loading the home page, please try again.'
+            this.getHome();
+        },
+        methods: {
+            getHome: async function () {
+                if (this.$store.state.home_content !== '') {
+                    this.content = this.$store.state.home_content;
+                } else {
+                    try {
+                        this.content = await this.$beerApi.getHome();
+                        this.$store.commit('cacheHomeContent', this.content);
+                    } catch (error) {
+                        this.handleErrors(error);
                     }
-
-                })
-                .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
-                    error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                });
-        }
+                }
+            },
+        },
     };
 </script>
 

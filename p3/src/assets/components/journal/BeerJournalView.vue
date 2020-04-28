@@ -18,7 +18,6 @@
             <beer-journal-view-expanded
                 v-else
                 :beer="beer"
-                :state="state"
                 :show_collapse="false"
                 @collapse-beer="beer.is_expanded = false"
             ></beer-journal-view-expanded>
@@ -29,9 +28,6 @@
 <script>
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
 
-    const Beer = require('../../../common/Beer').default;
-    let beer = new Beer();
-
     export default {
         components: { BeerJournalViewExpanded },
         data: function () {
@@ -40,27 +36,24 @@
                 is_loading: true,
             };
         },
-        props: ['state'],
         mounted: function () {
-            window.Axios.get('/beer/' + this.$route.params.id, {})
-                .then(response => {
-                    if (beer.validateResponse(response, 'beer')) {
-                        this.beer = response.data.data.beer;
+            this.getBeer(this.$route.params.id);
+        },
+        methods: {
+            getBeer: async function (id) {
+                if (this.$store.getters.checkCachedBeer(id)) {
+                    this.beer = this.$store.getters.getCachedBeer(id);
+                } else {
+                    try {
+                        this.beer = await this.$beerApi.getBeer(id);
+                        this.$store.commit('cacheBeer', this.beer);
+                    } catch (error) {
+                        this.handleErrors(error);
                     }
-                })
-                .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
-                    error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                })
-                .then(() => {
-                    this.is_loading = false;
-                });
-        }
+                }
+
+                this.is_loading = false;
+            },
+        },
     };
 </script>

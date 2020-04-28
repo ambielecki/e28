@@ -10,7 +10,7 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form :beer="beer" :styles="state.styles"></beer-journal-form>
+                        <beer-journal-form :beer="beer"></beer-journal-form>
                         <div class="columns">
                             <div class="column is-full">
                                 <div class="field is-grouped">
@@ -32,8 +32,6 @@
 
 <script>
     import BeerJournalForm from "./parts/BeerJournalForm";
-    const Beer = require('../../../common/Beer').default;
-    let beer = new Beer();
 
     export default {
         components: { BeerJournalForm },
@@ -46,44 +44,27 @@
                 },
             };
         },
-        props: ['state'],
         methods: {
-            submit: function () {
-                window.Axios.post('/beer', this.beer)
-                    .then(response => {
-                        if (beer.validateResponse(response, 'beer')) {
-                            this.$emit('set-message', {
-                                time: 5,
-                                type: 'is-success',
-                                message: 'Beer created successfully',
-                            });
+            submit: async function () {
+                try {
+                    let response_beer = await this.$beerApi.postBeer(this.beer);
 
-                            this.$store.commit('addMessage', {
-                                time: 5,
-                                type: 'is-success',
-                                message: 'Beer created successfully',
-                            });
-
-                            this.$router.push({ name:'journal' });
-                        }
-                    })
-                    .catch(error => {
-                        let error_messages = beer.formatErrorMessages(error);
-                        error_messages.forEach(error_message => {
-                            this.$emit('set-message', {
-                                time: 5,
-                                type: 'is-danger',
-                                message: error_message,
-                            });
-
-                            this.$store.commit('addMessage', {
-                                time: 5,
-                                type: 'is-danger',
-                                message: error_message,
-                            });
+                    if (response_beer) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Beer created successfully',
                         });
-                    });
+
+                        this.$store.commit('cacheBeer', response_beer);
+
+                        this.$router.push({ name:'journal' });
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
+                }
             },
+
             cancel: function () {
                 this.$router.push({ name: 'journal' })
             }

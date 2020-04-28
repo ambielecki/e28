@@ -44,7 +44,7 @@
                                                     >
                                                         <option :value="null">All</option>
                                                         <option
-                                                            v-for="(name, value) in state.styles"
+                                                            v-for="(name, value) in styles"
                                                             :value="value"
                                                             :key="value"
                                                         >
@@ -137,14 +137,12 @@
             <beer-journal-view-compressed
                 v-if="!beer.is_expanded"
                 :beer="beer"
-                :state="state"
                 :key="key"
                 @expand-beer="beer.is_expanded = true"
             ></beer-journal-view-compressed>
             <beer-journal-view-expanded
                 v-else
                 :beer="beer"
-                :state="state"
                 :key="key"
                 :show_collapse="true"
                 @collapse-beer="beer.is_expanded = false"
@@ -162,9 +160,6 @@
 <script>
     import BeerJournalViewCompressed from "./parts/BeerJournalViewCompressed";
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
-
-    const Beer = require('../../../common/Beer').default;
-    let beer = new Beer;
 
     export default {
         components: {BeerJournalViewExpanded, BeerJournalViewCompressed },
@@ -184,7 +179,6 @@
                 is_loading: false,
             };
         },
-        props: ['state'],
         mounted: function () {
             this.getBeers();
         },
@@ -192,47 +186,45 @@
             load_more: function () {
                 return (this.page - 1) * this.params.limit < this.count && this.count !== 0 && this.count > this.beers.length;
             },
-
             is_initial_load: function () {
                 return this.is_loading && this.beers.length === 0;
+            },
+            styles: function () {
+                return this.$store.state.styles;
             }
         },
         methods: {
-            getBeers(page = 1) {
+            getBeers: async function(page = 1) {
                 if (this.is_loading === false) {
                     this.is_loading = true;
                     let params = this.params;
                     params.page = page;
-                    window.Axios.get('/beer', {
-                        params: params,
-                    })
-                        .then(response => {
-                            if (beer.validateResponse(response, 'beers')) {
-                                let beers = response.data.data.beers;
-                                beers.map(beer => {
-                                    beer.is_expanded = false;
+                    try {
+                        let data = await this.$beerApi.getList(params);
+                        if (data.length > 0) {
+                            let [beers, page, count] = data;
 
-                                    return beer;
-                                });
-
-                                this.beers = this.beers.concat(beers);
-                                this.page = response.data.data.page;
-                                this.count = response.data.data.count;
-                            }
-                        })
-                        .catch(error => {
-                            let error_messages = beer.formatErrorMessages(error);
-                            error_messages.forEach(error_message => {
-                                this.$emit('set-message', {
-                                    time: 5,
-                                    type: 'is-danger',
-                                    message: error_message,
-                                });
+                            beers.forEach((beer) => {
+                                this.$store.commit('cacheBeer', beer);
                             });
-                        })
-                        .then(() => {
-                            this.is_loading = false;
-                        });
+
+                            beers.map(beer => {
+                                beer.is_expanded = false;
+
+                                return beer;
+                            });
+
+                            this.beers = this.beers.concat(beers);
+                            this.page = page;
+                            this.count = count;
+                        }
+
+                        this.is_loading = false;
+                    } catch (error) {
+                        this.handleErrors(error);
+
+                        this.is_loading = false;
+                    }
                 }
             },
             filterBeers() {

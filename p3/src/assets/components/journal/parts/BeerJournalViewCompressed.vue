@@ -9,7 +9,7 @@
                 <div class="content">
                     <div class="columns is-multiline is-mobile">
                         <div v-if="beer.style" class="column is-half">
-                            <b>Style: </b>{{ state.styles[beer.style] }}
+                            <b>Style: </b>{{ styles[beer.style] }}
                         </div>
 
                         <div v-if="beer.primary_fermentation_start" class="column is-half">
@@ -63,10 +63,15 @@
         data: function () {
             return {};
         },
-        props: ['beer', 'state'],
+        props: ['beer'],
         methods: {
             expandBeer: function () {
                 this.$emit('expand-beer');
+            }
+        },
+        computed: {
+            styles: function () {
+                return this.$store.state.styles;
             }
         },
     };

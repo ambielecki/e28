@@ -17,8 +17,22 @@
             <div id="beer_navbar" class="navbar-menu">
                 <div class="navbar-start">
                     <router-link :to="{ name: 'home' }" class="navbar-item">Home</router-link>
-                    <router-link :to="{ name: 'journal' }" class="navbar-item">Journal</router-link>
+                    <router-link v-if="logged_in" :to="{ name: 'journal' }" class="navbar-item">Journal</router-link>
                     <router-link :to="{ name: 'tools' }" class="navbar-item">Tools</router-link>
+                </div>
+
+                <div class="navbar-end">
+                    <template v-if="!logged_in">
+                        <router-link :to="{ name: 'login' }" class="navbar-item">Log In</router-link>
+                        <router-link :to="{ name: 'register' }" class="navbar-item">Register</router-link>
+                    </template>
+
+                    <template v-else>
+                        <router-link v-if="logged_in" :to="{ name: 'password' }" class="navbar-item">Update Password</router-link>
+                        <div class="buttons" v-if="logged_in">
+                            <button class="button is-link" @click="logOut">Log Out</button>
+                        </div>
+                    </template>
                 </div>
             </div>
         </nav>
@@ -28,10 +42,7 @@
         <br>
 
         <div class="container">
-            <router-view
-                :state="state"
-                @set-message="setMessage"
-            ></router-view>
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -45,87 +56,40 @@
      */
 
     import BeerFlashMessage from "./assets/components/helpers/BeerFlashMessage";
-    const Beer = require('./common/Beer').default;
-    let beer = new Beer();
 
     export default {
         name: 'App',
         components: { BeerFlashMessage },
         data: function () {
-            return {
-                state: {
-                    styles: {},
-                    messages: [], // object { time: int, message: 'string', type: 'string (is-success, is-danger)' }
-                    logged_in: false,
-                },
-
-            };
+            return {};
         },
-        methods: {
-            /**
-             * @param {FlashMessage} message
-             */
-            setMessage(message) {
-                this.state.messages.push(message);
+        computed: {
+            logged_in: function () {
+                return this.$store.state.logged_in;
             },
-            removeMessage(key) {
-                this.state.messages.splice(key, 1);
-            },
-        },
-        mounted: function () {
-            window.Axios.get('/beer/styles')
-                .then(response => {
-                    if (beer.validateResponse(response, 'styles')) {
-                        this.$data.state.styles = response.data.data.styles;
-                    }
-                })
-                .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
-
-                    error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                });
         },
         created: function () {
-            // log in the test user and set axios headers
-            beer.testLogin()
-                .then(response => {
-                    if (beer.validateResponse(response, 'access_token')) {
-                        this.state.logged_in = true;
-                    }
-                })
-                .catch(error => {
-                    let error_messages = beer.formatErrorMessages(error);
-
-                    error_messages.forEach(error_message => {
-                        this.$emit('set-message', {
-                            time: 5,
-                            type: 'is-danger',
-                            message: error_message,
-                        });
-                    });
-                });
-
             // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
-                this.state.messages.map(function (message) {
-                    message.time--;
-
-                    return message;
-                });
-
-                this.state.messages = this.state.messages.filter(function (message) {
-                    return message.time > 0;
-                });
-
                 this.$store.commit('decrementMessageTimes');
                 this.$store.commit('removeExpiredMessages');
             }, 1000);
+        },
+        methods: {
+            // TODO :: need to actually make API call to invalidate token
+            logOut: function () {
+                this.$store.commit('setLogin', false);
+                this.$beerApi.clearAuthHeader();
+                this.$store.commit('addMessage', {
+                    time: 5,
+                    type: 'is-success',
+                    message: 'Successfully logged out, come back soon.',
+                });
+
+                if (this.$route.path !== '/') {
+                    this.$router.push('/');
+                }
+            }
         },
     }
 </script>
