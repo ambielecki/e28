@@ -48,6 +48,8 @@
 </template>
 
 <script>
+    import accounting from 'accounting';
+
     export default {
         data: function () {
             return {
@@ -59,7 +61,7 @@
             abv: function () {
                 let abv = (this.original_gravity - this.final_gravity) * 131.25;
 
-                return window.Accounting.formatNumber(abv, 1);
+                return accounting.formatNumber(abv, 1);
             }
         }
     };

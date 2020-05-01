@@ -30,9 +30,7 @@ window.Axios = require('axios').default.create({
     },
 });
 
-// Time and number formats, two things I hate about JS
 window.Moment = require('moment-timezone');
-window.Accounting = require('accounting');
 
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
