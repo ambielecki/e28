@@ -10,9 +10,12 @@
                             class="input"
                             type="text"
                             placeholder="Name your beer"
-                            v-model="beer.name"
+                            v-model="$v.beer.name.$model"
                         >
                     </div>
+                    <p class="help is-danger" v-if="$v.beer.name.$anyError">
+                        A Name is Required
+                    </p>
                 </div>
             </div>
 
@@ -60,13 +63,16 @@
                     <datepicker
                         placeholder="Select Date"
                         id="primary_fermentation_start"
-                        v-model="beer.primary_fermentation_start"
+                        v-model="$v.beer.primary_fermentation_start.$model"
                         :config="{
                             dateFormat: 'Y-m-d H:i',
                             enableTime: true,
                             static: true
                         }"
                     ></datepicker>
+                    <p class="help is-danger" v-if="$v.beer.primary_fermentation_start.$anyError">
+                        Start Date is Required
+                    </p>
                 </div>
             </div>
 
@@ -173,6 +179,7 @@
     import Datepicker from 'vue-bulma-datepicker';
     import CKEditor from '@ckeditor/ckeditor5-vue';
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import { required } from 'vuelidate/lib/validators';
 
     export default {
         components: {
@@ -180,6 +187,12 @@
             ckeditor: CKEditor.component,
         },
         props: ['beer'],
+        validations: {
+            beer: {
+                name: { required },
+                primary_fermentation_start: { required },
+            },
+        },
         computed: {
             styles: function () {
                 return this.$store.state.styles;
@@ -189,6 +202,23 @@
             return {
                 editor: ClassicEditor,
             };
+        },
+        methods: {
+            validate: function () {
+                this.$v.$touch();
+
+                if (this.$v.$anyError) {
+                    this.$store.commit('addMessage', {
+                        time: 5,
+                        type: 'is-danger',
+                        message: 'Please fix form errors before submission',
+                    });
+
+                    return false;
+                }
+
+                return true;
+            },
         },
     };
 </script>

@@ -10,7 +10,7 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form :beer="beer"></beer-journal-form>
+                        <beer-journal-form :beer="beer" ref="beerJournalForm"></beer-journal-form>
                         <div class="columns">
                             <div class="column is-full">
                                 <div class="field is-grouped">
@@ -38,6 +38,7 @@
         data: function () {
             return {
                 beer: {
+                    name: '',
                     style: null,
                     primary_fermentation_start: window.Moment.tz('America/New_York').format('YYYY-M-D H:mm'),
                     rating: null,
@@ -47,6 +48,10 @@
         methods: {
             submit: async function () {
                 try {
+                    if (!this.$refs.beerJournalForm.validate()) {
+                        return
+                    }
+
                     let response_beer = await this.$beerApi.postBeer(this.beer);
 
                     if (response_beer) {

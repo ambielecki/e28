@@ -24,7 +24,7 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form :beer="beer"></beer-journal-form>
+                        <beer-journal-form :beer="beer" ref="beerJournalForm"></beer-journal-form>
                         <div class="columns">
                             <div class="column is-full">
                                 <div class="field is-grouped">
@@ -58,6 +58,10 @@
         methods: {
             submit: async function () {
                 try {
+                    if (!this.$refs.beerJournalForm.validate()) {
+                        return
+                    }
+
                     let response_beer = await this.$beerApi.putBeer(this.beer.id, this.beer);
 
                     if (response_beer) {
