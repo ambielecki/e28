@@ -40,7 +40,7 @@
                 beer: {
                     name: '',
                     style: null,
-                    primary_fermentation_start: window.Moment.tz('America/New_York').format('YYYY-M-D H:mm'),
+                    primary_fermentation_start: this.$moment.tz('America/New_York').format('YYYY-M-D H:mm'),
                     rating: null,
                 },
             };
