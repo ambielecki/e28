@@ -15,7 +15,7 @@
                                 class="input"
                                 type="text"
                                 placeholder="First Name"
-                                v-model="user.first_name"
+                                v-model="$v.user.first_name.$model"
                                 @keyup.enter="register"
                             >
                         </div>
@@ -34,7 +34,7 @@
                                 class="input"
                                 type="text"
                                 placeholder="Last Name"
-                                v-model="user.last_name"
+                                v-model="$v.user.last_name.$model"
                                 @keyup.enter="register"
                             >
                         </div>
@@ -53,7 +53,7 @@
                                 class="input"
                                 type="text"
                                 placeholder="Email Address"
-                                v-model="user.email"
+                                v-model="$v.user.email.$model"
                                 @keyup.enter="register"
                             >
                         </div>
@@ -74,12 +74,12 @@
                                 class="input"
                                 type="password"
                                 placeholder="Password: Min 6 Characters"
-                                v-model="user.password"
+                                v-model="$v.user.password.$model"
                                 @keyup.enter="register"
                             >
                         </div>
                         <p class="help is-danger" v-if="$v.user.password.$anyError">
-                            Password is required and must match confirmation (6 character minmum)
+                            Password is required and must match confirmation (6 character minimum)
                         </p>
                     </div>
                 </div>

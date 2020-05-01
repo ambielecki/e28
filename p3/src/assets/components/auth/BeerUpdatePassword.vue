@@ -17,9 +17,12 @@
                                         class="input"
                                         type="password"
                                         placeholder="Current Password"
-                                        v-model="current_password"
+                                        v-model="$v.current_password.$model"
                                     >
                                 </div>
+                                <p class="help is-danger" v-if="$v.current_password.$anyError">
+                                    Current Password is required
+                                </p>
                             </div>
                         </div>
 
@@ -32,9 +35,12 @@
                                         class="input"
                                         type="password"
                                         placeholder="New Password"
-                                        v-model="new_password"
+                                        v-model="$v.new_password.$model"
                                     >
                                 </div>
+                                <p class="help is-danger" v-if="$v.new_password.$anyError">
+                                    New Password is required and must match confirmation (6 character minimum)
+                                </p>
                             </div>
                         </div>
 
@@ -70,6 +76,8 @@
 </template>
 
 <script>
+    import {required, minLength, sameAs } from 'vuelidate/lib/validators';
+
     export default {
         data: function () {
             return {
@@ -78,9 +86,31 @@
                 new_password_confirmation: '',
             }
         },
+        validations: {
+            current_password: {
+                required,
+            },
+            new_password: {
+                required,
+                minLength: minLength(6),
+                sameAs: sameAs('new_password_confirmation'),
+            },
+        },
         methods: {
             resetPassword: async function () {
                 try {
+                    this.$v.$touch();
+
+                    if (this.$v.$anyError) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: 'Please fix form errors before submission',
+                        });
+
+                        return
+                    }
+
                     let success = await this.$beerApi.postUpdatePassword({
                         current_password: this.current_password,
                         new_password: this.new_password,

@@ -41,7 +41,7 @@
                                     >
                                 </div>
                                 <p class="help is-danger" v-if="$v.password.$anyError">
-                                    Password is required (6 character minimum)
+                                    Password is required
                                 </p>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-    import { email, required, minLength } from 'vuelidate/lib/validators';
+    import { email, required } from 'vuelidate/lib/validators';
 
     export default {
         data: function () {
@@ -78,7 +78,6 @@
                 email,
             },
             password: {
-                minLength: minLength(6),
                 required,
             },
         },
