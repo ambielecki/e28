@@ -17,10 +17,13 @@
                                         class="input"
                                         type="text"
                                         placeholder="Email Address"
-                                        v-model="email"
+                                        v-model="$v.email.$model"
                                         @keyup.enter="login"
                                     >
                                 </div>
+                                <p class="help is-danger" v-if="$v.email.$anyError">
+                                    Email is required and must be in a valid format
+                                </p>
                             </div>
                         </div>
 
@@ -33,10 +36,13 @@
                                         class="input"
                                         type="password"
                                         placeholder="Password"
-                                        v-model="password"
+                                        v-model="$v.password.$model"
                                         @keyup.enter="login"
                                     >
                                 </div>
+                                <p class="help is-danger" v-if="$v.password.$anyError">
+                                    Password is required (6 character minimum)
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -57,6 +63,8 @@
 </template>
 
 <script>
+    import { email, required, minLength } from 'vuelidate/lib/validators';
+
     export default {
         data: function () {
             return {
@@ -64,9 +72,31 @@
                 password: '',
             }
         },
+        validations: {
+            email: {
+                required,
+                email,
+            },
+            password: {
+                minLength: minLength(6),
+                required,
+            },
+        },
         methods: {
             login: async function () {
                 try {
+                    this.$v.$touch();
+
+                    if (this.$v.$anyError) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: 'Please fix form errors before submission',
+                        });
+
+                        return
+                    }
+
                     let is_logged_in = await this.$beerApi.login(this.email, this.password);
                     this.$store.commit('setLogin', is_logged_in);
 

@@ -2,7 +2,7 @@
     <transition-group name="fade" tag="div" class="notifications container">
         <div
             v-for="(message, key) in messages"
-            :key="key"
+            :key="'message' + key"
             :class="message.type"
             class="notification"
         >

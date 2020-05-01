@@ -2,6 +2,7 @@ import './../node_modules/bulma/bulma.sass';
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuelidate from 'vuelidate';
 import BeerApiPlugin from "./common/BeerApiPlugin";
 
 // components
@@ -53,6 +54,7 @@ Vue.filter('date-format', function (value) {
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
+Vue.use(Vuelidate);
 Vue.use(BeerApiPlugin);
 
 const routes = [
