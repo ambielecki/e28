@@ -29,7 +29,7 @@
                             <div class="column is-full">
                                 <div class="field is-grouped">
                                     <div class="control">
-                                        <button class="button is-link" @click="submit">Edit Beer</button>
+                                        <button class="button is-link" @click="submit" data-test="form-edit">Edit Beer</button>
                                     </div>
                                     <div class="control">
                                         <button class="button is-link is-light" @click="cancel">Cancel</button>

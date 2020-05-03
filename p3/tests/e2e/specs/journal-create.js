@@ -5,11 +5,13 @@ describe('Journal Create', () => {
         name: 'Api Test Beer ' + moment.tz().format(),
     };
 
-    it('Creates a new entry', () => {
+    it('Creates a new entry with minimum content', () => {
         cy.visit('/login');
-        cy.get('#email').type('testy@test.com');
-        cy.get('#password').type('foobarfizzbuzz');
+        cy.get('#email').type(Cypress.env('test_user'));
+        cy.get('#password').type(Cypress.env('test_password'));
         cy.get('[data-test="login-button"]').first().click();
+        cy.wait(1000);
+        cy.get('[data-test="notification-dismiss"]').first().click();
         cy.get('[data-test="nav-journal"]').first().click();
         cy.wait(1000);
         cy.get('[data-test="create-entry"]').first().click();
@@ -17,16 +19,18 @@ describe('Journal Create', () => {
         cy.get('[data-test="form-name"]').first().type(beer.name);
         cy.get('[data-test="form-create"').first().click();
         cy.contains('[data-test="notification"]', 'Beer created successfully');
+        cy.get('[data-test="notification"]').first().should('have.class', 'is-success');
         cy.location('pathname').should('eq', '/journal');
         cy.contains('[data-test="beer-name"]', beer.name);
     });
 
     it('Fails without a name', () => {
         cy.visit('/login');
-        cy.get('#email').type('testy@test.com');
-        cy.get('#password').type('foobarfizzbuzz');
+        cy.get('#email').type(Cypress.env('test_user'));
+        cy.get('#password').type(Cypress.env('test_password'));
         cy.get('[data-test="login-button"]').first().click();
-        cy.get('[data-test="notification-dismiss"]').first().click;
+        cy.wait(1000);
+        cy.get('[data-test="notification-dismiss"]').first().click();
         cy.get('[data-test="nav-journal"]').first().click();
         cy.wait(1000);
         cy.get('[data-test="create-entry"]').first().click();

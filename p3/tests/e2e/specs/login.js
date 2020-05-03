@@ -8,8 +8,8 @@ describe('Authentication and Authorization', () => {
     it('Logs In', () => {
         cy.visit('/login');
         cy.contains('[data-test="header-login"]', 'Login');
-        cy.get('#email').type('testy@test.com');
-        cy.get('#password').type('foobarfizzbuzz');
+        cy.get('#email').type(Cypress.env('test_user'));
+        cy.get('#password').type(Cypress.env('test_password'));
         cy.get('[data-test="login-button"]').first().click();
         cy.contains('[data-test="nav-logout"]', 'Log Out');
         cy.location('pathname').should('eq', '/');
@@ -17,8 +17,8 @@ describe('Authentication and Authorization', () => {
 
     it('Logs Out', () => {
         cy.visit('/login');
-        cy.get('#email').type('testy@test.com');
-        cy.get('#password').type('foobarfizzbuzz');
+        cy.get('#email').type(Cypress.env('test_user'));
+        cy.get('#password').type(Cypress.env('test_password'));
         cy.get('[data-test="login-button"]').first().click();
         cy.contains('[data-test="nav-logout"]', 'Log Out');
         cy.get('[data-test="nav-logout"]').first().click();
@@ -33,8 +33,8 @@ describe('Authentication and Authorization', () => {
 
     it('Can visit journal when logged in', () => {
         cy.visit('/login');
-        cy.get('#email').type('testy@test.com');
-        cy.get('#password').type('foobarfizzbuzz');
+        cy.get('#email').type(Cypress.env('test_user'));
+        cy.get('#password').type(Cypress.env('test_password'));
         cy.get('[data-test="login-button"]').first().click();
         cy.get('[data-test="nav-journal"]').first().click();
         cy.location('pathname').should('eq', '/journal');
