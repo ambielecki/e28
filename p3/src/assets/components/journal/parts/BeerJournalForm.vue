@@ -11,6 +11,7 @@
                             type="text"
                             placeholder="Name your beer"
                             v-model="$v.beer.name.$model"
+                            data-test="form-name"
                         >
                     </div>
                     <p class="help is-danger" v-if="$v.beer.name.$anyError">
@@ -27,6 +28,7 @@
                             <select
                                 id="style"
                                 v-model="beer.style"
+                                data-test="form-style"
                             >
                                 <option :value="null" disabled>Select Style</option>
                                 <option
@@ -142,6 +144,7 @@
                         id="recipe"
                         v-model="beer.recipe"
                         placeholder="Recipe"
+                        data-test="form-recipe"
                     ></ckeditor>
                 </div>
             </div>

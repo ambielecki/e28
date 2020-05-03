@@ -15,7 +15,7 @@
                             <div class="column is-full">
                                 <div class="field is-grouped">
                                     <div class="control">
-                                        <button class="button is-link" @click="submit">Add Entry</button>
+                                        <button class="button is-link" @click="submit" data-test="form-create">Add Entry</button>
                                     </div>
                                     <div class="control">
                                         <button class="button is-link is-light" @click="cancel">Cancel</button>

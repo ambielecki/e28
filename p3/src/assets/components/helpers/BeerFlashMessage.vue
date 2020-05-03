@@ -5,8 +5,9 @@
             :key="'message' + key"
             :class="message.type"
             class="notification"
+            data-test="notification"
         >
-            <button class="delete" @click="removeMessage(key)"></button>
+            <button class="delete" @click="removeMessage(key)" data-test="notification-dismiss"></button>
             {{ message.message }}
         </div>
     </transition-group>

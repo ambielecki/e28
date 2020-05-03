@@ -123,6 +123,7 @@
                                     <button
                                         class="button is-link"
                                         @click="$router.push({ name: 'journal-create' })"
+                                        data-test="create-entry"
                                     >
                                         Add New Entry
                                     </button>

@@ -2,7 +2,7 @@
     <div class="column is-half">
         <div class="card" data-test="journal-card">
             <header class="card-header">
-                <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }}</router-link>
+                <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title" data-test="beer-name">{{ beer.name }}</router-link>
             </header>
 
             <div class="card-content" data-test="compressed-content">

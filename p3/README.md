@@ -25,9 +25,16 @@ Figured out I needed a Mixin
 * [Check that element does not exist in Cypress](https://stackoverflow.com/questions/48915773/cypress-test-if-element-does-not-exist)
 
 ## Notes for instructor
+#### Setup
+You will need to copy ./p3/example.env to ./p3/.env  This will set the app api to use the production version, 
+which has been opened to accept http://localhost:*  Please let me know if you will be using a different domain 
+and I will open up the CORS policy
+
 #### Test User
 * Email: __testy@test.com__
 * Password: __foobarfizzbuzz__
+
+This user's ability to change their password is locked down at the API level.
 
 #### Other Notes
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
@@ -36,3 +43,6 @@ projects. <https://github.com/ambielecki/e28-api>
 go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/create
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
 * List search filtering is just MySQL like statements, so, nothing fancy and will get slow
+* No test for changing password, I am using the same test user live and for testing, so don't want to break anything. 
+In real deployment I would test that and have additional test users (also didn't want to get too crazy setting env 
+variables if you plan on testing locally).

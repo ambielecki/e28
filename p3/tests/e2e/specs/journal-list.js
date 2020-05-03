@@ -1,4 +1,4 @@
-describe('Journal', () => {
+describe('Journal List', () => {
     it('Loads Journal Entries', () => {
         cy.visit('/login');
         cy.get('#email').type('testy@test.com');
