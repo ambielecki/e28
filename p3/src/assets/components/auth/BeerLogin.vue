@@ -3,7 +3,7 @@
         <div class="column is-half">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">Login</p>
+                    <p class="card-header-title" data-test="header-login">Login</p>
                 </header>
 
                 <div class="card-content">
@@ -51,7 +51,7 @@
                         <div class="column is-full">
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <button class="button is-link" @click="login">Login</button>
+                                    <button class="button is-link" @click="login" data-test="login-button">Login</button>
                                 </div>
                             </div>
                         </div>
@@ -106,8 +106,7 @@
                             message: 'Successfully logged in, welcome back!',
                         });
 
-                        // from the Vue router docs, this is nice
-                        window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
+                       this.$router.push({ name: 'home' });
                     }
                 } catch (error) {
                     this.handleErrors(error);

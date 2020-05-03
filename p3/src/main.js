@@ -106,6 +106,10 @@ router.beforeEach((to, from, next) => {
     }
 });
 
+if (window.Cypress) {
+    window.__router__ = router;
+}
+
 Vue.mixin({
     methods: {
         handleErrors(error) {

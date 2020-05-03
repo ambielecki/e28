@@ -22,6 +22,7 @@ Figured out I needed a Mixin
 * [Vue Plugin](https://alligator.io/vuejs/creating-custom-plugins/): Wanted to extract API calls to a pseudo-service
 * [Vue Router Guards](https://router.vuejs.org/guide/advanced/navigation-guards.html#global-after-hooks)
 * [Testing Computed](https://lmiller1990.github.io/vue-testing-handbook/computed-properties.html#testing-by-rendering-the-value)
+* [Check that element does not exist in Cypress](https://stackoverflow.com/questions/48915773/cypress-test-if-element-does-not-exist)
 
 ## Notes for instructor
 #### Test User

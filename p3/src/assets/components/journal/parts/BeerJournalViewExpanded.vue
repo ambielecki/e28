@@ -1,11 +1,11 @@
 <template>
     <div class="column is-full">
-        <div class="card">
+        <div class="card" data-test="journal-card">
             <header class="card-header">
                 <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }}</router-link>
             </header>
 
-            <div class="card-content">
+            <div class="card-content" data-test="expanded-content">
                 <div class="content">
                     <div class="columns is-multiline">
                         <div v-if="beer.style" class="column is-one-third">
@@ -58,9 +58,9 @@
                     <div class="columns">
                         <div class="column is-full">
                             <div class="buttons">
-                                <button v-if="show_collapse" class="button is-link" @click="collapseBeer">Collapse</button>
-                                <button v-if="show_collapse" class="button is-link" @click="goToBeer(beer.id)">View Beer</button>
-                                <button v-if="!show_collapse" class="button is-link" @click="editBeer(beer.id)">Edit Beer</button>
+                                <button v-if="show_collapse" class="button is-link" @click="collapseBeer" data-test="collapse-button">Collapse</button>
+                                <button v-if="show_collapse" class="button is-link" @click="goToBeer(beer.id)" data-test="view-button">View Beer</button>
+                                <button v-if="show_collapse" class="button is-link" @click="editBeer(beer.id)" data-test="edit-button">Edit Beer</button>
                             </div>
                         </div>
                     </div>

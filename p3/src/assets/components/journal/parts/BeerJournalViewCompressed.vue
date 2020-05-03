@@ -1,11 +1,11 @@
 <template>
     <div class="column is-half">
-        <div class="card">
+        <div class="card" data-test="journal-card">
             <header class="card-header">
                 <router-link :to="{ name: 'journal-view', params: { id: beer.id, } }" class="card-header-title">{{ beer.name }}</router-link>
             </header>
 
-            <div class="card-content">
+            <div class="card-content" data-test="compressed-content">
                 <div class="content">
                     <div class="columns is-multiline is-mobile">
                         <div v-if="beer.style" class="column is-half">
@@ -48,7 +48,7 @@
                     <div class="columns">
                         <div class="column is-full">
                             <div class="buttons">
-                                <button class="button is-link" @click="expandBeer">Expand</button>
+                                <button class="button is-link" @click="expandBeer" data-test="expand-button">Expand</button>
                             </div>
                         </div>
                     </div>

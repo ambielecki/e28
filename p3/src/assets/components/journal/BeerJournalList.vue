@@ -26,6 +26,7 @@
                                                     placeholder="Search By Name, Yeast, or Recipe"
                                                     v-model="params.search"
                                                     @keyup="searchBeers"
+                                                    data-test="search"
                                                 >
                                             </div>
                                         </div>
@@ -151,7 +152,14 @@
 
         <div v-if="load_more" class="column is-full">
             <div class="buttons is-centered">
-                <button class="button is-link" :class="{ 'is-loading': is_loading }" @click="getBeers(page + 1)">Load More Beer!</button>
+                <button
+                    class="button is-link"
+                    :class="{ 'is-loading': is_loading }"
+                    @click="getBeers(page + 1)"
+                    data-test="load-more"
+                >
+                    Load More Beer!
+                </button>
             </div>
         </div>
     </div>
