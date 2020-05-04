@@ -183,7 +183,7 @@
     import BeerJournalViewExpanded from "./parts/BeerJournalViewExpanded";
 
     export default {
-        components: {BeerJournalViewExpanded, BeerJournalViewCompressed },
+        components: { BeerJournalViewExpanded, BeerJournalViewCompressed },
         data: function () {
             return {
                 beers: [],
