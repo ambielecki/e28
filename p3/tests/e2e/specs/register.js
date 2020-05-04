@@ -1,9 +1,9 @@
 import moment from 'moment-timezone';
 
 let user = {
-    first_name: 'Automation',
-    last_name: 'User',
-    email: 'Automation' + moment.tz().format('YYYYMMDDHHmmss') + '@test.com',
+    first_name: 'Registration',
+    last_name: 'Test',
+    email: 'registration' + moment.tz().format('YYYYMMDDHHmmss') + '@test.com',
     password: 'Password' + moment.tz().format('YYYYMMDDHHmmss'),
     new_password: 'NewPassword' + moment.tz().format('YYYYMMDDHHmmss'),
 };
