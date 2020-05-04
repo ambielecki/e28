@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div v-if="beers.length > 0">
+        <template v-if="beers.length > 0">
             <template v-for="(beer, key) in beers">
                 <beer-journal-view-compressed
                     v-if="!beer.is_expanded"
@@ -164,9 +164,9 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </template>
 
-        <div v-if="!is_initial_load && beers.length === 0">
+        <template v-if="!is_initial_load && beers.length === 0">
             <div class="column is-full">
                 <div class="card">
                     <header class="card-header">
@@ -174,7 +174,7 @@
                     </header>
                 </div>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 
