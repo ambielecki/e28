@@ -24,7 +24,7 @@ Figured out I needed a Mixin
 * [Testing Computed](https://lmiller1990.github.io/vue-testing-handbook/computed-properties.html#testing-by-rendering-the-value)
 * [Check that element does not exist in Cypress](https://stackoverflow.com/questions/48915773/cypress-test-if-element-does-not-exist)
 * [Cypress Testing CKEditor](https://medium.com/@nickdenardis/getting-cypress-js-to-interact-with-ckeditor-f46eec01132f): 
-Modified a bit to but the selector on the encapsulating field div
+Modified a bit to put the selector on the encapsulating field div
 
 ## Notes for instructor
 #### Setup
@@ -45,6 +45,4 @@ projects. <https://github.com/ambielecki/e28-api>
 go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/create
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
 * List search filtering is just MySQL like statements, so, nothing fancy and will get slow
-* No test for changing password, I am using the same test user live and for testing, so don't want to break anything. 
-In real deployment I would test that and have additional test users (also didn't want to get too crazy setting env 
-variables if you plan on testing locally).
+* Committed the cypress.env.json so your automation will work
