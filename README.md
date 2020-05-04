@@ -14,3 +14,9 @@ Course Website: <https://hesweb.dev/e28>
 * P1
   * Repo: <https://github.com/ambielecki/e28/tree/master/p1>
   * Live Site: <https://e28p1.andrewbielecki.com>
+* P2
+  * Repo: <https://github.com/ambielecki/e28/tree/master/p2>
+  * Live Site: <https://e28p2.andrewbielecki.com>
+* P3
+  * Repo: <https://github.com/ambielecki/e28/tree/master/p3>
+  * Live Site: <https://e28p3.andrewbielecki.com>

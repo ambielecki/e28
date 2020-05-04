@@ -1,6 +1,6 @@
 # Project 3
 * By: Andrew Bielecki
-* Production URL: <http://e28p3.andrewbielecki.com>
+* Production URL: <https://e28p3.andrewbielecki.com>
 * API Test URL: <https://e28-api-2.andrewbielecki.com/api/health-check>
 ## Outside resources
 * [Beer Mug Favicon](https://favicon.io/emoji-favicons/beer-mug/)
