@@ -18,6 +18,7 @@
                                         type="password"
                                         placeholder="Current Password"
                                         v-model="$v.current_password.$model"
+                                        data-test="form-current-password"
                                     >
                                 </div>
                                 <p class="help is-danger" v-if="$v.current_password.$anyError">
@@ -36,6 +37,7 @@
                                         type="password"
                                         placeholder="New Password"
                                         v-model="$v.new_password.$model"
+                                        data-test="form-new-password"
                                     >
                                 </div>
                                 <p class="help is-danger" v-if="$v.new_password.$anyError">
@@ -54,6 +56,7 @@
                                         type="password"
                                         placeholder="Confirm New Password"
                                         v-model="new_password_confirmation"
+                                        data-test="form-new-password-confirm"
                                     >
                                 </div>
                             </div>
@@ -64,7 +67,7 @@
                         <div class="column is-full">
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <button class="button is-link" @click="resetPassword">Update Password</button>
+                                    <button class="button is-link" @click="resetPassword" data-test="form-submit">Update Password</button>
                                 </div>
                             </div>
                         </div>
@@ -124,8 +127,7 @@
                             message: 'Password Reset',
                         });
 
-                        // from the Vue router docs, this is nice
-                        window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
+                        this.$router.push({ name: 'home' })
                     }
                 } catch (error) {
                     this.handleErrors(error);
