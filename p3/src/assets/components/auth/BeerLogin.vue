@@ -3,7 +3,7 @@
         <div class="column is-half">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">Login</p>
+                    <p class="card-header-title" data-test="header-login">Login</p>
                 </header>
 
                 <div class="card-content">
@@ -17,9 +17,13 @@
                                         class="input"
                                         type="text"
                                         placeholder="Email Address"
-                                        v-model="email"
+                                        v-model="$v.email.$model"
+                                        @keyup.enter="login"
                                     >
                                 </div>
+                                <p class="help is-danger" v-if="$v.email.$anyError">
+                                    Email is required and must be in a valid format
+                                </p>
                             </div>
                         </div>
 
@@ -32,9 +36,13 @@
                                         class="input"
                                         type="password"
                                         placeholder="Password"
-                                        v-model="password"
+                                        v-model="$v.password.$model"
+                                        @keyup.enter="login"
                                     >
                                 </div>
+                                <p class="help is-danger" v-if="$v.password.$anyError">
+                                    Password is required
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -43,7 +51,7 @@
                         <div class="column is-full">
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <button class="button is-link" @click="login">Login</button>
+                                    <button class="button is-link" @click="login" data-test="login-button">Login</button>
                                 </div>
                             </div>
                         </div>
@@ -55,6 +63,8 @@
 </template>
 
 <script>
+    import { email, required } from 'vuelidate/lib/validators';
+
     export default {
         data: function () {
             return {
@@ -62,9 +72,30 @@
                 password: '',
             }
         },
+        validations: {
+            email: {
+                required,
+                email,
+            },
+            password: {
+                required,
+            },
+        },
         methods: {
             login: async function () {
                 try {
+                    this.$v.$touch();
+
+                    if (this.$v.$anyError) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: 'Please fix form errors before submission',
+                        });
+
+                        return
+                    }
+
                     let is_logged_in = await this.$beerApi.login(this.email, this.password);
                     this.$store.commit('setLogin', is_logged_in);
 
@@ -75,8 +106,7 @@
                             message: 'Successfully logged in, welcome back!',
                         });
 
-                        // from the Vue router docs, this is nice
-                        window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
+                       this.$router.push({ name: 'home' });
                     }
                 } catch (error) {
                     this.handleErrors(error);

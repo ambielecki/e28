@@ -10,9 +10,13 @@
                             class="input"
                             type="text"
                             placeholder="Name your beer"
-                            v-model="beer.name"
+                            v-model="$v.beer.name.$model"
+                            data-test="form-name"
                         >
                     </div>
+                    <p class="help is-danger" v-if="$v.beer.name.$anyError">
+                        A Name is Required
+                    </p>
                 </div>
             </div>
 
@@ -24,6 +28,7 @@
                             <select
                                 id="style"
                                 v-model="beer.style"
+                                data-test="form-style"
                             >
                                 <option :value="null" disabled>Select Style</option>
                                 <option
@@ -49,6 +54,7 @@
                             type="text"
                             placeholder="Yeast Strain"
                             v-model="beer.yeast"
+                            data-test="form-yeast"
                         >
                     </div>
                 </div>
@@ -60,13 +66,16 @@
                     <datepicker
                         placeholder="Select Date"
                         id="primary_fermentation_start"
-                        v-model="beer.primary_fermentation_start"
+                        v-model="$v.beer.primary_fermentation_start.$model"
                         :config="{
                             dateFormat: 'Y-m-d H:i',
                             enableTime: true,
                             static: true
                         }"
                     ></datepicker>
+                    <p class="help is-danger" v-if="$v.beer.primary_fermentation_start.$anyError">
+                        Start Date is Required
+                    </p>
                 </div>
             </div>
 
@@ -82,6 +91,7 @@
                             enableTime: true,
                             static: true
                         }"
+                        data-test="form-secondary"
                     ></datepicker>
                 </div>
             </div>
@@ -98,6 +108,7 @@
                             enableTime: true,
                             static: true
                         }"
+                        data-test="form-bottling"
                     ></datepicker>
                 </div>
             </div>
@@ -110,6 +121,7 @@
                             <select
                                 id="rating"
                                 v-model="beer.rating"
+                                data-test="form-rating"
                             >
                                 <option :value="null">Unrated</option>
                                 <option
@@ -128,7 +140,7 @@
 
         <div class="columns is-multiline">
             <div class="column is-half">
-                <div class="field">
+                <div class="field" data-test="form-recipe">
                     <label class="label" for="recipe">Recipe</label>
                     <ckeditor
                         :editor="editor"
@@ -141,7 +153,7 @@
             </div>
 
             <div class="column is-half">
-                <div class="field">
+                <div class="field" data-test="form-brew">
                     <label class="label" for="recipe">Brew Notes</label>
                     <ckeditor
                         :editor="editor"
@@ -149,12 +161,13 @@
                         id="brew_notes"
                         v-model="beer.brew_notes"
                         placeholder="Brewing Notes"
+                        data-test="form-brew"
                     ></ckeditor>
                 </div>
             </div>
 
             <div class="column is-half">
-                <div class="field">
+                <div class="field" data-test="form-tasting">
                     <label class="label" for="tasting_notes">Tasting Notes</label>
                     <ckeditor
                         :editor="editor"
@@ -162,6 +175,7 @@
                         id="tasting_notes"
                         v-model="beer.tasting_notes"
                         placeholder="Tasting Notes"
+                        data-test="form-tasting"
                     ></ckeditor>
                 </div>
             </div>
@@ -173,6 +187,7 @@
     import Datepicker from 'vue-bulma-datepicker';
     import CKEditor from '@ckeditor/ckeditor5-vue';
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import { required } from 'vuelidate/lib/validators';
 
     export default {
         components: {
@@ -180,6 +195,12 @@
             ckeditor: CKEditor.component,
         },
         props: ['beer'],
+        validations: {
+            beer: {
+                name: { required },
+                primary_fermentation_start: { required },
+            },
+        },
         computed: {
             styles: function () {
                 return this.$store.state.styles;
@@ -189,6 +210,23 @@
             return {
                 editor: ClassicEditor,
             };
+        },
+        methods: {
+            validate: function () {
+                this.$v.$touch();
+
+                if (this.$v.$anyError) {
+                    this.$store.commit('addMessage', {
+                        time: 5,
+                        type: 'is-danger',
+                        message: 'Please fix form errors before submission',
+                    });
+
+                    return false;
+                }
+
+                return true;
+            },
         },
     };
 </script>

@@ -2,6 +2,7 @@ import './../node_modules/bulma/bulma.sass';
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuelidate from 'vuelidate';
 import BeerApiPlugin from "./common/BeerApiPlugin";
 
 // components
@@ -29,9 +30,8 @@ window.Axios = require('axios').default.create({
     },
 });
 
-// Time and number formats, two things I hate about JS
-window.Moment = require('moment-timezone');
-window.Accounting = require('accounting');
+import moment from 'moment-timezone';
+Vue.prototype.$moment = moment;
 
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
@@ -47,12 +47,13 @@ Vue.filter('truncate', function (value, length) {
 });
 
 Vue.filter('date-format', function (value) {
-    return window.Moment.tz(value, 'America/New_York').format('YYYY-MM-DD');
+    return moment.tz(value, 'America/New_York').format('YYYY-MM-DD');
 });
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
+Vue.use(Vuelidate);
 Vue.use(BeerApiPlugin);
 
 const routes = [
@@ -177,7 +178,7 @@ new Vue({
             let expiration = window.localStorage.getItem('token_expiration');
             let token = window.localStorage.getItem('token');
             if (expiration) {
-                if (window.Moment.tz().isBefore(expiration)) {
+                if (moment.tz('America/New_York').isBefore(expiration)) {
                     this.$beerApi.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
                     this.$store.commit('setLogin', true);
@@ -221,7 +222,7 @@ function checkCachedTokenValidity() {
     let token = window.localStorage.getItem('token');
 
     if (expiration && token) {
-        has_valid_token = window.Moment.tz().isBefore(expiration);
+        has_valid_token = moment.tz('America/New_York').isBefore(expiration);
     }
 
     return has_valid_token
