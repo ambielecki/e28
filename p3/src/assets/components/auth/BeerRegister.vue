@@ -17,6 +17,7 @@
                                 placeholder="First Name"
                                 v-model="$v.user.first_name.$model"
                                 @keyup.enter="register"
+                                data-test="form-first-name"
                             >
                         </div>
                         <p class="help is-danger" v-if="$v.user.first_name.$anyError">
@@ -36,6 +37,7 @@
                                 placeholder="Last Name"
                                 v-model="$v.user.last_name.$model"
                                 @keyup.enter="register"
+                                data-test="form-last-name"
                             >
                         </div>
                         <p class="help is-danger" v-if="$v.user.last_name.$anyError">
@@ -55,6 +57,7 @@
                                 placeholder="Email Address"
                                 v-model="$v.user.email.$model"
                                 @keyup.enter="register"
+                                data-test="form-email"
                             >
                         </div>
                         <p class="help is-danger" v-if="$v.user.email.$anyError">
@@ -76,6 +79,7 @@
                                 placeholder="Password: Min 6 Characters"
                                 v-model="$v.user.password.$model"
                                 @keyup.enter="register"
+                                data-test="form-password"
                             >
                         </div>
                         <p class="help is-danger" v-if="$v.user.password.$anyError">
@@ -95,6 +99,7 @@
                                 placeholder="Confirm Password"
                                 v-model="user.password_confirmation"
                                 @keyup.enter="register"
+                                data-test="form-password-confirm"
                             >
                         </div>
                     </div>
@@ -105,7 +110,7 @@
                 <div class="column is-full">
                     <div class="field is-grouped">
                         <div class="control">
-                            <button class="button is-link" @click="register">Register</button>
+                            <button class="button is-link" @click="register" data-test="form-submit">Register</button>
                         </div>
                     </div>
                 </div>
@@ -173,8 +178,7 @@
                             message: 'Thank you for registering!!',
                         });
 
-                        // from the Vue router docs, this is nice
-                        window.history.length > 1 ? this.$router.go(-1) : this.$router.push({ name: 'home' })
+                        this.$router.push({ name: 'home' })
                     }
                 } catch (error) {
                     this.handleErrors(error);
