@@ -23,6 +23,8 @@ Figured out I needed a Mixin
 * [Vue Router Guards](https://router.vuejs.org/guide/advanced/navigation-guards.html#global-after-hooks)
 * [Testing Computed](https://lmiller1990.github.io/vue-testing-handbook/computed-properties.html#testing-by-rendering-the-value)
 * [Check that element does not exist in Cypress](https://stackoverflow.com/questions/48915773/cypress-test-if-element-does-not-exist)
+* [Cypress Testing CKEditor](https://medium.com/@nickdenardis/getting-cypress-js-to-interact-with-ckeditor-f46eec01132f): 
+Modified a bit to but the selector on the encapsulating field div
 
 ## Notes for instructor
 #### Setup

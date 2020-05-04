@@ -17,6 +17,7 @@
                                     type="text"
                                     placeholder="OG"
                                     v-model="original_gravity"
+                                    data-test="form-original-gravity"
                                 >
                             </div>
                         </div>
@@ -32,6 +33,7 @@
                                     type="text"
                                     placeholder="OG"
                                     v-model="final_gravity"
+                                    data-test="form-final-gravity"
                                 >
                             </div>
                         </div>
@@ -39,7 +41,7 @@
 
                     <div class="column is-full">
                         <label class="label">ABV</label>
-                        <p class="is-size-1">{{ abv }} %</p>
+                        <p class="is-size-1" data-test="abv">{{ abv }} %</p>
                     </div>
                 </div>
             </div>

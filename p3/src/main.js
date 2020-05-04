@@ -33,8 +33,6 @@ window.Axios = require('axios').default.create({
 import moment from 'moment-timezone';
 Vue.prototype.$moment = moment;
 
-console.log(moment.tz().format());
-
 Vue.filter('truncate', function (value, length) {
     let split_words = value.split(' ');
     let number_of_words = split_words.length;

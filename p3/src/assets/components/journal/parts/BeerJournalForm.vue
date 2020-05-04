@@ -54,6 +54,7 @@
                             type="text"
                             placeholder="Yeast Strain"
                             v-model="beer.yeast"
+                            data-test="form-yeast"
                         >
                     </div>
                 </div>
@@ -90,6 +91,7 @@
                             enableTime: true,
                             static: true
                         }"
+                        data-test="form-secondary"
                     ></datepicker>
                 </div>
             </div>
@@ -106,6 +108,7 @@
                             enableTime: true,
                             static: true
                         }"
+                        data-test="form-bottling"
                     ></datepicker>
                 </div>
             </div>
@@ -118,6 +121,7 @@
                             <select
                                 id="rating"
                                 v-model="beer.rating"
+                                data-test="form-rating"
                             >
                                 <option :value="null">Unrated</option>
                                 <option
@@ -136,7 +140,7 @@
 
         <div class="columns is-multiline">
             <div class="column is-half">
-                <div class="field">
+                <div class="field" data-test="form-recipe">
                     <label class="label" for="recipe">Recipe</label>
                     <ckeditor
                         :editor="editor"
@@ -144,13 +148,12 @@
                         id="recipe"
                         v-model="beer.recipe"
                         placeholder="Recipe"
-                        data-test="form-recipe"
                     ></ckeditor>
                 </div>
             </div>
 
             <div class="column is-half">
-                <div class="field">
+                <div class="field" data-test="form-brew">
                     <label class="label" for="recipe">Brew Notes</label>
                     <ckeditor
                         :editor="editor"
@@ -158,12 +161,13 @@
                         id="brew_notes"
                         v-model="beer.brew_notes"
                         placeholder="Brewing Notes"
+                        data-test="form-brew"
                     ></ckeditor>
                 </div>
             </div>
 
             <div class="column is-half">
-                <div class="field">
+                <div class="field" data-test="form-tasting">
                     <label class="label" for="tasting_notes">Tasting Notes</label>
                     <ckeditor
                         :editor="editor"
@@ -171,6 +175,7 @@
                         id="tasting_notes"
                         v-model="beer.tasting_notes"
                         placeholder="Tasting Notes"
+                        data-test="form-tasting"
                     ></ckeditor>
                 </div>
             </div>
