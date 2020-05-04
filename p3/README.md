@@ -45,6 +45,4 @@ projects. <https://github.com/ambielecki/e28-api>
 go to /journal/edit/{id} OR go to /journal -> click Add Entry to go to /journal/create
 * Filters on journal list are not perfect nor complete, still can have some timing issues even with debounce
 * List search filtering is just MySQL like statements, so, nothing fancy and will get slow
-* No test for changing password, the user / passwords are not secure due to github storage (need you to be able to use 
-them), so I have them locked in the api to prevent all tests failing
 * Committed the cypress.env.json so your automation will work
