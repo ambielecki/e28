@@ -135,32 +135,44 @@
             </div>
         </div>
 
-        <template v-for="(beer, key) in beers">
-            <beer-journal-view-compressed
-                v-if="!beer.is_expanded"
-                :beer="beer"
-                :key="key"
-                @expand-beer="beer.is_expanded = true"
-            ></beer-journal-view-compressed>
-            <beer-journal-view-expanded
-                v-else
-                :beer="beer"
-                :key="key"
-                :show_collapse="true"
-                @collapse-beer="beer.is_expanded = false"
-            ></beer-journal-view-expanded>
-        </template>
+        <div v-if="beers.length > 0">
+            <template v-for="(beer, key) in beers">
+                <beer-journal-view-compressed
+                    v-if="!beer.is_expanded"
+                    :beer="beer"
+                    :key="key"
+                    @expand-beer="beer.is_expanded = true"
+                ></beer-journal-view-compressed>
+                <beer-journal-view-expanded
+                    v-else
+                    :beer="beer"
+                    :key="key"
+                    :show_collapse="true"
+                    @collapse-beer="beer.is_expanded = false"
+                ></beer-journal-view-expanded>
+            </template>
 
-        <div v-if="load_more" class="column is-full">
-            <div class="buttons is-centered">
-                <button
-                    class="button is-link"
-                    :class="{ 'is-loading': is_loading }"
-                    @click="getBeers(page + 1)"
-                    data-test="load-more"
-                >
-                    Load More Beer!
-                </button>
+            <div v-if="load_more" class="column is-full">
+                <div class="buttons is-centered">
+                    <button
+                        class="button is-link"
+                        :class="{ 'is-loading': is_loading }"
+                        @click="getBeers(page + 1)"
+                        data-test="load-more"
+                    >
+                        Load More Beer!
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="!is_initial_load && beers.length === 0">
+            <div class="column is-full">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">You Have Not Logged Any Beers Yet! Get Brewing!</p>
+                    </header>
+                </div>
             </div>
         </div>
     </div>
