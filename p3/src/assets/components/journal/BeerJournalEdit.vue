@@ -24,12 +24,12 @@
 
                 <div class="card-content">
                     <div class="content">
-                        <beer-journal-form :beer="beer"></beer-journal-form>
+                        <beer-journal-form :beer="beer" ref="beerJournalForm"></beer-journal-form>
                         <div class="columns">
                             <div class="column is-full">
                                 <div class="field is-grouped">
                                     <div class="control">
-                                        <button class="button is-link" @click="submit">Edit Beer</button>
+                                        <button class="button is-link" @click="submit" data-test="form-edit">Edit Beer</button>
                                     </div>
                                     <div class="control">
                                         <button class="button is-link is-light" @click="cancel">Cancel</button>
@@ -58,6 +58,10 @@
         methods: {
             submit: async function () {
                 try {
+                    if (!this.$refs.beerJournalForm.validate()) {
+                        return
+                    }
+
                     let response_beer = await this.$beerApi.putBeer(this.beer.id, this.beer);
 
                     if (response_beer) {

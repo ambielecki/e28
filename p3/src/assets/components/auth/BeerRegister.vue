@@ -15,9 +15,13 @@
                                 class="input"
                                 type="text"
                                 placeholder="First Name"
-                                v-model="user.first_name"
+                                v-model="$v.user.first_name.$model"
+                                @keyup.enter="register"
                             >
                         </div>
+                        <p class="help is-danger" v-if="$v.user.first_name.$anyError">
+                            First Name is Required
+                        </p>
                     </div>
                 </div>
 
@@ -30,9 +34,13 @@
                                 class="input"
                                 type="text"
                                 placeholder="Last Name"
-                                v-model="user.last_name"
+                                v-model="$v.user.last_name.$model"
+                                @keyup.enter="register"
                             >
                         </div>
+                        <p class="help is-danger" v-if="$v.user.last_name.$anyError">
+                            Last Name is Required
+                        </p>
                     </div>
                 </div>
 
@@ -45,9 +53,13 @@
                                 class="input"
                                 type="text"
                                 placeholder="Email Address"
-                                v-model="user.email"
+                                v-model="$v.user.email.$model"
+                                @keyup.enter="register"
                             >
                         </div>
+                        <p class="help is-danger" v-if="$v.user.email.$anyError">
+                            Email is required and must be in a valid format
+                        </p>
                     </div>
                 </div>
             </div>
@@ -62,9 +74,13 @@
                                 class="input"
                                 type="password"
                                 placeholder="Password: Min 6 Characters"
-                                v-model="user.password"
+                                v-model="$v.user.password.$model"
+                                @keyup.enter="register"
                             >
                         </div>
+                        <p class="help is-danger" v-if="$v.user.password.$anyError">
+                            Password is required and must match confirmation (6 character minimum)
+                        </p>
                     </div>
                 </div>
 
@@ -78,6 +94,7 @@
                                 type="password"
                                 placeholder="Confirm Password"
                                 v-model="user.password_confirmation"
+                                @keyup.enter="register"
                             >
                         </div>
                     </div>
@@ -98,6 +115,8 @@
 </template>
 
 <script>
+    import { email, required, minLength, sameAs } from 'vuelidate/lib/validators';
+
     export default {
         data: function () {
             return {
@@ -110,9 +129,40 @@
                 },
             }
         },
+        validations: {
+            user: {
+                first_name: {
+                    required,
+                },
+                last_name: {
+                    required,
+                },
+                email: {
+                    required,
+                    email,
+                },
+                password: {
+                    required,
+                    minLength: minLength(6),
+                    sameAs: sameAs('password_confirmation'),
+                },
+            },
+        },
         methods: {
             register: async function() {
                 try {
+                    this.$v.$touch();
+
+                    if (this.$v.$anyError) {
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-danger',
+                            message: 'Please fix form errors before submission',
+                        });
+
+                        return
+                    }
+
                     let is_logged_in = await this.$beerApi.postRegister(this.user);
                     this.$store.commit('setLogin', is_logged_in);
 

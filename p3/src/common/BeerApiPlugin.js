@@ -1,3 +1,5 @@
+import moment from 'moment-timezone';
+
 const BeerApiPlugin = {
     install (Vue) {
         Vue.prototype.$beerApi = {
@@ -113,6 +115,17 @@ const BeerApiPlugin = {
                 return logged_in;
             },
 
+            logout: async function() {
+                let logged_out = false;
+
+                await this.axios.post('/logout', {})
+                    .then(() => {
+                        logged_out = true;
+                    });
+
+                return logged_out;
+            },
+
             postRegister: async function (user) {
                 let logged_in = false;
 
@@ -169,7 +182,7 @@ const BeerApiPlugin = {
 
             setLocalStorageToken(token, expires_in) {
                 window.localStorage.setItem('token', token);
-                window.localStorage.setItem('token_expiration', window.Moment.tz().add(expires_in - 10, 'm').format())
+                window.localStorage.setItem('token_expiration', moment.tz('America/New_York').add(expires_in - 10, 'm').format())
             },
 
             clearAuthHeader() {

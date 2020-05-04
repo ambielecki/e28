@@ -2,8 +2,8 @@
     <div id="app">
         <nav class="navbar is-light" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <router-link to="/" exact class="navbar-item">
-                    <img src="./assets/images/logo.png" width="21" height="30">
+                <router-link to="/" exact class="navbar-item" data-test="logo">
+                    <img alt="Beer Mug Logo" src="./assets/images/logo.png" width="21" height="30">
                 </router-link>
 
                 <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -16,21 +16,21 @@
 
             <div id="beer_navbar" class="navbar-menu">
                 <div class="navbar-start">
-                    <router-link :to="{ name: 'home' }" class="navbar-item">Home</router-link>
-                    <router-link v-if="logged_in" :to="{ name: 'journal' }" class="navbar-item">Journal</router-link>
-                    <router-link :to="{ name: 'tools' }" class="navbar-item">Tools</router-link>
+                    <router-link :to="{ name: 'home' }" class="navbar-item" data-test="nav-home">Home</router-link>
+                    <router-link v-if="logged_in" :to="{ name: 'journal' }" class="navbar-item" data-test="nav-journal">Journal</router-link>
+                    <router-link :to="{ name: 'tools' }" class="navbar-item" data-test="nav-tools">Tools</router-link>
                 </div>
 
                 <div class="navbar-end">
                     <template v-if="!logged_in">
-                        <router-link :to="{ name: 'login' }" class="navbar-item">Log In</router-link>
-                        <router-link :to="{ name: 'register' }" class="navbar-item">Register</router-link>
+                        <router-link :to="{ name: 'login' }" class="navbar-item" data-test="nav-login">Log In</router-link>
+                        <router-link :to="{ name: 'register' }" class="navbar-item" data-test="nav-register">Register</router-link>
                     </template>
 
                     <template v-else>
-                        <router-link v-if="logged_in" :to="{ name: 'password' }" class="navbar-item">Update Password</router-link>
+                        <router-link v-if="logged_in" :to="{ name: 'password' }" class="navbar-item" data-test="nav-password">Update Password</router-link>
                         <div class="buttons" v-if="logged_in">
-                            <button class="button is-link" @click="logOut">Log Out</button>
+                            <button class="button is-link" @click="logOut" data-test="nav-logout">Log Out</button>
                         </div>
                     </template>
                 </div>
@@ -76,18 +76,25 @@
             }, 1000);
         },
         methods: {
-            // TODO :: need to actually make API call to invalidate token
-            logOut: function () {
-                this.$store.commit('setLogin', false);
-                this.$beerApi.clearAuthHeader();
-                this.$store.commit('addMessage', {
-                    time: 5,
-                    type: 'is-success',
-                    message: 'Successfully logged out, come back soon.',
-                });
+            logOut: async function () {
+                try {
+                    let logged_out = await this.$beerApi.logout();
 
-                if (this.$route.path !== '/') {
-                    this.$router.push('/');
+                    if (logged_out) {
+                        this.$store.commit('setLogin', false);
+                        this.$beerApi.clearAuthHeader();
+                        this.$store.commit('addMessage', {
+                            time: 5,
+                            type: 'is-success',
+                            message: 'Successfully logged out, come back soon.',
+                        });
+
+                        if (this.$route.path !== '/') {
+                            this.$router.push('/');
+                        }
+                    }
+                } catch (error) {
+                    this.handleErrors(error);
                 }
             }
         },
