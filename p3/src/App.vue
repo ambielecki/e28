@@ -71,8 +71,10 @@
         created: function () {
             // every second decrement time by 1 and remove messages that have timed out
             window.setInterval(() => {
-                this.$store.commit('decrementMessageTimes');
-                this.$store.commit('removeExpiredMessages');
+                if (this.$store.state.messages.length > 0) {
+                    this.$store.commit('decrementMessageTimes');
+                    this.$store.commit('removeExpiredMessages');
+                }
             }, 1000);
         },
         methods: {
