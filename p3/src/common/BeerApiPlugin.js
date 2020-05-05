@@ -174,9 +174,8 @@ const BeerApiPlugin = {
                         this.setLocalStorageToken(token, response.data.data.expires_in);
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                     })
-                    .catch(error => {
-                        // there's some assuming here that everything works, would need to invalidate the login on a failure
-                        console.log(error);
+                    .catch(() => {
+                        window.localStorage.removeItem('token');
                     });
             },
 
