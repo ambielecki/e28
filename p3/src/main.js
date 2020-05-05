@@ -112,24 +112,30 @@ Vue.mixin({
             let messages = [];
 
             // just want to make sure everything is defined
-            if (Object.prototype.hasOwnProperty.call(error, 'response')) {
-                if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
-                    // where api validation errors are placed
-                    if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
-                        for (let error_group in error.response.data.data.errors) {
-                            error.response.data.data.errors[error_group].forEach(message => {
-                                messages.push(error_group + ': ' + message);
-                            });
+            if (Object.prototype.hasOwnProperty.call(error, 'response') && error.response !== undefined) {
+                if (Object.prototype.hasOwnProperty.call(error.response, 'data')) {
+                    if (Object.prototype.hasOwnProperty.call(error.response.data, 'data')) {
+                        // where api validation errors are placed
+                        if (Object.prototype.hasOwnProperty.call(error.response.data.data, 'errors')) {
+                            for (let error_group in error.response.data.data.errors) {
+                                error.response.data.data.errors[error_group].forEach(message => {
+                                    messages.push(error_group + ': ' + message);
+                                });
+                            }
                         }
                     }
                 }
 
                 // add the default message if there were no error messages
                 if (messages.length === 0) {
-                    if (Object.prototype.hasOwnProperty.call(error.response.data, 'message')) {
-                        messages.push(error.response.data.message);
+                    if (Object.prototype.hasOwnProperty.call(error.response, 'data')) {
+                        if (Object.prototype.hasOwnProperty.call(error.response.data, 'message')) {
+                            messages.push(error.response.data.message);
+                        }
                     }
                 }
+            } else {
+                messages.push('We are experiencing an application error, please try back later')
             }
 
             messages.forEach(error_message => {
@@ -161,15 +167,7 @@ new Vue({
             try {
                 this.$store.state.styles = await this.$beerApi.getStyles();
             } catch (error) {
-                let error_messages = this.formatErrorMessages(error);
-
-                error_messages.forEach(error_message => {
-                    this.$store.commit('addMessage', {
-                        time: 5,
-                        type: 'is-danger',
-                        message: error_message,
-                    });
-                });
+                this.handleErrors(error);
             }
         },
 
