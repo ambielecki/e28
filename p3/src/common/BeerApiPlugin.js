@@ -174,7 +174,7 @@ const BeerApiPlugin = {
                         this.setLocalStorageToken(token, response.data.data.expires_in);
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                     })
-                    .catch(error => {
+                    .catch(() => {
                         window.localStorage.removeItem('token');
                     });
             },
