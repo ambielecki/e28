@@ -18,6 +18,13 @@
                 <div class="navbar-start">
                     <router-link :to="{ name: 'home' }" class="navbar-item" data-test="nav-home">Home</router-link>
                     <router-link v-if="logged_in" :to="{ name: 'journal' }" class="navbar-item" data-test="nav-journal">Journal</router-link>
+                    <span
+                        v-else
+                        class="navbar-item disabled_link"
+                        title="Please Login Or Register To View Journal"
+                    >
+                        Journal
+                    </span>
                     <router-link :to="{ name: 'tools' }" class="navbar-item" data-test="nav-tools">Tools</router-link>
                 </div>
 
@@ -105,4 +112,8 @@
 
 <style>
     @import './assets/scss/beer.scss';
+
+    .disabled_link {
+        opacity: .65;
+    }
 </style>
