@@ -68,25 +68,19 @@ task('week9-build', function () {
 });
 
 task('e28-env', function () {
-    run("cp {{deploy_path}}/shared/p2/.env {{release_path}}/p2/.env");
     run("cp {{deploy_path}}/shared/p3/.env {{release_path}}/p3/.env");
 });
 
 task('e28-install', function () {
     if (has('previous_release')) {
-        if (test('[ -d {{previous_release}}/p2/node_modules ]')) {
-            run('cp -R {{previous_release}}/p2/node_modules {{release_path}}/p2');
-        }
         if (test('[ -d {{previous_release}}/p3/node_modules ]')) {
             run('cp -R {{previous_release}}/p3/node_modules {{release_path}}/p3');
         }
     }
-    run("cd {{release_path}}/p2 && {{bin/npm}} ci");
     run("cd {{release_path}}/p3 && {{bin/npm}} ci");
 });
 
 task('e28-build', function () {
-    run("cd {{release_path}}/p2 && {{bin/npm}} run build");
     run("cd {{release_path}}/p3 && {{bin/npm}} run build");
 });
 
