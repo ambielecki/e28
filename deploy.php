@@ -44,9 +44,9 @@ task('deploy', [
     'deploy:lock',
     'deploy:release',
     'deploy:update_code',
-    'p2-env',
-    'p2-install',
-    'p2-build',
+    'e28-env',
+    'e28-install',
+    'e28-build',
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
@@ -67,21 +67,27 @@ task('week9-build', function () {
     run("cd {{release_path}}/week9 && {{bin/npm}} run build");
 });
 
-task('p2-env', function () {
+task('e28-env', function () {
     run("cp {{deploy_path}}/shared/p2/.env {{release_path}}/p2/.env");
+    run("cp {{deploy_path}}/shared/p3/.env {{release_path}}/p3/.env");
 });
 
-task('p2-install', function () {
+task('e28-install', function () {
     if (has('previous_release')) {
         if (test('[ -d {{previous_release}}/p2/node_modules ]')) {
             run('cp -R {{previous_release}}/p2/node_modules {{release_path}}/p2');
         }
+        if (test('[ -d {{previous_release}}/p3/node_modules ]')) {
+            run('cp -R {{previous_release}}/p3/node_modules {{release_path}}/p3');
+        }
     }
     run("cd {{release_path}}/p2 && {{bin/npm}} ci");
+    run("cd {{release_path}}/p3 && {{bin/npm}} ci");
 });
 
-task('p2-build', function () {
+task('e28-build', function () {
     run("cd {{release_path}}/p2 && {{bin/npm}} run build");
+    run("cd {{release_path}}/p3 && {{bin/npm}} run build");
 });
 
 // [Optional] If deploy fails automatically unlock.
