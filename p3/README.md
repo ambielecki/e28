@@ -32,12 +32,6 @@ You will need to copy ./p3/example.env to ./p3/.env  This will set the app api t
 which has been opened to accept http://localhost:*  Please let me know if you will be using a different domain 
 and I will open up the CORS policy
 
-#### Test User
-* Email: __testy@test.com__
-* Password: __foobarfizzbuzz__
-
-This user's ability to change their password is locked down at the API level.
-
 #### Other Notes
 * API is live (written in Laravel - shocking, right?) - it's a mess as I have been playing with multiple test
 projects. <https://github.com/ambielecki/e28-api>
