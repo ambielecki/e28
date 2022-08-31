@@ -18,7 +18,7 @@
     "axios": "^0.19.2",
     "bulma": "^0.8.1",
     "core-js": "^3.6.4",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
     "stylus": "^0.54.7",
